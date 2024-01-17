@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Encore</string>
+    <string name="filter_view_spotify_authorization">Spotify user authorization</string>
 </resources>
