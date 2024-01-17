@@ -5,6 +5,14 @@ import presentation.home.HomeViewModel
 
 val viewModelModule = module {
     factory {
-        HomeViewModel(get(), get(), get())
+        HomeViewModel(
+            requestAccessTokenUseCase = get(),
+            getAccessTokenUseCase = get(),
+            getCategoriesUseCase = get(),
+            getFeaturedPlaylistsUseCase = get(),
+            getUsersTopItemsUseCase = get(),
+            requestUserAuthorizationUseCase = get(),
+            urlLauncher = get()
+        )
     }
 }
