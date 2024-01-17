@@ -54,6 +54,8 @@ kotlin {
             implementation(libs.moko.mvvm.flow.compose)
             implementation(libs.datastore.preferences.core)
             implementation(libs.media.kamel.image)
+            implementation(libs.decompose)
+            implementation(libs.decompose.extensions.compose.jetbrains)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)

@@ -14,6 +14,9 @@ koin-compose = "1.1.2"
 moko-mvvm = "0.16.1"
 datastore = "1.1.0-beta01"
 kamel-image = "0.9.1"
+decompose = "2.2.2"
+decompose-compose-experimental = "2.2.2-compose-experimental"
+decompose-alpha = "3.0.0-alpha01" # Currently causes problems with compose and kotlinx-serialization modules
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -31,6 +34,9 @@ moko-mvvm-compose = { group = "dev.icerock.moko", name = "mvvm-compose", version
 moko-mvvm-flow-compose = { group = "dev.icerock.moko", name = "mvvm-flow-compose", version.ref = "moko-mvvm" }
 datastore-preferences-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
 media-kamel-image = { group = "media.kamel", name = "kamel-image", version.ref = "kamel-image" }
+decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "decompose" }
+decompose-extensions-compose-jetbrains = { group = "com.arkivanov.decompose", name = "extensions-compose-jetbrains", version.ref = "decompose-compose-experimental" } # Deprecated, use decompose-extensions-compose instead
+decompose-extensions-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "decompose-alpha" } # Currently causes problems with compose modules
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

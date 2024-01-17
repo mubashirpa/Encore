@@ -14,10 +14,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import core.Result
+import navigation.HomeScreenComponent
 import presentation.home.components.HomeListItem
 
 @Composable
 fun HomeScreen(
+    component: HomeScreenComponent,
     uiState: HomeUiState,
     onEvent: (HomeUiEvent) -> Unit
 ) {
