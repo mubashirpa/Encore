@@ -1,8 +1,8 @@
 package di
 
 fun appModule() = listOf(
-    dataStoreModule,
     ktorModule,
+    platformModule,
     repositoryModule,
     useCaseModule,
     viewModelModule
