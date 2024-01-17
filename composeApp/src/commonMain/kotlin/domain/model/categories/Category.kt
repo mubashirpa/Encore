@@ -1,4 +1,4 @@
-package domain.model
+package domain.model.categories
 
 import data.remote.dto.category.Categories
 
