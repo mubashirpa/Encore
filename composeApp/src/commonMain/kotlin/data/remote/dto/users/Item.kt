@@ -4,9 +4,6 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed class Item
-
-@Serializable
 data class ArtistItem(
     @SerialName("external_urls")
     val externalUrls: ExternalUrls? = null,
@@ -19,7 +16,7 @@ data class ArtistItem(
     val popularity: Int? = 0,
     val type: String? = null,
     val uri: String? = null
-) : Item()
+)
 
 @Serializable
 data class TrackItem(
@@ -51,4 +48,4 @@ data class TrackItem(
     val trackNumber: Int? = 0,
     val type: String? = null,
     val uri: String? = null
-) : Item()
+)

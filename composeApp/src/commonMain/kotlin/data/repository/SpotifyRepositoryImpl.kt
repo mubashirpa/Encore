@@ -4,12 +4,13 @@ import core.Spotify
 import data.remote.dto.AccessTokenDto
 import data.remote.dto.category.CategoryDto
 import data.remote.dto.playlists.PlaylistsDto
-import data.remote.dto.users.TopItemsDto
+import data.remote.dto.users.TopTracksDto
 import domain.repository.SpotifyRepository
 import domain.repository.TimeRange
 import domain.repository.Type
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.forms.FormDataContent
 import io.ktor.client.request.get
 import io.ktor.client.request.header
@@ -20,8 +21,11 @@ import io.ktor.http.HttpHeaders
 import io.ktor.http.Parameters
 import io.ktor.http.appendPathSegments
 import io.ktor.http.contentType
+import io.ktor.util.encodeBase64
 
-class SpotifyRepositoryImpl(private val httpClient: HttpClient) : SpotifyRepository {
+class SpotifyRepositoryImpl(
+    private val httpClient: HttpClient
+) : SpotifyRepository {
 
     override fun requestUserAuthorization(
         clientId: String,
@@ -45,18 +49,43 @@ class SpotifyRepositoryImpl(private val httpClient: HttpClient) : SpotifyReposit
         return authorizationUrl.toString()
     }
 
-    override suspend fun requestAccessToken(): AccessTokenDto {
+    override suspend fun requestAccessToken(
+        clientId: String,
+        clientSecret: String
+    ): AccessTokenDto {
         return httpClient.post(Spotify.TOKEN_ENDPOINT_URI) {
             contentType(ContentType.Application.FormUrlEncoded)
             setBody(
                 FormDataContent(
                     Parameters.build {
                         append(Spotify.Parameters.GRANT_TYPE, Spotify.Parameters.CLIENT_CREDENTIALS)
-                        append(Spotify.Parameters.CLIENT_ID, "08de4eaf71904d1b95254fab3015d711")
-                        append(Spotify.Parameters.CLIENT_SECRET, "622b4fbad33947c59b95a6ae607de11d")
+                        append(Spotify.Parameters.CLIENT_ID, clientId)
+                        append(Spotify.Parameters.CLIENT_SECRET, clientSecret)
                     }
                 )
             )
+        }.body()
+    }
+
+    override suspend fun requestAccessToken(
+        code: String,
+        redirectUri: String,
+        clientId: String,
+        clientSecret: String
+    ): AccessTokenDto {
+        val credentials = "$clientId:$clientSecret".encodeBase64()
+        return httpClient.post(Spotify.TOKEN_ENDPOINT_URI) {
+            setBody(
+                FormDataContent(
+                    Parameters.build {
+                        append(Spotify.Parameters.GRANT_TYPE, Spotify.Parameters.AUTHORIZATION_CODE)
+                        append(Spotify.Parameters.CODE, code)
+                        append(Spotify.Parameters.REDIRECT_URI, redirectUri)
+                    }
+                )
+            )
+            header(HttpHeaders.Authorization, "Basic $credentials")
+            contentType(ContentType.Application.FormUrlEncoded)
         }.body()
     }
 
@@ -83,26 +112,43 @@ class SpotifyRepositoryImpl(private val httpClient: HttpClient) : SpotifyReposit
                 parameters.append(Spotify.Parameters.LIMIT, limit.toString())
                 parameters.append(Spotify.Parameters.OFFSET, offset.toString())
             }
-            header(HttpHeaders.Authorization, "Bearer $accessToken")
+            authorisationHeader(accessToken)
         }.body()
     }
 
-    override suspend fun getUsersTopItems(
+    override suspend fun getUsersTopArtists(
         accessToken: String,
-        type: Type,
         timeRange: TimeRange,
         limit: Int,
         offset: Int
-    ): TopItemsDto {
+    ): TopTracksDto {
         return httpClient.get(Spotify.API_BASE_URL) {
             url {
                 appendPathSegments(Spotify.ENDPOINT_USERS_TOP_ITEMS)
-                appendPathSegments(type.name.lowercase())
+                appendPathSegments(Type.ARTISTS.name.lowercase())
                 parameters.append(Spotify.Parameters.TIME_RANGE, timeRange.name.lowercase())
                 parameters.append(Spotify.Parameters.LIMIT, limit.toString())
                 parameters.append(Spotify.Parameters.OFFSET, offset.toString())
             }
-            header(HttpHeaders.Authorization, "Bearer $accessToken")
+            authorisationHeader(accessToken)
+        }.body()
+    }
+
+    override suspend fun getUsersTopTracks(
+        accessToken: String,
+        timeRange: TimeRange,
+        limit: Int,
+        offset: Int
+    ): TopTracksDto {
+        return httpClient.get(Spotify.API_BASE_URL) {
+            url {
+                appendPathSegments(Spotify.ENDPOINT_USERS_TOP_ITEMS)
+                appendPathSegments(Type.TRACKS.name.lowercase())
+                parameters.append(Spotify.Parameters.TIME_RANGE, timeRange.name.lowercase())
+                parameters.append(Spotify.Parameters.LIMIT, limit.toString())
+                parameters.append(Spotify.Parameters.OFFSET, offset.toString())
+            }
+            authorisationHeader(accessToken)
         }.body()
     }
 
@@ -125,7 +171,11 @@ class SpotifyRepositoryImpl(private val httpClient: HttpClient) : SpotifyReposit
                 parameters.append(Spotify.Parameters.LIMIT, limit.toString())
                 parameters.append(Spotify.Parameters.OFFSET, offset.toString())
             }
-            header(HttpHeaders.Authorization, "Bearer $accessToken")
+            authorisationHeader(accessToken)
         }.body()
+    }
+
+    private fun HttpRequestBuilder.authorisationHeader(accessToken: String) {
+        return header(HttpHeaders.Authorization, "Bearer $accessToken")
     }
 }

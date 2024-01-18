@@ -3,7 +3,7 @@ package domain.repository
 import data.remote.dto.AccessTokenDto
 import data.remote.dto.category.CategoryDto
 import data.remote.dto.playlists.PlaylistsDto
-import data.remote.dto.users.TopItemsDto
+import data.remote.dto.users.TopTracksDto
 
 interface SpotifyRepository {
 
@@ -38,8 +38,31 @@ interface SpotifyRepository {
      * The access token is a string which contains the credentials and permissions that can be used
      * to access a given resource (e.g artists, albums or tracks) or user's data (e.g your profile
      * or your playlists).
+     * @param clientId The Client ID generated after registering your application.
+     * @param clientSecret The Client Secret generated after registering your application.
      */
-    suspend fun requestAccessToken(): AccessTokenDto
+    suspend fun requestAccessToken(
+        clientId: String,
+        clientSecret: String
+    ): AccessTokenDto
+
+    /**
+     * The access token is a string which contains the credentials and permissions that can be used
+     * to access a given resource (e.g artists, albums or tracks) or user's data (e.g your profile
+     * or your playlists).
+     * @param code The authorization code returned from the UserAuthorization request.
+     * @param redirectUri This parameter is used for validation only (there is no actual
+     * redirection). The value of this parameter must exactly match the value of redirect_uri
+     * supplied when requesting the authorization code.
+     * @param clientId The Client ID generated after registering your application.
+     * @param clientSecret The Client Secret generated after registering your application.
+     */
+    suspend fun requestAccessToken(
+        code: String,
+        redirectUri: String,
+        clientId: String,
+        clientSecret: String
+    ): AccessTokenDto
 
     /**
      * Get a list of Spotify featured playlists (shown, for example, on a Spotify player's 'Browse'
@@ -72,22 +95,36 @@ interface SpotifyRepository {
     ): PlaylistsDto
 
     /**
-     * Get the current user's top artists or tracks based on calculated affinity.
+     * Get the current user's top artists based on calculated affinity.
      * @param accessToken String which contains the credentials and permissions that can be used to
      * access a given resource (e.g artists, albums or tracks) or user's data.
-     * @param type The type of entity to return.
      * @param timeRange Over what time frame the affinities are computed.
      * @param limit The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.
      * @param offset The index of the first item to return. Default: 0 (the first item). Use with
      * limit to get the next set of items.
      */
-    suspend fun getUsersTopItems(
+    suspend fun getUsersTopArtists(
         accessToken: String,
-        type: Type,
         timeRange: TimeRange = TimeRange.MEDIUM_TERM,
         limit: Int = 20,
         offset: Int = 0
-    ): TopItemsDto
+    ): TopTracksDto
+
+    /**
+     * Get the current user's top tracks based on calculated affinity.
+     * @param accessToken String which contains the credentials and permissions that can be used to
+     * access a given resource (e.g artists, albums or tracks) or user's data.
+     * @param timeRange Over what time frame the affinities are computed.
+     * @param limit The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.
+     * @param offset The index of the first item to return. Default: 0 (the first item). Use with
+     * limit to get the next set of items.
+     */
+    suspend fun getUsersTopTracks(
+        accessToken: String,
+        timeRange: TimeRange = TimeRange.MEDIUM_TERM,
+        limit: Int = 20,
+        offset: Int = 0
+    ): TopTracksDto
 
     suspend fun getCategories(
         accessToken: String,
@@ -103,6 +140,7 @@ enum class Type {
     TRACKS
 }
 
+@Suppress("unused")
 enum class TimeRange {
     LONG_TERM,
     MEDIUM_TERM,
