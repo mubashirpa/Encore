@@ -1,4 +1,6 @@
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
@@ -9,5 +11,8 @@ fun MainViewController() = ComposeUIViewController {
     val rootComponent = remember {
         DefaultRootComponent(DefaultComponentContext(LifecycleRegistry()))
     }
-    App(rootComponent = rootComponent)
+    App(
+        component = rootComponent,
+        modifier = Modifier.fillMaxSize()
+    )
 }
