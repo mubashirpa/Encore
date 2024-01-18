@@ -34,8 +34,9 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
 
-            implementation(libs.ktor.client.okhttp)
+            implementation(libs.androidx.core.splashscreen)
             implementation(libs.koin.android)
+            implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -45,17 +46,17 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
 
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.serialization.kotlinx.json)
-            implementation(libs.koin.core)
-            implementation(libs.koin.compose)
-            implementation(libs.moko.mvvm.compose)
-            implementation(libs.moko.mvvm.flow.compose)
             implementation(libs.datastore.preferences.core)
-            implementation(libs.media.kamel.image)
             implementation(libs.decompose)
             implementation(libs.decompose.extensions.compose.jetbrains)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.media.kamel.image)
+            implementation(libs.moko.mvvm.compose)
+            implementation(libs.moko.mvvm.flow.compose)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
