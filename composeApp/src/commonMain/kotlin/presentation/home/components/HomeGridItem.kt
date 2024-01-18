@@ -1,10 +1,9 @@
 package presentation.home.components
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,24 +16,24 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 
 @Composable
-fun HomeListItem(name: String, imageUrl: String) {
-    Column(
-        modifier = Modifier.width(120.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Card {
+fun HomeGridItem(name: String, imageUrl: String) {
+    Card {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             KamelImage(
                 resource = asyncPainterResource(imageUrl),
                 contentDescription = null,
-                modifier = Modifier.size(120.dp)
+                modifier = Modifier.size(56.dp)
+            )
+            Text(
+                text = name,
+                modifier = Modifier.padding(horizontal = 8.dp),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                style = MaterialTheme.typography.labelLarge
             )
         }
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = name,
-            maxLines = 2,
-            overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.labelLarge
-        )
     }
 }
