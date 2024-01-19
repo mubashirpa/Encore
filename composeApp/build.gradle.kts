@@ -46,6 +46,7 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
 
+            implementation(libs.aakira.napier)
             implementation(libs.datastore.preferences.core)
             implementation(libs.decompose)
             implementation(libs.decompose.extensions.compose.jetbrains)
