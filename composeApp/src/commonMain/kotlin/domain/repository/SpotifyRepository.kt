@@ -65,6 +65,19 @@ interface SpotifyRepository {
     ): AccessTokenDto
 
     /**
+     * A refresh token is a security credential that allows client applications to obtain new access
+     * tokens without requiring users to reauthorize the application.
+     * @param refreshToken The refresh token returned from the authorization token request.
+     * @param clientId The client ID for your app, available from the developer dashboard.
+     * @param clientSecret The client secret for your app, available from the developer dashboard.
+     */
+    suspend fun refreshToken(
+        refreshToken: String,
+        clientId: String,
+        clientSecret: String
+    ): AccessTokenDto
+
+    /**
      * Get a list of Spotify featured playlists (shown, for example, on a Spotify player's 'Browse'
      * tab).
      * @param accessToken String which contains the credentials and permissions that can be used to

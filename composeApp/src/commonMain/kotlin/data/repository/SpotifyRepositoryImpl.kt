@@ -89,6 +89,26 @@ class SpotifyRepositoryImpl(
         }.body()
     }
 
+    override suspend fun refreshToken(
+        refreshToken: String,
+        clientId: String,
+        clientSecret: String
+    ): AccessTokenDto {
+        val credentials = "$clientId:$clientSecret".encodeBase64()
+        return httpClient.post(Spotify.TOKEN_ENDPOINT_URI) {
+            setBody(
+                FormDataContent(
+                    Parameters.build {
+                        append(Spotify.Parameters.GRANT_TYPE, Spotify.Parameters.REFRESH_TOKEN)
+                        append(Spotify.Parameters.REFRESH_TOKEN, refreshToken)
+                    }
+                )
+            )
+            contentType(ContentType.Application.FormUrlEncoded)
+            header(HttpHeaders.Authorization, "Basic $credentials")
+        }.body()
+    }
+
     override suspend fun getFeaturedPlaylists(
         accessToken: String,
         country: String?,

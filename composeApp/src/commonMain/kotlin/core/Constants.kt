@@ -25,6 +25,7 @@ object Spotify {
         const val LOCALE = "locale"
         const val OFFSET = "offset"
         const val REDIRECT_URI = "redirect_uri"
+        const val REFRESH_TOKEN = "refresh_token"
         const val RESPONSE_TYPE = "response_type"
         const val SCOPE = "scope"
         const val SHOW_DIALOG = "show_dialog"
@@ -38,5 +39,7 @@ object PreferencesKeys {
 
     val SPOTIFY_ACCESS_TOKEN = stringPreferencesKey("spotify_access_token")
     val SPOTIFY_TOKEN_EXPIRES_IN = intPreferencesKey("spotify_token_expires_in")
+    val SPOTIFY_REFRESH_TOKEN = stringPreferencesKey("spotify_refresh_token")
+    val SPOTIFY_ACCESS_TOKEN_SCOPE = stringPreferencesKey("spotify_access_token_scope")
     val SPOTIFY_TOKEN_TOKEN_TYPE = stringPreferencesKey("spotify_token_type")
 }

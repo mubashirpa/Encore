@@ -2,6 +2,7 @@ package di
 
 import domain.usecase.spotify.RequestUserAuthorizationUseCase
 import domain.usecase.spotify.access_token.GetAccessTokenUseCase
+import domain.usecase.spotify.access_token.RefreshTokenUseCase
 import domain.usecase.spotify.access_token.RequestAuthAccessTokenUseCase
 import domain.usecase.spotify.access_token.RequestCredentialAccessTokenUseCase
 import domain.usecase.spotify.categories.GetCategoriesUseCase
@@ -17,4 +18,5 @@ val useCaseModule = module {
     single { RequestAuthAccessTokenUseCase(get(), get()) }
     single { RequestCredentialAccessTokenUseCase(get(), get()) }
     single { RequestUserAuthorizationUseCase(get()) }
+    single { RefreshTokenUseCase(get(), get()) }
 }

@@ -20,6 +20,8 @@ class UserPreferencesRepositoryImpl(
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.SPOTIFY_ACCESS_TOKEN] = accessToken.accessToken ?: ""
             preferences[PreferencesKeys.SPOTIFY_TOKEN_EXPIRES_IN] = accessToken.expiresIn ?: 0
+            preferences[PreferencesKeys.SPOTIFY_REFRESH_TOKEN] = accessToken.refreshToken ?: ""
+            preferences[PreferencesKeys.SPOTIFY_ACCESS_TOKEN_SCOPE] = accessToken.scope ?: ""
             preferences[PreferencesKeys.SPOTIFY_TOKEN_TOKEN_TYPE] = accessToken.tokenType ?: ""
         }
     }
@@ -37,6 +39,8 @@ class UserPreferencesRepositoryImpl(
                 AccessToken(
                     accessToken = preferences[PreferencesKeys.SPOTIFY_ACCESS_TOKEN] ?: "",
                     expiresIn = preferences[PreferencesKeys.SPOTIFY_TOKEN_EXPIRES_IN] ?: 0,
+                    refreshToken = preferences[PreferencesKeys.SPOTIFY_REFRESH_TOKEN] ?: "",
+                    scope = preferences[PreferencesKeys.SPOTIFY_ACCESS_TOKEN_SCOPE] ?: "",
                     tokenType = preferences[PreferencesKeys.SPOTIFY_TOKEN_TOKEN_TYPE] ?: ""
                 )
             }
