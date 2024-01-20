@@ -11,6 +11,10 @@ fun MainViewController() = ComposeUIViewController {
     val rootComponent = remember {
         DefaultRootComponent(DefaultComponentContext(LifecycleRegistry()))
     }
+    // TODO("Implement SplashScreen")
+    // TODO("Implement MainViewModel")
+    // TODO("Get spotify user authorization code after login via deep link")
+    // TODO("Initialize Napier")
     App(
         component = rootComponent,
         modifier = Modifier.fillMaxSize()
