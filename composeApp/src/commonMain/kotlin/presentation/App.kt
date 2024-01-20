@@ -19,9 +19,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.slid
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import navigation.RootComponent
 import org.koin.compose.KoinContext
-import org.koin.compose.koinInject
 import presentation.home.HomeScreen
-import presentation.home.HomeViewModel
 import presentation.theme.EncoreTheme
 
 @Composable
@@ -51,8 +49,6 @@ private fun EncoreApp(
     component: RootComponent,
     modifier: Modifier = Modifier
 ) {
-    val homeViewModel: HomeViewModel = koinInject()
-
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0)
@@ -68,11 +64,8 @@ private fun EncoreApp(
         ) { child ->
             when (val instance = child.instance) {
                 is RootComponent.Child.HomeScreen -> {
-                    HomeScreen(
-                        component = instance.component,
-                        uiState = homeViewModel.uiState,
-                        onEvent = homeViewModel::onEvent
-                    )
+                    val homeScreenComponent = instance.component
+                    HomeScreen(uiState = homeScreenComponent.viewModel.uiState)
                 }
             }
         }
