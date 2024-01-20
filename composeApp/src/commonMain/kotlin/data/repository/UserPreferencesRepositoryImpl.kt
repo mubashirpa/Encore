@@ -20,7 +20,10 @@ class UserPreferencesRepositoryImpl(
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.SPOTIFY_ACCESS_TOKEN] = accessToken.accessToken ?: ""
             preferences[PreferencesKeys.SPOTIFY_TOKEN_EXPIRES_IN] = accessToken.expiresIn ?: 0
-            preferences[PreferencesKeys.SPOTIFY_REFRESH_TOKEN] = accessToken.refreshToken ?: ""
+            // TODO("Make sure it is okay")
+            if (!accessToken.refreshToken.isNullOrEmpty()) {
+                preferences[PreferencesKeys.SPOTIFY_REFRESH_TOKEN] = accessToken.refreshToken
+            }
             preferences[PreferencesKeys.SPOTIFY_ACCESS_TOKEN_SCOPE] = accessToken.scope ?: ""
             preferences[PreferencesKeys.SPOTIFY_TOKEN_TOKEN_TYPE] = accessToken.tokenType ?: ""
         }
