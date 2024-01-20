@@ -1,23 +1,18 @@
 package navigation
 
 import com.arkivanov.decompose.ComponentContext
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import presentation.home.HomeViewModel
 
 interface HomeScreenComponent {
 
-    val authorizationCode: String?
-
-    fun onCloseClicked()
+    val viewModel: HomeViewModel
 }
 
 class DefaultHomeScreenComponent(
-    componentContext: ComponentContext,
-    authCode: String?,
-    private val onFinished: () -> Unit
-) : HomeScreenComponent, ComponentContext by componentContext {
+    componentContext: ComponentContext
+) : HomeScreenComponent, ComponentContext by componentContext, KoinComponent {
 
-    override val authorizationCode: String? = authCode
-
-    override fun onCloseClicked() {
-        onFinished()
-    }
+    override val viewModel: HomeViewModel by inject()
 }
