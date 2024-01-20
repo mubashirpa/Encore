@@ -12,27 +12,36 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.arkivanov.decompose.defaultComponentContext
 import navigation.DefaultRootComponent
 import navigation.RootComponent
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import presentation.App
+import presentation.MainUIEvent
+import presentation.MainViewModel
 
 class MainActivity : ComponentActivity() {
 
     private lateinit var rootComponent: RootComponent
+    private val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        installSplashScreen()
+        installSplashScreen().apply {
+            setKeepOnScreenCondition {
+                !viewModel.isReady.value
+            }
+        }
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
+        // TODO("Handle user authorization error")
         val authorizationCode = intent.data?.extractAuthorizationCode()
 
-        rootComponent = DefaultRootComponent(
-            componentContext = defaultComponentContext(),
-            authorizationCode = authorizationCode
-        )
+        rootComponent = DefaultRootComponent(componentContext = defaultComponentContext())
 
         if (authorizationCode != null) {
             intent =
                 Intent(intent).setData(null) // The deep link has been handled, clear the Intent data
+            viewModel.onEvent(MainUIEvent.OnAuthorizationCodeReceived(authorizationCode))
+        } else {
+            viewModel.onEvent(MainUIEvent.GetAccessToken)
         }
 
         setContent {
@@ -47,7 +56,7 @@ class MainActivity : ComponentActivity() {
         super.onNewIntent(intent)
 
         val authorizationCode = intent?.data?.extractAuthorizationCode() ?: return
-        rootComponent.onDeepLink(authorizationCode)
+        viewModel.onEvent(MainUIEvent.OnAuthorizationCodeReceived(authorizationCode))
     }
 
     private fun Uri.extractAuthorizationCode(): String? {
