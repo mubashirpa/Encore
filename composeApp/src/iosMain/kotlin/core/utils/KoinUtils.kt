@@ -1,8 +1,7 @@
-package di
+package core.utils
 
+import di.appModule
 import org.koin.core.context.startKoin
-
-// TODO("Move to core.utils")
 
 fun initKoin() {
     startKoin {
