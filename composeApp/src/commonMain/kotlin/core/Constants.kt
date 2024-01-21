@@ -8,6 +8,7 @@ object Spotify {
     const val API_BASE_URL = "https://api.spotify.com/v1"
     const val AUTHORIZE_ENDPOINT_URI = "https://accounts.spotify.com/authorize"
     const val ENDPOINT_BROWSE_CATEGORIES = "browse/categories"
+    const val ENDPOINT_CURRENT_USERS_PROFILE = "me"
     const val ENDPOINT_FEATURED_PLAYLISTS = "browse/featured-playlists"
     const val ENDPOINT_USERS_TOP_ITEMS = "me/top"
     const val TOKEN_ENDPOINT_URI = "https://accounts.spotify.com/api/token"
