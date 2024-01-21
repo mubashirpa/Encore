@@ -1,4 +1,4 @@
-package data.remote.dto.users
+package data.remote.dto.spotify.users.top_items
 
 import kotlinx.serialization.Serializable
 

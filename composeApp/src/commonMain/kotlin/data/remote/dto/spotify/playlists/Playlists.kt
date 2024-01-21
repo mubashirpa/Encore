@@ -1,11 +1,11 @@
-package data.remote.dto.category
+package data.remote.dto.spotify.playlists
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Categories(
+data class Playlists(
     val href: String? = null,
-    val items: List<Item?>? = null,
+    val items: List<Item>? = null,
     val limit: Int? = null,
     val next: String? = null,
     val offset: Int? = null,

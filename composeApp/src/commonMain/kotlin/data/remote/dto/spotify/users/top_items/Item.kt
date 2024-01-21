@@ -1,5 +1,8 @@
-package data.remote.dto.users
+package data.remote.dto.spotify.users.top_items
 
+import data.remote.dto.spotify.ExternalUrls
+import data.remote.dto.spotify.Image
+import data.remote.dto.spotify.users.Followers
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -13,7 +16,7 @@ data class ArtistItem(
     val id: String? = null,
     val images: List<Image>? = null,
     val name: String? = null,
-    val popularity: Int? = 0,
+    val popularity: Int? = null,
     val type: String? = null,
     val uri: String? = null
 )
@@ -25,10 +28,10 @@ data class TrackItem(
     @SerialName("available_markets")
     val availableMarkets: List<String>? = null,
     @SerialName("disc_number")
-    val discNumber: Int? = 0,
+    val discNumber: Int? = null,
     @SerialName("duration_ms")
-    val durationMs: Int? = 0,
-    val explicit: Boolean? = false,
+    val durationMs: Int? = null,
+    val explicit: Boolean? = null,
     @SerialName("external_ids")
     val externalIds: ExternalIds? = null,
     @SerialName("external_urls")
@@ -36,16 +39,16 @@ data class TrackItem(
     val href: String? = null,
     val id: String? = null,
     @SerialName("is_local")
-    val isLocal: Boolean? = false,
+    val isLocal: Boolean? = null,
     @SerialName("is_playable")
-    val isPlayable: Boolean? = false,
+    val isPlayable: Boolean? = null,
     val name: String? = null,
     val popularity: Int? = 0,
     @SerialName("preview_url")
     val previewUrl: String? = null,
     val restrictions: Restrictions? = null,
     @SerialName("track_number")
-    val trackNumber: Int? = 0,
+    val trackNumber: Int? = null,
     val type: String? = null,
     val uri: String? = null
 )

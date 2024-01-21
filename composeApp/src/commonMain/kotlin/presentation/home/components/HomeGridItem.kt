@@ -30,7 +30,7 @@ fun HomeGridItem(name: String, imageUrl: String) {
             Text(
                 text = name,
                 modifier = Modifier.padding(horizontal = 8.dp),
-                maxLines = 1,
+                maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.labelLarge
             )

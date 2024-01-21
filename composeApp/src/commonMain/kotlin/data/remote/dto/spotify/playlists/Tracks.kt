@@ -1,4 +1,4 @@
-package data.remote.dto.playlists
+package data.remote.dto.spotify.playlists
 
 import kotlinx.serialization.Serializable
 

@@ -1,4 +1,4 @@
-package domain.model
+package domain.model.spotify
 
 data class AccessToken(
     val accessToken: String? = null,

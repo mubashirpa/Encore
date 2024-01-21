@@ -1,8 +1,8 @@
-package data.remote.dto.category
+package data.remote.dto.spotify.category
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CategoryDto(
+data class CategoriesDto(
     val categories: Categories? = null
 )

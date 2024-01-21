@@ -1,6 +1,6 @@
 package domain.usecase.spotify.access_token
 
-import domain.model.AccessToken
+import domain.model.spotify.AccessToken
 import domain.repository.UserPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 

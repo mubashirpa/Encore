@@ -1,18 +1,18 @@
 package data.mapper
 
-import data.remote.dto.playlists.Image
-import data.remote.dto.playlists.Item
-import domain.model.playlists.PlaylistsItem
-import domain.model.playlists.PlaylistsItemImage
+import data.remote.dto.spotify.Image
+import data.remote.dto.spotify.playlists.Item
+import domain.model.spotify.playlists.PlaylistsItem
+import domain.model.spotify.playlists.PlaylistsImage
 
 fun Item.toPlaylistsItem(): PlaylistsItem {
     return PlaylistsItem(
         id,
-        images?.map { it.toPlaylistsItemImage() },
+        images?.map { it.toPlaylistsImage() },
         name
     )
 }
 
-private fun Image.toPlaylistsItemImage(): PlaylistsItemImage {
-    return PlaylistsItemImage(url)
+private fun Image.toPlaylistsImage(): PlaylistsImage {
+    return PlaylistsImage(url)
 }
