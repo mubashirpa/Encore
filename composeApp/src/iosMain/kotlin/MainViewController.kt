@@ -4,6 +4,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.ComposeUIViewController
 import com.arkivanov.decompose.DefaultComponentContext
 import com.arkivanov.essenty.lifecycle.LifecycleRegistry
+import io.github.aakira.napier.Napier
 import navigation.DefaultRootComponent
 import presentation.App
 
@@ -19,4 +20,9 @@ fun MainViewController() = ComposeUIViewController {
         component = rootComponent,
         modifier = Modifier.fillMaxSize()
     )
+}
+
+fun onDeepLink(url: String) {
+    // TODO("Check deep link working or not")
+    Napier.d(message = url, tag = "IOS")
 }
