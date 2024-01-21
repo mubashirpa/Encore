@@ -6,6 +6,7 @@ import data.remote.dto.spotify.category.CategoriesDto
 import data.remote.dto.spotify.playlists.PlaylistsDto
 import data.remote.dto.spotify.users.top_items.TopTracksDto
 import data.remote.dto.spotify.users.profile.UserDto
+import data.remote.dto.spotify.users.top_items.TopArtistsDto
 import domain.repository.SpotifyRepository
 import domain.repository.TimeRange
 import domain.repository.Type
@@ -151,7 +152,7 @@ class SpotifyRepositoryImpl(
         timeRange: TimeRange,
         limit: Int,
         offset: Int
-    ): TopTracksDto {
+    ): TopArtistsDto {
         return httpClient.get(Spotify.API_BASE_URL) {
             url {
                 appendPathSegments(Spotify.ENDPOINT_USERS_TOP_ITEMS)

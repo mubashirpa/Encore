@@ -5,6 +5,7 @@ import data.remote.dto.spotify.category.CategoriesDto
 import data.remote.dto.spotify.playlists.PlaylistsDto
 import data.remote.dto.spotify.users.top_items.TopTracksDto
 import data.remote.dto.spotify.users.profile.UserDto
+import data.remote.dto.spotify.users.top_items.TopArtistsDto
 
 interface SpotifyRepository {
 
@@ -129,7 +130,7 @@ interface SpotifyRepository {
         timeRange: TimeRange = TimeRange.MEDIUM_TERM,
         limit: Int = 20,
         offset: Int = 0
-    ): TopTracksDto
+    ): TopArtistsDto
 
     /**
      * Get the current user's top tracks based on calculated affinity.
