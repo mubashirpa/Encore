@@ -1,11 +1,19 @@
 package domain.repository
 
-import data.remote.dto.AccessTokenDto
-import data.remote.dto.category.CategoryDto
-import data.remote.dto.playlists.PlaylistsDto
-import data.remote.dto.users.TopTracksDto
+import data.remote.dto.spotify.AccessTokenDto
+import data.remote.dto.spotify.category.CategoriesDto
+import data.remote.dto.spotify.playlists.PlaylistsDto
+import data.remote.dto.spotify.users.top_items.TopTracksDto
+import data.remote.dto.spotify.users.profile.UserDto
 
 interface SpotifyRepository {
+
+    /**
+     * Get detailed profile information about the current user.
+     * @param accessToken String which contains the credentials and permissions that can be used to
+     * access a given resource (e.g artists, albums or tracks) or user's data.
+     */
+    suspend fun getCurrentUsersProfile(accessToken: String): UserDto
 
     /**
      * Request authorization from the user so that our app can access to the Spotify resources on the user's behalf.
@@ -145,7 +153,7 @@ interface SpotifyRepository {
         locale: String? = null,
         limit: Int = 20,
         offset: Int = 0
-    ): CategoryDto
+    ): CategoriesDto
 }
 
 enum class Type {

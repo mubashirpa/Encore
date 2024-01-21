@@ -1,10 +1,11 @@
 package data.repository
 
 import core.Spotify
-import data.remote.dto.AccessTokenDto
-import data.remote.dto.category.CategoryDto
-import data.remote.dto.playlists.PlaylistsDto
-import data.remote.dto.users.TopTracksDto
+import data.remote.dto.spotify.AccessTokenDto
+import data.remote.dto.spotify.category.CategoriesDto
+import data.remote.dto.spotify.playlists.PlaylistsDto
+import data.remote.dto.spotify.users.top_items.TopTracksDto
+import data.remote.dto.spotify.users.profile.UserDto
 import domain.repository.SpotifyRepository
 import domain.repository.TimeRange
 import domain.repository.Type
@@ -26,6 +27,15 @@ import io.ktor.util.encodeBase64
 class SpotifyRepositoryImpl(
     private val httpClient: HttpClient
 ) : SpotifyRepository {
+
+    override suspend fun getCurrentUsersProfile(accessToken: String): UserDto {
+        return httpClient.get(Spotify.API_BASE_URL) {
+            url {
+                appendPathSegments(Spotify.ENDPOINT_CURRENT_USERS_PROFILE)
+            }
+            authorisationHeader(accessToken)
+        }.body()
+    }
 
     override fun requestUserAuthorization(
         clientId: String,
@@ -178,7 +188,7 @@ class SpotifyRepositoryImpl(
         locale: String?,
         limit: Int,
         offset: Int
-    ): CategoryDto {
+    ): CategoriesDto {
         return httpClient.get(Spotify.API_BASE_URL) {
             url {
                 appendPathSegments(Spotify.ENDPOINT_BROWSE_CATEGORIES)

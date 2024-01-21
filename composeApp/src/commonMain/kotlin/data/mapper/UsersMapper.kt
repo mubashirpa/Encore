@@ -1,25 +1,39 @@
 package data.mapper
 
-import data.remote.dto.users.Album
-import data.remote.dto.users.ArtistItem
-import data.remote.dto.users.Image
-import data.remote.dto.users.TrackItem
-import domain.model.users.UserTopItemImage
-import domain.model.users.UsersTopArtistItem
-import domain.model.users.UsersTopItemAlbum
-import domain.model.users.UsersTopTrackItem
+import data.remote.dto.spotify.Image
+import data.remote.dto.spotify.users.Followers
+import data.remote.dto.spotify.users.profile.UserDto
+import data.remote.dto.spotify.users.top_items.Album
+import data.remote.dto.spotify.users.top_items.ArtistItem
+import data.remote.dto.spotify.users.top_items.TrackItem
+import domain.model.spotify.users.UsersImage
+import domain.model.spotify.users.profile.User
+import domain.model.spotify.users.profile.UsersFollowers
+import domain.model.spotify.users.top_items.UsersAlbum
+import domain.model.spotify.users.top_items.UsersArtistItem
+import domain.model.spotify.users.top_items.UsersTrackItem
 
-fun ArtistItem.toUsersTopArtistItem(): UsersTopArtistItem {
-    return UsersTopArtistItem(
+fun UserDto.toUser(): User {
+    return User(
+        displayName,
+        email,
+        followers?.toUsersFollowers(),
         id,
-        images?.map { it.toUserTopItemImage() },
+        images?.map { it.toUsersImage() }
+    )
+}
+
+fun ArtistItem.toUsersArtistItem(): UsersArtistItem {
+    return UsersArtistItem(
+        id,
+        images?.map { it.toUsersImage() },
         name
     )
 }
 
-fun TrackItem.toUsersTopTrackItem(): UsersTopTrackItem {
-    return UsersTopTrackItem(
-        album?.toUsersTopAlbum(),
+fun TrackItem.toUsersTrackItem(): UsersTrackItem {
+    return UsersTrackItem(
+        album?.toUsersAlbum(),
         id,
         isPlayable,
         name,
@@ -28,12 +42,18 @@ fun TrackItem.toUsersTopTrackItem(): UsersTopTrackItem {
     )
 }
 
-private fun Album.toUsersTopAlbum(): UsersTopItemAlbum {
-    return UsersTopItemAlbum(
-        images.map { it.toUserTopItemImage() }
+private fun Followers.toUsersFollowers(): UsersFollowers {
+    return UsersFollowers(
+        total
     )
 }
 
-private fun Image.toUserTopItemImage(): UserTopItemImage {
-    return UserTopItemImage(url)
+private fun Image.toUsersImage(): UsersImage {
+    return UsersImage(url)
+}
+
+private fun Album.toUsersAlbum(): UsersAlbum {
+    return UsersAlbum(
+        images?.map { it.toUsersImage() }
+    )
 }

@@ -8,16 +8,17 @@ val viewModelModule = module {
     factory {
         HomeViewModel(
             getAccessTokenUseCase = get(),
+            getCurrentUsersProfileUseCase = get(),
             getFeaturedPlaylistsUseCase = get(),
             getUsersTopTracksUseCase = get()
         )
     }
     factory {
         MainViewModel(
-            requestUserAuthorizationUseCase = get(),
-            requestAuthAccessTokenUseCase = get(),
             getAccessTokenUseCase = get(),
             refreshTokenUseCase = get(),
+            requestAuthAccessTokenUseCase = get(),
+            requestUserAuthorizationUseCase = get(),
             urlLauncher = get()
         )
     }
