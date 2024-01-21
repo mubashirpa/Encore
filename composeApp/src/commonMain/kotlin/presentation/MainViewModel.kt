@@ -15,11 +15,11 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val requestUserAuthorizationUseCase: RequestUserAuthorizationUseCase,
-    private val requestAuthAccessTokenUseCase: RequestAuthAccessTokenUseCase,
     private val getAccessTokenUseCase: GetAccessTokenUseCase,
     private val refreshTokenUseCase: RefreshTokenUseCase,
-    private val urlLauncher: UrlLauncher,
+    private val requestAuthAccessTokenUseCase: RequestAuthAccessTokenUseCase,
+    private val requestUserAuthorizationUseCase: RequestUserAuthorizationUseCase,
+    private val urlLauncher: UrlLauncher
 ) : ViewModel() {
 
     private val _isReady = MutableStateFlow(false)
@@ -44,13 +44,28 @@ class MainViewModel(
         }
     }
 
-    private fun requestUserAuthorization() {
-        val requestUserAuthorization = requestUserAuthorizationUseCase(
+    private fun getAccessToken() {
+        viewModelScope.launch {
+            val refreshToken = getAccessTokenUseCase().first().refreshToken
+            if (refreshToken.isNullOrEmpty()) {
+                requestUserAuthorization()
+            } else {
+                refreshToken(refreshToken)
+            }
+        }
+    }
+
+    private fun refreshToken(refreshToken: String) {
+        refreshTokenUseCase(
+            refreshToken = refreshToken,
             clientId = clientId,
-            redirectUri = redirectUrl,
-            scope = scope
-        )
-        urlLauncher.openUrl(requestUserAuthorization)
+            clientSecret = clientSecret
+        ).onEach {
+            if (it is Result.Success) {
+                _isReady.value = true
+            }
+            // TODO("Handle error")
+        }.launchIn(viewModelScope)
     }
 
     private fun requestAccessToken(code: String) {
@@ -67,27 +82,12 @@ class MainViewModel(
         }.launchIn(viewModelScope)
     }
 
-    private fun refreshToken(refreshToken: String) {
-        refreshTokenUseCase(
-            refreshToken = refreshToken,
+    private fun requestUserAuthorization() {
+        val requestUserAuthorization = requestUserAuthorizationUseCase(
             clientId = clientId,
-            clientSecret = clientSecret
-        ).onEach {
-            if (it is Result.Success) {
-                _isReady.value = true
-            }
-            // TODO("Handle error")
-        }.launchIn(viewModelScope)
-    }
-
-    private fun getAccessToken() {
-        viewModelScope.launch {
-            val refreshToken = getAccessTokenUseCase().first().refreshToken
-            if (refreshToken.isNullOrEmpty()) {
-                requestUserAuthorization()
-            } else {
-                refreshToken(refreshToken)
-            }
-        }
+            redirectUri = redirectUrl,
+            scope = scope
+        )
+        urlLauncher.openUrl(requestUserAuthorization)
     }
 }
