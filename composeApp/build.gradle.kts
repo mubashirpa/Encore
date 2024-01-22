@@ -46,18 +46,14 @@ kotlin {
             @OptIn(ExperimentalComposeLibrary::class)
             implementation(compose.components.resources)
 
+            implementation(libs.bundles.decompose.common)
+            implementation(libs.bundles.koin.common)
+            implementation(libs.bundles.ktor.common)
+            implementation(libs.bundles.moko.mvvm.common)
+
             implementation(libs.aakira.napier)
             implementation(libs.datastore.preferences.core)
-            implementation(libs.decompose)
-            implementation(libs.decompose.extensions.compose.jetbrains)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.core)
-            implementation(libs.ktor.client.content.negotiation)
-            implementation(libs.ktor.client.core)
-            implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.media.kamel.image)
-            implementation(libs.moko.mvvm.compose)
-            implementation(libs.moko.mvvm.flow.compose)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)

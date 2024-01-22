@@ -48,3 +48,22 @@ androidLibrary = { id = "com.android.library", version.ref = "agp" }
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+[bundles]
+decompose-common = [
+    "decompose",
+    "decompose-extensions-compose-jetbrains"
+]
+koin-common = [
+    "koin-compose",
+    "koin-core"
+]
+ktor-common = [
+    "ktor-client-content-negotiation",
+    "ktor-client-core",
+    "ktor-serialization-kotlinx-json"
+]
+moko-mvvm-common = [
+    "moko-mvvm-compose",
+    "moko-mvvm-flow-compose"
+]
