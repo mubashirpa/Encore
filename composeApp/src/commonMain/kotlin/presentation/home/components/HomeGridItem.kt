@@ -1,7 +1,6 @@
 package presentation.home.components
 
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
@@ -16,12 +15,13 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 
 @Composable
-fun HomeGridItem(name: String, imageUrl: String) {
-    Card {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
+fun HomeGridItem(
+    name: String,
+    imageUrl: String,
+    modifier: Modifier = Modifier
+) {
+    Card(modifier = modifier) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
             KamelImage(
                 resource = asyncPainterResource(imageUrl),
                 contentDescription = null,
