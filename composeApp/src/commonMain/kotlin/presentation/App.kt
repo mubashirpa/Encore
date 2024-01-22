@@ -19,7 +19,7 @@ import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.slid
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
 import navigation.RootComponent
 import org.koin.compose.KoinContext
-import presentation.home.HomeScreen
+import presentation.home_container.HomeContainer
 import presentation.theme.EncoreTheme
 
 @Composable
@@ -63,9 +63,8 @@ private fun EncoreApp(
             animation = stackAnimation(slide())
         ) { child ->
             when (val instance = child.instance) {
-                is RootComponent.Child.HomeScreen -> {
-                    val homeScreenComponent = instance.component
-                    HomeScreen(uiState = homeScreenComponent.viewModel.uiState)
+                is RootComponent.Child.HomeContainer -> {
+                    HomeContainer(component = instance.component)
                 }
             }
         }
