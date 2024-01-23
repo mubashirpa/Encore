@@ -1,6 +1,7 @@
 package presentation.home_container.components
 
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -54,6 +55,7 @@ fun HomeAppBar(
             )
         },
         actions = actions,
+        windowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp),
         colors = TopAppBarDefaults.topAppBarColors(scrolledContainerColor = MaterialTheme.colorScheme.surface),
         scrollBehavior = scrollBehavior
     )
