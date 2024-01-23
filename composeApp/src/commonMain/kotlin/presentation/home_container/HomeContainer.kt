@@ -1,5 +1,6 @@
 package presentation.home_container
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,26 +30,13 @@ fun HomeContainer(component: HomeContainerComponent) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
         state = rememberTopAppBarState()
     )
+    val accessToken = component.viewModel.uiState.accessToken
+    val profileUrl = component.viewModel.uiState.currentUsersProfile?.images?.firstOrNull()?.url
 
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
             .nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            HomeAppBar(
-                title = "Go listen!",
-                profileImage = "",
-                actions = {
-                    IconButton(onClick = { /* do something */ }) {
-                        Icon(
-                            painter = painterResource("refresh.xml"),
-                            contentDescription = null
-                        )
-                    }
-                },
-                scrollBehavior = scrollBehavior
-            )
-        },
         bottomBar = {
             HomeBottomBar(component)
         }
@@ -60,18 +48,78 @@ fun HomeContainer(component: HomeContainerComponent) {
                 .padding(innerPadding),
             animation = stackAnimation(fade())
         ) { child ->
-            when (val instance = child.instance) {
-                is HomeContainerComponent.Child.HomeScreen -> {
-                    val homeScreenComponent = instance.component
-                    HomeScreen(uiState = homeScreenComponent.viewModel.uiState)
-                }
+            Column(modifier = Modifier.fillMaxSize()) {
+                when (val instance = child.instance) {
+                    is HomeContainerComponent.Child.HomeScreen -> {
+                        val homeScreenComponent = instance.component
+                        val viewModel = homeScreenComponent.viewModel
 
-                is HomeContainerComponent.Child.LibraryScreen -> {
-                    LibraryScreen()
-                }
+                        HomeAppBar(
+                            title = "Go listen!",
+                            profileImage = "$profileUrl",
+                            actions = {
+                                IconButton(onClick = { /* do something */ }) {
+                                    Icon(
+                                        painter = painterResource("refresh.xml"),
+                                        contentDescription = null
+                                    )
+                                }
+                            },
+                            scrollBehavior = scrollBehavior
+                        )
+                        HomeScreen(
+                            uiState = viewModel.uiState,
+                            onEvent = viewModel::onEvent,
+                            accessToken = accessToken
+                        )
+                    }
 
-                is HomeContainerComponent.Child.SearchScreen -> {
-                    SearchScreen()
+                    is HomeContainerComponent.Child.LibraryScreen -> {
+                        HomeAppBar(
+                            title = "Your library",
+                            profileImage = "$profileUrl",
+                            actions = {
+                                IconButton(onClick = { /* do something */ }) {
+                                    Icon(
+                                        painter = painterResource("search.xml"),
+                                        contentDescription = null
+                                    )
+                                }
+                                IconButton(onClick = { /* do something */ }) {
+                                    Icon(
+                                        painter = painterResource("add.xml"),
+                                        contentDescription = null
+                                    )
+                                }
+                            },
+                            scrollBehavior = scrollBehavior
+                        )
+                        LibraryScreen()
+                    }
+
+                    is HomeContainerComponent.Child.SearchScreen -> {
+                        val searchScreenComponent = instance.component
+                        val viewModel = searchScreenComponent.viewModel
+
+                        HomeAppBar(
+                            title = "Let's search",
+                            profileImage = "$profileUrl",
+                            actions = {
+                                IconButton(onClick = { /* do something */ }) {
+                                    Icon(
+                                        painter = painterResource("shazam.xml"),
+                                        contentDescription = null
+                                    )
+                                }
+                            },
+                            scrollBehavior = scrollBehavior
+                        )
+                        SearchScreen(
+                            uiState = viewModel.uiState,
+                            onEvent = viewModel::onEvent,
+                            accessToken = accessToken
+                        )
+                    }
                 }
             }
         }

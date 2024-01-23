@@ -11,10 +11,14 @@ import navigation.HomeContainerComponent.Child
 import navigation.HomeContainerComponent.Child.HomeScreen
 import navigation.HomeContainerComponent.Child.LibraryScreen
 import navigation.HomeContainerComponent.Child.SearchScreen
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
+import presentation.home_container.HomeContainerViewModel
 
 interface HomeContainerComponent {
 
     val childStack: Value<ChildStack<*, Child>>
+    val viewModel: HomeContainerViewModel
 
     fun onHomeScreenTabClicked()
     fun onLibraryScreenTabClicked()
@@ -30,7 +34,7 @@ interface HomeContainerComponent {
 
 class DefaultHomeContainerComponent(
     componentContext: ComponentContext
-) : HomeContainerComponent, ComponentContext by componentContext {
+) : HomeContainerComponent, ComponentContext by componentContext, KoinComponent {
 
     private val navigation = StackNavigation<Configuration>()
 
@@ -69,6 +73,8 @@ class DefaultHomeContainerComponent(
 
     private fun searchScreenComponent(componentContext: ComponentContext): SearchScreenComponent =
         DefaultSearchScreenComponent(componentContext = componentContext)
+
+    override val viewModel: HomeContainerViewModel by inject()
 
     override fun onHomeScreenTabClicked() {
         navigation.bringToFront(Configuration.HomeScreen)
