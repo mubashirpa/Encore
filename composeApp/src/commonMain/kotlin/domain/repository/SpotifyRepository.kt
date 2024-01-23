@@ -148,6 +148,20 @@ interface SpotifyRepository {
         offset: Int = 0
     ): TopTracksDto
 
+    /**
+     * Get a list of categories used to tag items in Spotify.
+     * @param accessToken String which contains the credentials and permissions that can be used to
+     * access a given resource (e.g artists, albums or tracks) or user's data.
+     * @param country An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to
+     * narrow the list of returned categories to those relevant to a particular country. If omitted,
+     * the returned items will be globally relevant.
+     * @param locale The desired language, consisting of an ISO 639-1 language code and an ISO
+     * 3166-1 alpha-2 country code, joined by an underscore. Provide this parameter if you want the
+     * category metadata returned in a particular language.
+     * @param limit The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.
+     * @param offset The index of the first item to return. Default: 0 (the first item). Use with
+     * limit to get the next set of items.
+     */
     suspend fun getCategories(
         accessToken: String,
         country: String? = null,
