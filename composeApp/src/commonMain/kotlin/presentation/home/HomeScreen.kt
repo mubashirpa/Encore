@@ -16,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import core.Result
@@ -24,7 +25,15 @@ import presentation.home.components.HomeListItem
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun HomeScreen(uiState: HomeUiState) {
+fun HomeScreen(
+    uiState: HomeUiState,
+    onEvent: (HomeUiEvent) -> Unit,
+    accessToken: String
+) {
+    LaunchedEffect(accessToken) {
+        onEvent(HomeUiEvent.OnGetAccessToken(accessToken))
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,7 +45,7 @@ fun HomeScreen(uiState: HomeUiState) {
                 FlowRow(
                     modifier = Modifier
                         .wrapContentHeight()
-                        .padding(16.dp)
+                        .padding(horizontal = 16.dp, vertical = 12.dp)
                         .fillMaxWidth(1f),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -58,12 +67,16 @@ fun HomeScreen(uiState: HomeUiState) {
             if (featuredPlaylists.isNotEmpty()) {
                 Text(
                     text = "Popular",
-                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                     style = MaterialTheme.typography.titleMedium
                 )
                 LazyRow(
                     modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(horizontal = 16.dp),
+                    contentPadding = PaddingValues(
+                        start = 16.dp,
+                        end = 16.dp,
+                        bottom = 12.dp
+                    ),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     content = {
                         items(

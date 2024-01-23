@@ -3,20 +3,13 @@ package presentation.home
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import core.Result
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
-import domain.usecase.spotify.access_token.GetAccessTokenUseCase
 import domain.usecase.spotify.playlists.GetFeaturedPlaylistsUseCase
-import domain.usecase.spotify.users.GetCurrentUsersProfileUseCase
 import domain.usecase.spotify.users.GetUsersTopTracksUseCase
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val getAccessTokenUseCase: GetAccessTokenUseCase,
-    private val getCurrentUsersProfileUseCase: GetCurrentUsersProfileUseCase,
     private val getFeaturedPlaylistsUseCase: GetFeaturedPlaylistsUseCase,
     private val getUsersTopTracksUseCase: GetUsersTopTracksUseCase
 ) : ViewModel() {
@@ -24,30 +17,16 @@ class HomeViewModel(
     var uiState by mutableStateOf(HomeUiState())
         private set
 
-    init {
-        getAccessToken()
-    }
-
-    private fun getAccessToken() {
-        viewModelScope.launch {
-            getAccessTokenUseCase().collectLatest {
-                val accessToken = it.accessToken
-                if (!accessToken.isNullOrEmpty()) {
-                    uiState = uiState.copy(accessToken = accessToken)
-                    getCurrentUsersProfile(uiState.accessToken)
+    fun onEvent(event: HomeUiEvent) {
+        when (event) {
+            is HomeUiEvent.OnGetAccessToken -> {
+                if (event.accessToken != uiState.accessToken) {
+                    uiState = uiState.copy(accessToken = event.accessToken)
                     getFeaturedPlaylists(uiState.accessToken)
                     getUsersTopItems(uiState.accessToken)
                 }
             }
         }
-    }
-
-    private fun getCurrentUsersProfile(accessToken: String) {
-        getCurrentUsersProfileUseCase(accessToken).onEach {
-            if (it is Result.Success) {
-                uiState = uiState.copy(currentUsersProfile = it.data)
-            }
-        }.launchIn(viewModelScope)
     }
 
     private fun getFeaturedPlaylists(accessToken: String) {
