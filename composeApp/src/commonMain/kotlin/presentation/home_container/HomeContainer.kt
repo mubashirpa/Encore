@@ -15,6 +15,7 @@ import androidx.compose.ui.input.nestedscroll.nestedScroll
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
+import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
 import navigation.HomeContainerComponent
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -30,8 +31,9 @@ fun HomeContainer(component: HomeContainerComponent) {
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
         state = rememberTopAppBarState()
     )
-    val accessToken = component.viewModel.uiState.accessToken
-    val profileUrl = component.viewModel.uiState.currentUsersProfile?.images?.firstOrNull()?.url
+    val uiState = component.uiState.subscribeAsState()
+    val accessToken = uiState.value.accessToken
+    val profileUrl = uiState.value.currentUsersProfile?.images?.firstOrNull()?.url
 
     Scaffold(
         modifier = Modifier
