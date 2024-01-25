@@ -28,34 +28,36 @@ import presentation.home.components.HomeListItem
 fun HomeScreen(
     uiState: HomeUiState,
     onEvent: (HomeUiEvent) -> Unit,
-    accessToken: String
+    accessToken: String,
 ) {
     LaunchedEffect(accessToken) {
         onEvent(HomeUiEvent.OnGetAccessToken(accessToken))
     }
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
     ) {
         if (uiState.usersTrackItemResult is Result.Success) {
             val tracks = uiState.usersTrackItemResult.data.orEmpty()
             if (tracks.isNotEmpty()) {
                 FlowRow(
-                    modifier = Modifier
-                        .wrapContentHeight()
-                        .padding(horizontal = 16.dp, vertical = 12.dp)
-                        .fillMaxWidth(1f),
+                    modifier =
+                        Modifier
+                            .wrapContentHeight()
+                            .padding(horizontal = 16.dp, vertical = 12.dp)
+                            .fillMaxWidth(1f),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     verticalArrangement = Arrangement.spacedBy(10.dp),
-                    maxItemsInEachRow = 2
+                    maxItemsInEachRow = 2,
                 ) {
                     tracks.forEach { track ->
                         HomeGridItem(
                             name = track.name.orEmpty(),
                             imageUrl = track.album?.images?.firstOrNull()?.url.orEmpty(),
-                            modifier = Modifier.weight(1F, fill = true)
+                            modifier = Modifier.weight(1F, fill = true),
                         )
                     }
                 }
@@ -68,27 +70,151 @@ fun HomeScreen(
                 Text(
                     text = "Popular",
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
                 )
                 LazyRow(
                     modifier = Modifier.fillMaxWidth(),
-                    contentPadding = PaddingValues(
-                        start = 16.dp,
-                        end = 16.dp,
-                        bottom = 12.dp
-                    ),
+                    contentPadding =
+                        PaddingValues(
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 12.dp,
+                        ),
                     horizontalArrangement = Arrangement.spacedBy(10.dp),
                     content = {
                         items(
                             items = featuredPlaylists,
-                            key = { it.id!! }
+                            key = { "${it.id}" },
                         ) { playlist ->
                             HomeListItem(
                                 name = playlist.name.orEmpty(),
-                                imageUrl = playlist.images?.firstOrNull()?.url.orEmpty()
+                                imageUrl = playlist.images?.firstOrNull()?.url.orEmpty(),
                             )
                         }
-                    }
+                    },
+                )
+            }
+        }
+
+        if (uiState.launchDataResult is Result.Success) {
+            val trendingList = uiState.launchDataResult.data?.newTrending.orEmpty()
+            val topChartsList = uiState.launchDataResult.data?.charts.orEmpty()
+            val newAlbumsList = uiState.launchDataResult.data?.newAlbums.orEmpty()
+            val topPlaylistsList = uiState.launchDataResult.data?.topPlaylists.orEmpty()
+
+            if (trendingList.isNotEmpty()) {
+                Text(
+                    text = "Trending Now",
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding =
+                        PaddingValues(
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 12.dp,
+                        ),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    content = {
+                        items(
+                            items = trendingList,
+                            key = { "${it.id}" },
+                        ) { trending ->
+                            HomeListItem(
+                                name = trending.title.orEmpty(),
+                                imageUrl = trending.image.orEmpty(),
+                            )
+                        }
+                    },
+                )
+            }
+
+            if (topChartsList.isNotEmpty()) {
+                Text(
+                    text = "Top Charts",
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding =
+                        PaddingValues(
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 12.dp,
+                        ),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    content = {
+                        items(
+                            items = topChartsList,
+                            key = { "${it.id}" },
+                        ) { topCharts ->
+                            HomeListItem(
+                                name = topCharts.title.orEmpty(),
+                                imageUrl = topCharts.image.orEmpty(),
+                            )
+                        }
+                    },
+                )
+            }
+
+            if (newAlbumsList.isNotEmpty()) {
+                Text(
+                    text = "New Releases",
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding =
+                        PaddingValues(
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 12.dp,
+                        ),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    content = {
+                        items(
+                            items = newAlbumsList,
+                            key = { "${it.id}" },
+                        ) { newAlbums ->
+                            HomeListItem(
+                                name = newAlbums.title.orEmpty(),
+                                imageUrl = newAlbums.image.orEmpty(),
+                            )
+                        }
+                    },
+                )
+            }
+
+            if (topPlaylistsList.isNotEmpty()) {
+                Text(
+                    text = "Editorial Picks",
+                    modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                LazyRow(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentPadding =
+                        PaddingValues(
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 12.dp,
+                        ),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    content = {
+                        items(
+                            items = topPlaylistsList,
+                            key = { "${it.id}" },
+                        ) { topPlaylists ->
+                            HomeListItem(
+                                name = topPlaylists.title.orEmpty(),
+                                imageUrl = topPlaylists.image.orEmpty(),
+                            )
+                        }
+                    },
                 )
             }
         }

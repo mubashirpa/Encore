@@ -3,8 +3,20 @@ package core
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 
-object Spotify {
+object PreferencesKeys {
+    val SPOTIFY_ACCESS_TOKEN = stringPreferencesKey("spotify_access_token")
+    val SPOTIFY_TOKEN_EXPIRES_IN = intPreferencesKey("spotify_token_expires_in")
+    val SPOTIFY_REFRESH_TOKEN = stringPreferencesKey("spotify_refresh_token")
+    val SPOTIFY_ACCESS_TOKEN_SCOPE = stringPreferencesKey("spotify_access_token_scope")
+    val SPOTIFY_TOKEN_TOKEN_TYPE = stringPreferencesKey("spotify_token_type")
+}
 
+object Saavn {
+    const val API_BASE_URL = "https://www.jiosaavn.com/api.php?_format=json&_marker=0&api_version=4&ctx=web6dot0"
+    const val ENDPOINT_LAUNCH_DATA = "&__call=webapi.getLaunchData"
+}
+
+object Spotify {
     const val API_BASE_URL = "https://api.spotify.com/v1"
     const val AUTHORIZE_ENDPOINT_URI = "https://accounts.spotify.com/authorize"
     const val ENDPOINT_BROWSE_CATEGORIES = "browse/categories"
@@ -14,7 +26,6 @@ object Spotify {
     const val TOKEN_ENDPOINT_URI = "https://accounts.spotify.com/api/token"
 
     object Parameters {
-
         const val AUTHORIZATION_CODE = "authorization_code"
         const val CLIENT_CREDENTIALS = "client_credentials"
         const val CLIENT_ID = "client_id"
@@ -34,13 +45,4 @@ object Spotify {
         const val TIME_RANGE = "time_range"
         const val TIMESTAMP = "timestamp"
     }
-}
-
-object PreferencesKeys {
-
-    val SPOTIFY_ACCESS_TOKEN = stringPreferencesKey("spotify_access_token")
-    val SPOTIFY_TOKEN_EXPIRES_IN = intPreferencesKey("spotify_token_expires_in")
-    val SPOTIFY_REFRESH_TOKEN = stringPreferencesKey("spotify_refresh_token")
-    val SPOTIFY_ACCESS_TOKEN_SCOPE = stringPreferencesKey("spotify_access_token_scope")
-    val SPOTIFY_TOKEN_TOKEN_TYPE = stringPreferencesKey("spotify_token_type")
 }

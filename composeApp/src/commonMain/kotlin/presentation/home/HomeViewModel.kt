@@ -4,6 +4,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
+import domain.usecase.saavn.launch_data.GetLaunchDataUseCase
 import domain.usecase.spotify.playlists.GetFeaturedPlaylistsUseCase
 import domain.usecase.spotify.users.GetUsersTopTracksUseCase
 import kotlinx.coroutines.flow.launchIn
@@ -11,11 +12,15 @@ import kotlinx.coroutines.flow.onEach
 
 class HomeViewModel(
     private val getFeaturedPlaylistsUseCase: GetFeaturedPlaylistsUseCase,
-    private val getUsersTopTracksUseCase: GetUsersTopTracksUseCase
+    private val getLaunchDataUseCase: GetLaunchDataUseCase,
+    private val getUsersTopTracksUseCase: GetUsersTopTracksUseCase,
 ) : ViewModel() {
-
     var uiState by mutableStateOf(HomeUiState())
         private set
+
+    init {
+        getLaunchData()
+    }
 
     fun onEvent(event: HomeUiEvent) {
         when (event) {
@@ -38,9 +43,15 @@ class HomeViewModel(
     private fun getUsersTopItems(accessToken: String) {
         getUsersTopTracksUseCase(
             accessToken = accessToken,
-            limit = 6
+            limit = 6,
         ).onEach {
             uiState = uiState.copy(usersTrackItemResult = it)
+        }.launchIn(viewModelScope)
+    }
+
+    private fun getLaunchData() {
+        getLaunchDataUseCase(languages = listOf("english", "malayalam", "hindi", "tamil")).onEach {
+            uiState = uiState.copy(launchDataResult = it)
         }.launchIn(viewModelScope)
     }
 }
