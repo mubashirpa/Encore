@@ -7,6 +7,7 @@ import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import domain.usecase.saavn.launch_data.GetLaunchDataUseCase
 import domain.usecase.spotify.playlists.GetFeaturedPlaylistsUseCase
 import domain.usecase.spotify.users.GetUsersTopTracksUseCase
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -17,6 +18,9 @@ class HomeViewModel(
 ) : ViewModel() {
     var uiState by mutableStateOf(HomeUiState())
         private set
+
+    private var getFeaturedPlaylistsUseCaseJob: Job? = null
+    private var getUsersTopTracksUseCaseJob: Job? = null
 
     init {
         getLaunchData()
@@ -35,18 +39,24 @@ class HomeViewModel(
     }
 
     private fun getFeaturedPlaylists(accessToken: String) {
-        getFeaturedPlaylistsUseCase(accessToken = accessToken).onEach {
-            uiState = uiState.copy(featuredPlaylistsResult = it)
-        }.launchIn(viewModelScope)
+        getFeaturedPlaylistsUseCaseJob?.cancel()
+        getFeaturedPlaylistsUseCaseJob = null
+        getFeaturedPlaylistsUseCaseJob =
+            getFeaturedPlaylistsUseCase(accessToken = accessToken).onEach {
+                uiState = uiState.copy(featuredPlaylistsResult = it)
+            }.launchIn(viewModelScope)
     }
 
     private fun getUsersTopItems(accessToken: String) {
-        getUsersTopTracksUseCase(
-            accessToken = accessToken,
-            limit = 6,
-        ).onEach {
-            uiState = uiState.copy(usersTrackItemResult = it)
-        }.launchIn(viewModelScope)
+        getUsersTopTracksUseCaseJob?.cancel()
+        getUsersTopTracksUseCaseJob = null
+        getUsersTopTracksUseCaseJob =
+            getUsersTopTracksUseCase(
+                accessToken = accessToken,
+                limit = 6,
+            ).onEach {
+                uiState = uiState.copy(usersTrackItemResult = it)
+            }.launchIn(viewModelScope)
     }
 
     private fun getLaunchData() {
