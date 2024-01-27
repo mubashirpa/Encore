@@ -1,8 +1,8 @@
 package data.remote.dto.spotify.users.profile
 
 import data.remote.dto.spotify.ExternalUrls
+import data.remote.dto.spotify.Followers
 import data.remote.dto.spotify.Image
-import data.remote.dto.spotify.users.Followers
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

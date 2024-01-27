@@ -1,7 +1,7 @@
 package data.mapper
 
+import data.remote.dto.spotify.Followers
 import data.remote.dto.spotify.Image
-import data.remote.dto.spotify.users.Followers
 import data.remote.dto.spotify.users.profile.UserDto
 import data.remote.dto.spotify.users.top_items.Album
 import data.remote.dto.spotify.users.top_items.ArtistItem

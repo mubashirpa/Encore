@@ -2,6 +2,7 @@ package data.remote.dto.spotify.users.top_items
 
 import data.remote.dto.spotify.ExternalUrls
 import data.remote.dto.spotify.Image
+import data.remote.dto.spotify.Restrictions
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
