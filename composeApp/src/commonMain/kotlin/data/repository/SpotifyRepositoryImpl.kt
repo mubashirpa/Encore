@@ -4,12 +4,14 @@ import core.Spotify
 import data.remote.dto.spotify.AccessTokenDto
 import data.remote.dto.spotify.category.CategoriesDto
 import data.remote.dto.spotify.playlists.PlaylistsDto
+import data.remote.dto.spotify.search.SearchDto
 import data.remote.dto.spotify.users.profile.UserDto
 import data.remote.dto.spotify.users.top_items.TopArtistsDto
 import data.remote.dto.spotify.users.top_items.TopTracksDto
+import domain.repository.SearchItemType
 import domain.repository.SpotifyRepository
-import domain.repository.TimeRange
-import domain.repository.Type
+import domain.repository.UsersTopItemTimeRange
+import domain.repository.UsersTopItemType
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.HttpRequestBuilder
@@ -45,10 +47,10 @@ class SpotifyRepositoryImpl(
         scope: String?,
         showDialog: Boolean?,
     ): String {
-        val authorizationUrl =
-            StringBuilder(
-                "${Spotify.AUTHORIZE_ENDPOINT_URI}?${Spotify.Parameters.CLIENT_ID}=$clientId&${Spotify.Parameters.RESPONSE_TYPE}=$responseType&${Spotify.Parameters.REDIRECT_URI}=$redirectUri",
-            )
+        val authorizationUrl = StringBuilder(Spotify.AUTHORIZE_ENDPOINT_URI)
+        authorizationUrl.append("?${Spotify.Parameters.CLIENT_ID}=$clientId")
+        authorizationUrl.append("&${Spotify.Parameters.RESPONSE_TYPE}=$responseType")
+        authorizationUrl.append("&${Spotify.Parameters.REDIRECT_URI}=$redirectUri")
         if (!state.isNullOrEmpty()) {
             authorizationUrl.append("&${Spotify.Parameters.STATE}=$state")
         }
@@ -150,14 +152,14 @@ class SpotifyRepositoryImpl(
 
     override suspend fun getUsersTopArtists(
         accessToken: String,
-        timeRange: TimeRange,
+        timeRange: UsersTopItemTimeRange,
         limit: Int,
         offset: Int,
     ): TopArtistsDto {
         return httpClient.get(Spotify.API_BASE_URL) {
             url {
                 appendPathSegments(Spotify.ENDPOINT_USERS_TOP_ITEMS)
-                appendPathSegments(Type.ARTISTS.name.lowercase())
+                appendPathSegments(UsersTopItemType.ARTISTS.name.lowercase())
                 parameters.append(Spotify.Parameters.TIME_RANGE, timeRange.name.lowercase())
                 parameters.append(Spotify.Parameters.LIMIT, limit.toString())
                 parameters.append(Spotify.Parameters.OFFSET, offset.toString())
@@ -168,14 +170,14 @@ class SpotifyRepositoryImpl(
 
     override suspend fun getUsersTopTracks(
         accessToken: String,
-        timeRange: TimeRange,
+        timeRange: UsersTopItemTimeRange,
         limit: Int,
         offset: Int,
     ): TopTracksDto {
         return httpClient.get(Spotify.API_BASE_URL) {
             url {
                 appendPathSegments(Spotify.ENDPOINT_USERS_TOP_ITEMS)
-                appendPathSegments(Type.TRACKS.name.lowercase())
+                appendPathSegments(UsersTopItemType.TRACKS.name.lowercase())
                 parameters.append(Spotify.Parameters.TIME_RANGE, timeRange.name.lowercase())
                 parameters.append(Spotify.Parameters.LIMIT, limit.toString())
                 parameters.append(Spotify.Parameters.OFFSET, offset.toString())
@@ -202,6 +204,36 @@ class SpotifyRepositoryImpl(
                 }
                 parameters.append(Spotify.Parameters.LIMIT, limit.toString())
                 parameters.append(Spotify.Parameters.OFFSET, offset.toString())
+            }
+            authorisationHeader(accessToken)
+        }.body()
+    }
+
+    override suspend fun searchForItem(
+        accessToken: String,
+        query: String,
+        type: List<SearchItemType>,
+        market: String?,
+        limit: Int,
+        offset: Int,
+        includeExternal: Boolean,
+    ): SearchDto {
+        return httpClient.get(Spotify.API_BASE_URL) {
+            url {
+                appendPathSegments(Spotify.ENDPOINT_SEARCH)
+                parameters.append(Spotify.Parameters.Q, query)
+                parameters.append(
+                    Spotify.Parameters.TYPE,
+                    type.joinToString("%2C") { it.name.lowercase() },
+                )
+                if (!market.isNullOrEmpty()) {
+                    parameters.append(Spotify.Parameters.MARKET, market)
+                }
+                parameters.append(Spotify.Parameters.LIMIT, limit.toString())
+                parameters.append(Spotify.Parameters.OFFSET, offset.toString())
+                if (includeExternal) {
+                    parameters.append(Spotify.Parameters.INCLUDE_EXTERNAL, Spotify.Parameters.AUDIO)
+                }
             }
             authorisationHeader(accessToken)
         }.body()

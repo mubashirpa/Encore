@@ -3,6 +3,7 @@ package domain.repository
 import data.remote.dto.spotify.AccessTokenDto
 import data.remote.dto.spotify.category.CategoriesDto
 import data.remote.dto.spotify.playlists.PlaylistsDto
+import data.remote.dto.spotify.search.SearchDto
 import data.remote.dto.spotify.users.profile.UserDto
 import data.remote.dto.spotify.users.top_items.TopArtistsDto
 import data.remote.dto.spotify.users.top_items.TopTracksDto
@@ -126,7 +127,7 @@ interface SpotifyRepository {
      */
     suspend fun getUsersTopArtists(
         accessToken: String,
-        timeRange: TimeRange = TimeRange.MEDIUM_TERM,
+        timeRange: UsersTopItemTimeRange = UsersTopItemTimeRange.MEDIUM_TERM,
         limit: Int = 20,
         offset: Int = 0,
     ): TopArtistsDto
@@ -142,7 +143,7 @@ interface SpotifyRepository {
      */
     suspend fun getUsersTopTracks(
         accessToken: String,
-        timeRange: TimeRange = TimeRange.MEDIUM_TERM,
+        timeRange: UsersTopItemTimeRange = UsersTopItemTimeRange.MEDIUM_TERM,
         limit: Int = 20,
         offset: Int = 0,
     ): TopTracksDto
@@ -168,16 +169,51 @@ interface SpotifyRepository {
         limit: Int = 20,
         offset: Int = 0,
     ): CategoriesDto
-}
 
-enum class Type {
-    ARTISTS,
-    TRACKS,
+    /**
+     * Get Spotify catalog information about albums, artists, playlists, tracks, shows, episodes or
+     * audiobooks that match a keyword string.
+     * @param query Your search query.
+     * @param type A comma-separated list of item types to search across.
+     * @param market An ISO 3166-1 alpha-2 country code. If a country code is specified, only
+     * content that is available in that market will be returned.
+     * @param limit The maximum number of results to return in each item type.
+     * @param offset The index of the first result to return. Use with limit to get the next page of
+     * search results.
+     * @param includeExternal If include_external=audio is specified it signals that the client can
+     * play externally hosted audio content, and marks the content as playable in the response. By
+     * default externally hosted audio content is marked as unplayable in the response.
+     */
+    suspend fun searchForItem(
+        accessToken: String,
+        query: String,
+        type: List<SearchItemType>,
+        market: String? = null,
+        limit: Int = 20,
+        offset: Int = 0,
+        includeExternal: Boolean = false,
+    ): SearchDto
 }
 
 @Suppress("unused")
-enum class TimeRange {
+enum class SearchItemType {
+    ALBUM,
+    ARTIST,
+    PLAYLIST,
+    TRACK,
+    SHOW,
+    EPISODE,
+    AUDIOBOOK,
+}
+
+@Suppress("unused")
+enum class UsersTopItemTimeRange {
     LONG_TERM,
     MEDIUM_TERM,
     SHORT_TERM,
+}
+
+enum class UsersTopItemType {
+    ARTISTS,
+    TRACKS,
 }

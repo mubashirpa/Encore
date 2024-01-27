@@ -8,6 +8,7 @@ import domain.usecase.spotify.access_token.RequestAuthAccessTokenUseCase
 import domain.usecase.spotify.access_token.RequestCredentialAccessTokenUseCase
 import domain.usecase.spotify.category.GetCategoriesUseCase
 import domain.usecase.spotify.playlists.GetFeaturedPlaylistsUseCase
+import domain.usecase.spotify.search.SearchForItemUseCase
 import domain.usecase.spotify.users.GetCurrentUsersProfileUseCase
 import domain.usecase.spotify.users.GetUsersTopTracksUseCase
 import org.koin.dsl.module
@@ -24,4 +25,5 @@ val useCaseModule =
         single { RequestAuthAccessTokenUseCase(get(), get()) }
         single { RequestCredentialAccessTokenUseCase(get(), get()) }
         single { RequestUserAuthorizationUseCase(get()) }
+        single { SearchForItemUseCase(get()) }
     }

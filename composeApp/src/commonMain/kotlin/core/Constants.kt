@@ -22,10 +22,12 @@ object Spotify {
     const val ENDPOINT_BROWSE_CATEGORIES = "browse/categories"
     const val ENDPOINT_CURRENT_USERS_PROFILE = "me"
     const val ENDPOINT_FEATURED_PLAYLISTS = "browse/featured-playlists"
+    const val ENDPOINT_SEARCH = "search"
     const val ENDPOINT_USERS_TOP_ITEMS = "me/top"
     const val TOKEN_ENDPOINT_URI = "https://accounts.spotify.com/api/token"
 
     object Parameters {
+        const val AUDIO = "audio"
         const val AUTHORIZATION_CODE = "authorization_code"
         const val CLIENT_CREDENTIALS = "client_credentials"
         const val CLIENT_ID = "client_id"
@@ -33,9 +35,12 @@ object Spotify {
         const val CODE = "code"
         const val COUNTRY = "country"
         const val GRANT_TYPE = "grant_type"
+        const val INCLUDE_EXTERNAL = "include_external"
         const val LIMIT = "limit"
         const val LOCALE = "locale"
+        const val MARKET = "market"
         const val OFFSET = "offset"
+        const val Q = "q"
         const val REDIRECT_URI = "redirect_uri"
         const val REFRESH_TOKEN = "refresh_token"
         const val RESPONSE_TYPE = "response_type"
@@ -44,5 +49,6 @@ object Spotify {
         const val STATE = "state"
         const val TIME_RANGE = "time_range"
         const val TIMESTAMP = "timestamp"
+        const val TYPE = "type"
     }
 }
