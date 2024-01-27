@@ -11,7 +11,7 @@ import domain.model.spotify.users.profile.User
 import domain.usecase.spotify.access_token.GetAccessTokenUseCase
 import domain.usecase.spotify.users.GetCurrentUsersProfileUseCase
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -122,10 +122,12 @@ class DefaultHomeContainerComponent(
 
     private fun getAccessToken() {
         coroutineScope.launch {
-            val accessToken = getAccessTokenUseCase().first().accessToken
-            if (!accessToken.isNullOrEmpty()) {
-                channel.send(uiState.value.copy(accessToken = accessToken))
-                getCurrentUsersProfile(accessToken)
+            getAccessTokenUseCase().collectLatest {
+                val accessToken = it.accessToken
+                if (!accessToken.isNullOrEmpty()) {
+                    channel.send(uiState.value.copy(accessToken = accessToken))
+                    getCurrentUsersProfile(accessToken)
+                }
             }
         }
     }
