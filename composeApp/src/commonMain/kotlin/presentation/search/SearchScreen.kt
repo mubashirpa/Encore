@@ -41,7 +41,7 @@ import presentation.home.components.HomeGridItem
 fun SearchScreen(
     uiState: SearchUiState,
     onEvent: (SearchUiEvent) -> Unit,
-    accessToken: String
+    accessToken: String,
 ) {
     var text by rememberSaveable { mutableStateOf("") }
     var active by rememberSaveable { mutableStateOf(false) }
@@ -51,9 +51,10 @@ fun SearchScreen(
     }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .semantics { isTraversalGroup = true }
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .semantics { isTraversalGroup = true },
     ) {
         DockedSearchBar(
             query = text,
@@ -61,19 +62,20 @@ fun SearchScreen(
             onSearch = { active = false },
             active = active,
             onActiveChange = { active = it },
-            modifier = Modifier
-                .align(Alignment.TopCenter)
-                .padding(top = 8.dp)
-                .semantics { traversalIndex = -1f },
+            modifier =
+                Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 8.dp)
+                    .semantics { traversalIndex = -1f },
             placeholder = {
                 Text("What will you listen to?")
             },
             leadingIcon = {
                 Icon(
                     Icons.Default.Search,
-                    contentDescription = null
+                    contentDescription = null,
                 )
-            }
+            },
         ) {
             repeat(4) { idx ->
                 val resultText = "Suggestion $idx"
@@ -87,23 +89,25 @@ fun SearchScreen(
                     leadingContent = {
                         Icon(
                             Icons.Filled.Star,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     },
-                    modifier = Modifier
-                        .clickable {
-                            text = resultText
-                            active = false
-                        }
-                        .fillMaxWidth()
+                    modifier =
+                        Modifier
+                            .clickable {
+                                text = resultText
+                                active = false
+                            }
+                            .fillMaxWidth(),
                 )
             }
         }
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 72.dp)
-                .verticalScroll(rememberScrollState())
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(top = 72.dp)
+                    .verticalScroll(rememberScrollState()),
         ) {
             if (uiState.categoriesResult is Result.Success) {
                 val categories = uiState.categoriesResult.data.orEmpty()
@@ -111,26 +115,27 @@ fun SearchScreen(
                     Text(
                         text = "Genres",
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                        style = MaterialTheme.typography.titleMedium
+                        style = MaterialTheme.typography.titleMedium,
                     )
                     FlowRow(
-                        modifier = Modifier
-                            .wrapContentHeight()
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                bottom = 12.dp
-                            )
-                            .fillMaxWidth(1f),
+                        modifier =
+                            Modifier
+                                .wrapContentHeight()
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    bottom = 12.dp,
+                                )
+                                .fillMaxWidth(1f),
                         horizontalArrangement = Arrangement.spacedBy(10.dp),
                         verticalArrangement = Arrangement.spacedBy(10.dp),
-                        maxItemsInEachRow = 2
+                        maxItemsInEachRow = 2,
                     ) {
                         categories.forEach { category ->
                             HomeGridItem(
                                 name = category.name.orEmpty(),
                                 imageUrl = category.icons?.firstOrNull()?.url.orEmpty(),
-                                modifier = Modifier.weight(1F, fill = true)
+                                modifier = Modifier.weight(1F, fill = true),
                             )
                         }
                     }

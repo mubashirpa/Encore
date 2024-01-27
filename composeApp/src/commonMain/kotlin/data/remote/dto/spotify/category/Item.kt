@@ -8,5 +8,5 @@ data class Item(
     val href: String? = null,
     val icons: List<Image>? = null,
     val id: String? = null,
-    val name: String? = null
+    val name: String? = null,
 )

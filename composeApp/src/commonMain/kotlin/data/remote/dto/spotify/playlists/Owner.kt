@@ -13,5 +13,5 @@ data class Owner(
     val href: String? = null,
     val id: String? = null,
     val type: String? = null,
-    val uri: String? = null
+    val uri: String? = null,
 )

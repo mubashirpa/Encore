@@ -7,5 +7,5 @@ data class User(
     val email: String? = null,
     val followers: UsersFollowers? = null,
     val id: String? = null,
-    val images: List<UsersImage>? = null
+    val images: List<UsersImage>? = null,
 )

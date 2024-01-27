@@ -10,5 +10,5 @@ data class TopArtistsDto(
     val next: String? = null,
     val offset: Int? = null,
     val previous: String? = null,
-    val total: Int? = null
+    val total: Int? = null,
 )

@@ -26,5 +26,5 @@ data class Album(
     @SerialName("total_tracks")
     val totalTracks: Int? = null,
     val type: String? = null,
-    val uri: String? = null
+    val uri: String? = null,
 )

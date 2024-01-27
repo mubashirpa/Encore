@@ -15,7 +15,7 @@ fun HomeBottomBar(component: HomeContainerComponent) {
     NavigationBar(
         containerColor = MaterialTheme.colorScheme.background,
         contentColor = MaterialTheme.colorScheme.onBackground,
-        tonalElevation = 0.dp
+        tonalElevation = 0.dp,
     ) {
         NavigationScreen(component = component) { isSelected, icon, text, onClick ->
             NavigationBarItem(
@@ -24,19 +24,20 @@ fun HomeBottomBar(component: HomeContainerComponent) {
                 icon = {
                     Icon(
                         painter = icon,
-                        contentDescription = text
+                        contentDescription = text,
                     )
                 },
                 label = {
                     Text(text = text)
                 },
-                colors = NavigationBarItemDefaults.colors(
-                    selectedIconColor = MaterialTheme.colorScheme.primary,
-                    selectedTextColor = MaterialTheme.colorScheme.primary,
-                    indicatorColor = MaterialTheme.colorScheme.background,
-                    unselectedIconColor = MaterialTheme.colorScheme.onBackground,
-                    unselectedTextColor = MaterialTheme.colorScheme.onBackground
-                )
+                colors =
+                    NavigationBarItemDefaults.colors(
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        selectedTextColor = MaterialTheme.colorScheme.primary,
+                        indicatorColor = MaterialTheme.colorScheme.background,
+                        unselectedIconColor = MaterialTheme.colorScheme.onBackground,
+                        unselectedTextColor = MaterialTheme.colorScheme.onBackground,
+                    ),
             )
         }
     }

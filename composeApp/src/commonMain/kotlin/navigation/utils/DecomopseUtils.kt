@@ -15,9 +15,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-fun LifecycleOwner.coroutineScope(
-    context: CoroutineContext = Dispatchers.Main.immediate,
-): CoroutineScope {
+fun LifecycleOwner.coroutineScope(context: CoroutineContext = Dispatchers.Main.immediate): CoroutineScope {
     val scope = CoroutineScope(context + SupervisorJob())
     lifecycle.doOnDestroy(scope::cancel)
     return scope
@@ -42,16 +40,17 @@ fun <T : Any> Flow<T>.asValue(
     var scope: CoroutineScope? = null
     lifecycle.subscribe(
         onStart = {
-            scope = CoroutineScope(context).apply {
-                launch {
-                    collect { value.value = it }
+            scope =
+                CoroutineScope(context).apply {
+                    launch {
+                        collect { value.value = it }
+                    }
                 }
-            }
         },
         onStop = {
             scope?.cancel()
             scope = null
-        }
+        },
     )
     return value
 }

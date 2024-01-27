@@ -19,7 +19,7 @@ fun UserDto.toUser(): User {
         email,
         followers?.toUsersFollowers(),
         id,
-        images?.map { it.toUsersImage() }
+        images?.map { it.toUsersImage() },
     )
 }
 
@@ -27,7 +27,7 @@ fun ArtistItem.toUsersArtistItem(): UsersArtistItem {
     return UsersArtistItem(
         id,
         images?.map { it.toUsersImage() },
-        name
+        name,
     )
 }
 
@@ -38,13 +38,13 @@ fun TrackItem.toUsersTrackItem(): UsersTrackItem {
         isPlayable,
         name,
         previewUrl,
-        uri
+        uri,
     )
 }
 
 private fun Followers.toUsersFollowers(): UsersFollowers {
     return UsersFollowers(
-        total
+        total,
     )
 }
 
@@ -54,6 +54,6 @@ private fun Image.toUsersImage(): UsersImage {
 
 private fun Album.toUsersAlbum(): UsersAlbum {
     return UsersAlbum(
-        images?.map { it.toUsersImage() }
+        images?.map { it.toUsersImage() },
     )
 }

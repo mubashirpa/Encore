@@ -8,5 +8,5 @@ data class ExplicitContent(
     @SerialName("filter_enabled")
     val filterEnabled: Boolean? = null,
     @SerialName("filter_locked")
-    val filterLocked: Boolean? = null
+    val filterLocked: Boolean? = null,
 )

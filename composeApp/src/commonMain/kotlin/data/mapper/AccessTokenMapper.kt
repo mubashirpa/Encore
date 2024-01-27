@@ -9,6 +9,6 @@ fun AccessTokenDto.toAccessToken(): AccessToken {
         expiresIn,
         refreshToken,
         scope,
-        tokenType
+        tokenType,
     )
 }

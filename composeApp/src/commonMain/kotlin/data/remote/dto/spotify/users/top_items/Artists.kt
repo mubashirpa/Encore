@@ -12,5 +12,5 @@ data class Artists(
     val id: String? = null,
     val name: String? = null,
     val type: String? = null,
-    val uri: String? = null
+    val uri: String? = null,
 )

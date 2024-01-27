@@ -13,20 +13,22 @@ class GetCategoriesUseCase(private val spotifyRepository: SpotifyRepository) {
         country: String? = null,
         locale: String? = null,
         limit: Int = 20,
-        offset: Int = 0
-    ): Flow<Result<List<CategoryItem>>> = flow {
-        try {
-            emit(Result.Loading())
-            val categories = spotifyRepository.getCategories(
-                accessToken,
-                country,
-                locale,
-                limit,
-                offset
-            ).categories?.items?.map { it.toCategoryItem() }
-            emit(Result.Success(categories))
-        } catch (e: Exception) {
-            emit(Result.Error(message = e.message.toString()))
+        offset: Int = 0,
+    ): Flow<Result<List<CategoryItem>>> =
+        flow {
+            try {
+                emit(Result.Loading())
+                val categories =
+                    spotifyRepository.getCategories(
+                        accessToken,
+                        country,
+                        locale,
+                        limit,
+                        offset,
+                    ).categories?.items?.map { it.toCategoryItem() }
+                emit(Result.Success(categories))
+            } catch (e: Exception) {
+                emit(Result.Error(message = e.message.toString()))
+            }
         }
-    }
 }

@@ -13,5 +13,5 @@ data class AccessTokenDto(
     val refreshToken: String? = null,
     val scope: String? = null,
     @SerialName("token_type")
-    val tokenType: String? = null
+    val tokenType: String? = null,
 )

@@ -22,5 +22,5 @@ data class UserDto(
     val images: List<Image>? = null,
     val product: String? = null,
     val type: String? = null,
-    val uri: String? = null
+    val uri: String? = null,
 )

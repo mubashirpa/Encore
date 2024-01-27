@@ -5,5 +5,5 @@ import com.arkivanov.decompose.ComponentContext
 interface LibraryScreenComponent
 
 class DefaultLibraryScreenComponent(
-    componentContext: ComponentContext
+    componentContext: ComponentContext,
 ) : LibraryScreenComponent, ComponentContext by componentContext

@@ -25,18 +25,18 @@ import presentation.theme.EncoreTheme
 @Composable
 fun App(
     component: RootComponent,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     KoinContext {
         EncoreTheme {
             // A surface container using the 'background' color from the theme
             Surface(
                 modifier = modifier,
-                color = MaterialTheme.colorScheme.background
+                color = MaterialTheme.colorScheme.background,
             ) {
                 EncoreApp(
                     component = component,
-                    modifier = modifier
+                    modifier = modifier,
                 )
             }
         }
@@ -47,20 +47,21 @@ fun App(
 @Composable
 private fun EncoreApp(
     component: RootComponent,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier,
-        contentWindowInsets = WindowInsets(0)
+        contentWindowInsets = WindowInsets(0),
     ) { innerPadding ->
         Children(
             stack = component.childStack,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .consumeWindowInsets(innerPadding)
-                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)),
-            animation = stackAnimation(slide())
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding)
+                    .consumeWindowInsets(innerPadding)
+                    .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)),
+            animation = stackAnimation(slide()),
         ) { child ->
             when (val instance = child.instance) {
                 is RootComponent.Child.HomeContainer -> {

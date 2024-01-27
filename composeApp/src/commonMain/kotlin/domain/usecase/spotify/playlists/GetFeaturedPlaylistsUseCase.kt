@@ -14,21 +14,23 @@ class GetFeaturedPlaylistsUseCase(private val spotifyRepository: SpotifyReposito
         locale: String? = null,
         timestamp: String? = null,
         limit: Int = 20,
-        offset: Int = 0
-    ): Flow<Result<List<PlaylistsItem>>> = flow {
-        try {
-            emit(Result.Loading())
-            val playlists = spotifyRepository.getFeaturedPlaylists(
-                accessToken,
-                country,
-                locale,
-                timestamp,
-                limit,
-                offset
-            ).playlists?.items?.map { it.toPlaylistsItem() }
-            emit(Result.Success(playlists))
-        } catch (e: Exception) {
-            emit(Result.Error(message = e.message.toString()))
+        offset: Int = 0,
+    ): Flow<Result<List<PlaylistsItem>>> =
+        flow {
+            try {
+                emit(Result.Loading())
+                val playlists =
+                    spotifyRepository.getFeaturedPlaylists(
+                        accessToken,
+                        country,
+                        locale,
+                        timestamp,
+                        limit,
+                        offset,
+                    ).playlists?.items?.map { it.toPlaylistsItem() }
+                emit(Result.Success(playlists))
+            } catch (e: Exception) {
+                emit(Result.Error(message = e.message.toString()))
+            }
         }
-    }
 }

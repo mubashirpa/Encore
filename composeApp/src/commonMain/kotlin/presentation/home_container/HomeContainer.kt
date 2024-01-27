@@ -28,27 +28,30 @@ import presentation.search.SearchScreen
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
 fun HomeContainer(component: HomeContainerComponent) {
-    val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
-        state = rememberTopAppBarState()
-    )
+    val scrollBehavior =
+        TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
+            state = rememberTopAppBarState(),
+        )
     val uiState = component.uiState.subscribeAsState()
     val accessToken = uiState.value.accessToken
     val profileUrl = uiState.value.currentUsersProfile?.images?.firstOrNull()?.url
 
     Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .nestedScroll(scrollBehavior.nestedScrollConnection),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .nestedScroll(scrollBehavior.nestedScrollConnection),
         bottomBar = {
             HomeBottomBar(component)
-        }
+        },
     ) { innerPadding ->
         Children(
             stack = component.childStack,
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-            animation = stackAnimation(fade())
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(innerPadding),
+            animation = stackAnimation(fade()),
         ) { child ->
             Column(modifier = Modifier.fillMaxSize()) {
                 when (val instance = child.instance) {
@@ -63,16 +66,16 @@ fun HomeContainer(component: HomeContainerComponent) {
                                 IconButton(onClick = { /* do something */ }) {
                                     Icon(
                                         painter = painterResource("refresh.xml"),
-                                        contentDescription = null
+                                        contentDescription = null,
                                     )
                                 }
                             },
-                            scrollBehavior = scrollBehavior
+                            scrollBehavior = scrollBehavior,
                         )
                         HomeScreen(
                             uiState = viewModel.uiState,
                             onEvent = viewModel::onEvent,
-                            accessToken = accessToken
+                            accessToken = accessToken,
                         )
                     }
 
@@ -84,17 +87,17 @@ fun HomeContainer(component: HomeContainerComponent) {
                                 IconButton(onClick = { /* do something */ }) {
                                     Icon(
                                         painter = painterResource("search.xml"),
-                                        contentDescription = null
+                                        contentDescription = null,
                                     )
                                 }
                                 IconButton(onClick = { /* do something */ }) {
                                     Icon(
                                         painter = painterResource("add.xml"),
-                                        contentDescription = null
+                                        contentDescription = null,
                                     )
                                 }
                             },
-                            scrollBehavior = scrollBehavior
+                            scrollBehavior = scrollBehavior,
                         )
                         LibraryScreen()
                     }
@@ -110,16 +113,16 @@ fun HomeContainer(component: HomeContainerComponent) {
                                 IconButton(onClick = { /* do something */ }) {
                                     Icon(
                                         painter = painterResource("shazam.xml"),
-                                        contentDescription = null
+                                        contentDescription = null,
                                     )
                                 }
                             },
-                            scrollBehavior = scrollBehavior
+                            scrollBehavior = scrollBehavior,
                         )
                         SearchScreen(
                             uiState = viewModel.uiState,
                             onEvent = viewModel::onEvent,
-                            accessToken = accessToken
+                            accessToken = accessToken,
                         )
                     }
                 }

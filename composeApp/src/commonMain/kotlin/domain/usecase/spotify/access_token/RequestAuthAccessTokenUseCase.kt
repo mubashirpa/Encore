@@ -10,23 +10,24 @@ import kotlinx.coroutines.flow.flow
 
 class RequestAuthAccessTokenUseCase(
     private val spotifyRepository: SpotifyRepository,
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository,
 ) {
     operator fun invoke(
         code: String,
         redirectUri: String,
         clientId: String,
-        clientSecret: String
-    ): Flow<Result<AccessToken>> = flow {
-        try {
-            emit(Result.Loading())
-            val accessToken =
-                spotifyRepository.requestAccessToken(code, redirectUri, clientId, clientSecret)
-                    .toAccessToken()
-            userPreferencesRepository.updateAccessToken(accessToken)
-            emit(Result.Success(accessToken))
-        } catch (e: Exception) {
-            emit(Result.Error(message = e.message.toString()))
+        clientSecret: String,
+    ): Flow<Result<AccessToken>> =
+        flow {
+            try {
+                emit(Result.Loading())
+                val accessToken =
+                    spotifyRepository.requestAccessToken(code, redirectUri, clientId, clientSecret)
+                        .toAccessToken()
+                userPreferencesRepository.updateAccessToken(accessToken)
+                emit(Result.Success(accessToken))
+            } catch (e: Exception) {
+                emit(Result.Error(message = e.message.toString()))
+            }
         }
-    }
 }

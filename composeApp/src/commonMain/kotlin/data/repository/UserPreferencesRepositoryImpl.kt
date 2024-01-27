@@ -13,9 +13,8 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
 class UserPreferencesRepositoryImpl(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
 ) : UserPreferencesRepository {
-
     override suspend fun updateAccessToken(accessToken: AccessToken) {
         dataStore.edit { preferences ->
             preferences[PreferencesKeys.SPOTIFY_ACCESS_TOKEN] = accessToken.accessToken ?: ""
@@ -44,7 +43,7 @@ class UserPreferencesRepositoryImpl(
                     expiresIn = preferences[PreferencesKeys.SPOTIFY_TOKEN_EXPIRES_IN] ?: 0,
                     refreshToken = preferences[PreferencesKeys.SPOTIFY_REFRESH_TOKEN] ?: "",
                     scope = preferences[PreferencesKeys.SPOTIFY_ACCESS_TOKEN_SCOPE] ?: "",
-                    tokenType = preferences[PreferencesKeys.SPOTIFY_TOKEN_TOKEN_TYPE] ?: ""
+                    tokenType = preferences[PreferencesKeys.SPOTIFY_TOKEN_TOKEN_TYPE] ?: "",
                 )
             }
     }

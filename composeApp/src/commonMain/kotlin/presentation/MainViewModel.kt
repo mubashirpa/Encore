@@ -19,9 +19,8 @@ class MainViewModel(
     private val refreshTokenUseCase: RefreshTokenUseCase,
     private val requestAuthAccessTokenUseCase: RequestAuthAccessTokenUseCase,
     private val requestUserAuthorizationUseCase: RequestUserAuthorizationUseCase,
-    private val urlLauncher: UrlLauncher
+    private val urlLauncher: UrlLauncher,
 ) : ViewModel() {
-
     private val _isReady = MutableStateFlow(false)
     val isReady = _isReady.asStateFlow()
 
@@ -59,7 +58,7 @@ class MainViewModel(
         refreshTokenUseCase(
             refreshToken = refreshToken,
             clientId = clientId,
-            clientSecret = clientSecret
+            clientSecret = clientSecret,
         ).onEach {
             if (it is Result.Success) {
                 _isReady.value = true
@@ -73,7 +72,7 @@ class MainViewModel(
             code = code,
             redirectUri = redirectUrl,
             clientId = clientId,
-            clientSecret = clientSecret
+            clientSecret = clientSecret,
         ).onEach {
             if (it is Result.Success) {
                 _isReady.value = true
@@ -83,11 +82,12 @@ class MainViewModel(
     }
 
     private fun requestUserAuthorization() {
-        val requestUserAuthorization = requestUserAuthorizationUseCase(
-            clientId = clientId,
-            redirectUri = redirectUrl,
-            scope = scope
-        )
+        val requestUserAuthorization =
+            requestUserAuthorizationUseCase(
+                clientId = clientId,
+                redirectUri = redirectUrl,
+                scope = scope,
+            )
         urlLauncher.openUrl(requestUserAuthorization)
     }
 }

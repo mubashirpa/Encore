@@ -28,13 +28,13 @@ fun HomeAppBar(
     title: String,
     profileImage: String,
     actions: @Composable (RowScope.() -> Unit) = {},
-    scrollBehavior: TopAppBarScrollBehavior
+    scrollBehavior: TopAppBarScrollBehavior,
 ) {
     TopAppBar(
         title = {
             Text(
                 text = title,
-                modifier = Modifier.padding(start = 8.dp)
+                modifier = Modifier.padding(start = 8.dp),
             )
         },
         modifier = Modifier.padding(horizontal = 16.dp),
@@ -42,21 +42,22 @@ fun HomeAppBar(
             KamelImage(
                 resource = asyncPainterResource(profileImage),
                 contentDescription = null,
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(CircleShape),
+                modifier =
+                    Modifier
+                        .size(40.dp)
+                        .clip(CircleShape),
                 contentScale = ContentScale.Crop,
                 onFailure = {
                     Icon(
                         imageVector = Icons.Default.Person,
-                        contentDescription = null
+                        contentDescription = null,
                     )
-                }
+                },
             )
         },
         actions = actions,
         windowInsets = WindowInsets(0.dp, 0.dp, 0.dp, 0.dp),
         colors = TopAppBarDefaults.topAppBarColors(scrolledContainerColor = MaterialTheme.colorScheme.surface),
-        scrollBehavior = scrollBehavior
+        scrollBehavior = scrollBehavior,
     )
 }

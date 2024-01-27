@@ -1,9 +1,10 @@
 package di
 
-fun appModule() = listOf(
-    ktorModule,
-    platformModule,
-    repositoryModule,
-    useCaseModule,
-    viewModelModule
-)
+fun appModule() =
+    listOf(
+        ktorModule,
+        platformModule,
+        repositoryModule,
+        useCaseModule,
+        viewModelModule,
+    )

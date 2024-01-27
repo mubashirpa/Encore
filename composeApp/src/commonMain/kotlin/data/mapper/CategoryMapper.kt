@@ -9,7 +9,7 @@ fun Item.toCategoryItem(): CategoryItem {
     return CategoryItem(
         icons?.map { it.toCategoryImage() },
         id,
-        name
+        name,
     )
 }
 

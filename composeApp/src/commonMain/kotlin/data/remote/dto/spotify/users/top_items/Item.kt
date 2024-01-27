@@ -18,7 +18,7 @@ data class ArtistItem(
     val name: String? = null,
     val popularity: Int? = null,
     val type: String? = null,
-    val uri: String? = null
+    val uri: String? = null,
 )
 
 @Serializable
@@ -50,5 +50,5 @@ data class TrackItem(
     @SerialName("track_number")
     val trackNumber: Int? = null,
     val type: String? = null,
-    val uri: String? = null
+    val uri: String? = null,
 )

@@ -19,8 +19,8 @@ fun <T> T.NavigationScreen(
         // unselectedIcon: ImageVector,
         // textId: Int,
         text: String,
-        onClick: () -> Unit
-    ) -> Unit
+        onClick: () -> Unit,
+    ) -> Unit,
 ) {
     val stack by component.childStack.subscribeAsState()
     val activeChild = stack.active.instance

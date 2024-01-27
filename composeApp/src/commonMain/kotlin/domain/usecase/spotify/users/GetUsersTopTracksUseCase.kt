@@ -13,19 +13,21 @@ class GetUsersTopTracksUseCase(private val spotifyRepository: SpotifyRepository)
         accessToken: String,
         timeRange: TimeRange = TimeRange.MEDIUM_TERM,
         limit: Int = 20,
-        offset: Int = 0
-    ): Flow<Result<List<UsersTrackItem>>> = flow {
-        try {
-            emit(Result.Loading())
-            val topTracks = spotifyRepository.getUsersTopTracks(
-                accessToken,
-                timeRange,
-                limit,
-                offset
-            ).items?.map { it.toUsersTrackItem() }
-            emit(Result.Success(topTracks))
-        } catch (e: Exception) {
-            emit(Result.Error(message = e.message.toString()))
+        offset: Int = 0,
+    ): Flow<Result<List<UsersTrackItem>>> =
+        flow {
+            try {
+                emit(Result.Loading())
+                val topTracks =
+                    spotifyRepository.getUsersTopTracks(
+                        accessToken,
+                        timeRange,
+                        limit,
+                        offset,
+                    ).items?.map { it.toUsersTrackItem() }
+                emit(Result.Success(topTracks))
+            } catch (e: Exception) {
+                emit(Result.Error(message = e.message.toString()))
+            }
         }
-    }
 }

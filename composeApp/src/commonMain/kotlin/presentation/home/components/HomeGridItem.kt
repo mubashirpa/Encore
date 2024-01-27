@@ -18,21 +18,21 @@ import io.kamel.image.asyncPainterResource
 fun HomeGridItem(
     name: String,
     imageUrl: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Card(modifier = modifier) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             KamelImage(
                 resource = asyncPainterResource(imageUrl),
                 contentDescription = null,
-                modifier = Modifier.size(56.dp)
+                modifier = Modifier.size(56.dp),
             )
             Text(
                 text = name,
                 modifier = Modifier.padding(horizontal = 8.dp),
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.labelLarge
+                style = MaterialTheme.typography.labelLarge,
             )
         }
     }

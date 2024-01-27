@@ -4,9 +4,9 @@ import core.Spotify
 import data.remote.dto.spotify.AccessTokenDto
 import data.remote.dto.spotify.category.CategoriesDto
 import data.remote.dto.spotify.playlists.PlaylistsDto
-import data.remote.dto.spotify.users.top_items.TopTracksDto
 import data.remote.dto.spotify.users.profile.UserDto
 import data.remote.dto.spotify.users.top_items.TopArtistsDto
+import data.remote.dto.spotify.users.top_items.TopTracksDto
 import domain.repository.SpotifyRepository
 import domain.repository.TimeRange
 import domain.repository.Type
@@ -26,9 +26,8 @@ import io.ktor.http.contentType
 import io.ktor.util.encodeBase64
 
 class SpotifyRepositoryImpl(
-    private val httpClient: HttpClient
+    private val httpClient: HttpClient,
 ) : SpotifyRepository {
-
     override suspend fun getCurrentUsersProfile(accessToken: String): UserDto {
         return httpClient.get(Spotify.API_BASE_URL) {
             url {
@@ -44,10 +43,12 @@ class SpotifyRepositoryImpl(
         redirectUri: String,
         state: String?,
         scope: String?,
-        showDialog: Boolean?
+        showDialog: Boolean?,
     ): String {
         val authorizationUrl =
-            StringBuilder("${Spotify.AUTHORIZE_ENDPOINT_URI}?${Spotify.Parameters.CLIENT_ID}=$clientId&${Spotify.Parameters.RESPONSE_TYPE}=$responseType&${Spotify.Parameters.REDIRECT_URI}=$redirectUri")
+            StringBuilder(
+                "${Spotify.AUTHORIZE_ENDPOINT_URI}?${Spotify.Parameters.CLIENT_ID}=$clientId&${Spotify.Parameters.RESPONSE_TYPE}=$responseType&${Spotify.Parameters.REDIRECT_URI}=$redirectUri",
+            )
         if (!state.isNullOrEmpty()) {
             authorizationUrl.append("&${Spotify.Parameters.STATE}=$state")
         }
@@ -62,7 +63,7 @@ class SpotifyRepositoryImpl(
 
     override suspend fun requestAccessToken(
         clientId: String,
-        clientSecret: String
+        clientSecret: String,
     ): AccessTokenDto {
         return httpClient.post(Spotify.TOKEN_ENDPOINT_URI) {
             contentType(ContentType.Application.FormUrlEncoded)
@@ -72,8 +73,8 @@ class SpotifyRepositoryImpl(
                         append(Spotify.Parameters.GRANT_TYPE, Spotify.Parameters.CLIENT_CREDENTIALS)
                         append(Spotify.Parameters.CLIENT_ID, clientId)
                         append(Spotify.Parameters.CLIENT_SECRET, clientSecret)
-                    }
-                )
+                    },
+                ),
             )
         }.body()
     }
@@ -82,7 +83,7 @@ class SpotifyRepositoryImpl(
         code: String,
         redirectUri: String,
         clientId: String,
-        clientSecret: String
+        clientSecret: String,
     ): AccessTokenDto {
         val credentials = "$clientId:$clientSecret".encodeBase64()
         return httpClient.post(Spotify.TOKEN_ENDPOINT_URI) {
@@ -92,8 +93,8 @@ class SpotifyRepositoryImpl(
                         append(Spotify.Parameters.GRANT_TYPE, Spotify.Parameters.AUTHORIZATION_CODE)
                         append(Spotify.Parameters.CODE, code)
                         append(Spotify.Parameters.REDIRECT_URI, redirectUri)
-                    }
-                )
+                    },
+                ),
             )
             header(HttpHeaders.Authorization, "Basic $credentials")
             contentType(ContentType.Application.FormUrlEncoded)
@@ -103,7 +104,7 @@ class SpotifyRepositoryImpl(
     override suspend fun refreshToken(
         refreshToken: String,
         clientId: String,
-        clientSecret: String
+        clientSecret: String,
     ): AccessTokenDto {
         val credentials = "$clientId:$clientSecret".encodeBase64()
         return httpClient.post(Spotify.TOKEN_ENDPOINT_URI) {
@@ -112,8 +113,8 @@ class SpotifyRepositoryImpl(
                     Parameters.build {
                         append(Spotify.Parameters.GRANT_TYPE, Spotify.Parameters.REFRESH_TOKEN)
                         append(Spotify.Parameters.REFRESH_TOKEN, refreshToken)
-                    }
-                )
+                    },
+                ),
             )
             contentType(ContentType.Application.FormUrlEncoded)
             header(HttpHeaders.Authorization, "Basic $credentials")
@@ -126,7 +127,7 @@ class SpotifyRepositoryImpl(
         locale: String?,
         timestamp: String?,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): PlaylistsDto {
         return httpClient.get(Spotify.API_BASE_URL) {
             url {
@@ -151,7 +152,7 @@ class SpotifyRepositoryImpl(
         accessToken: String,
         timeRange: TimeRange,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): TopArtistsDto {
         return httpClient.get(Spotify.API_BASE_URL) {
             url {
@@ -169,7 +170,7 @@ class SpotifyRepositoryImpl(
         accessToken: String,
         timeRange: TimeRange,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): TopTracksDto {
         return httpClient.get(Spotify.API_BASE_URL) {
             url {
@@ -188,7 +189,7 @@ class SpotifyRepositoryImpl(
         country: String?,
         locale: String?,
         limit: Int,
-        offset: Int
+        offset: Int,
     ): CategoriesDto {
         return httpClient.get(Spotify.API_BASE_URL) {
             url {

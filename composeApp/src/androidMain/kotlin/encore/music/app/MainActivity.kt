@@ -18,7 +18,6 @@ import presentation.MainUIEvent
 import presentation.MainViewModel
 
 class MainActivity : ComponentActivity() {
-
     private lateinit var rootComponent: RootComponent
     private val viewModel: MainViewModel by viewModel()
 
@@ -47,7 +46,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             App(
                 component = rootComponent,
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
             )
         }
     }

@@ -5,7 +5,7 @@ import domain.repository.UserPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 
 class GetAccessTokenUseCase(
-    private val userPreferencesRepository: UserPreferencesRepository
+    private val userPreferencesRepository: UserPreferencesRepository,
 ) {
     suspend operator fun invoke(): Flow<AccessToken> = userPreferencesRepository.getAccessToken()
 }

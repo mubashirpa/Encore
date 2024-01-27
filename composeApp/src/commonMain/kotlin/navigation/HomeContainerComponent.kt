@@ -28,31 +28,32 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 interface HomeContainerComponent {
-
     val childStack: Value<ChildStack<*, Child>>
     val uiState: Value<HomeContainerUiState>
 
     fun onHomeScreenTabClicked()
+
     fun onLibraryScreenTabClicked()
+
     fun onSearchScreenTabClicked()
 
     data class HomeContainerUiState(
         val accessToken: String = "",
-        val currentUsersProfile: User? = null
+        val currentUsersProfile: User? = null,
     )
 
     sealed class Child {
-
         class HomeScreen(val component: HomeScreenComponent) : Child()
+
         class LibraryScreen(val component: LibraryScreenComponent) : Child()
+
         class SearchScreen(val component: SearchScreenComponent) : Child()
     }
 }
 
 class DefaultHomeContainerComponent(
-    componentContext: ComponentContext
+    componentContext: ComponentContext,
 ) : HomeContainerComponent, ComponentContext by componentContext, KoinComponent {
-
     private val navigation = StackNavigation<Configuration>()
 
     private val coroutineScope = coroutineScope()
@@ -66,18 +67,19 @@ class DefaultHomeContainerComponent(
             serializer = Configuration.serializer(),
             initialConfiguration = Configuration.HomeScreen,
             handleBackButton = true,
-            childFactory = ::createChild
+            childFactory = ::createChild,
         )
 
     init {
         getAccessToken()
     }
 
-    override val uiState: Value<HomeContainerUiState> = flow {
-        for (uiState in channel) {
-            emit(uiState)
-        }
-    }.asValue(initialValue = HomeContainerUiState(), lifecycle = lifecycle)
+    override val uiState: Value<HomeContainerUiState> =
+        flow {
+            for (uiState in channel) {
+                emit(uiState)
+            }
+        }.asValue(initialValue = HomeContainerUiState(), lifecycle = lifecycle)
 
     override fun onHomeScreenTabClicked() {
         navigation.bringToFront(Configuration.HomeScreen)
@@ -93,7 +95,7 @@ class DefaultHomeContainerComponent(
 
     private fun createChild(
         configuration: Configuration,
-        componentContext: ComponentContext
+        componentContext: ComponentContext,
     ): Child =
         when (configuration) {
             is Configuration.HomeScreen -> {
@@ -138,7 +140,6 @@ class DefaultHomeContainerComponent(
 
     @Serializable
     private sealed interface Configuration {
-
         @Serializable
         data object HomeScreen : Configuration
 

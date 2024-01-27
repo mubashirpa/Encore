@@ -17,16 +17,19 @@ import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 
 @Composable
-fun HomeListItem(name: String, imageUrl: String) {
+fun HomeListItem(
+    name: String,
+    imageUrl: String,
+) {
     Column(
         modifier = Modifier.width(120.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Card {
             KamelImage(
                 resource = asyncPainterResource(imageUrl),
                 contentDescription = null,
-                modifier = Modifier.size(120.dp)
+                modifier = Modifier.size(120.dp),
             )
         }
         Spacer(modifier = Modifier.height(4.dp))
@@ -34,7 +37,7 @@ fun HomeListItem(name: String, imageUrl: String) {
             text = name,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            style = MaterialTheme.typography.labelLarge
+            style = MaterialTheme.typography.labelLarge,
         )
     }
 }

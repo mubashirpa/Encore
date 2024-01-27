@@ -23,5 +23,5 @@ data class Item(
     val snapshotId: String? = null,
     val tracks: Tracks? = null,
     val type: String? = null,
-    val uri: String? = null
+    val uri: String? = null,
 )

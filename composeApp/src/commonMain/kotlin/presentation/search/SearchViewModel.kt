@@ -9,9 +9,8 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class SearchViewModel(
-    private val getCategoriesUseCase: GetCategoriesUseCase
+    private val getCategoriesUseCase: GetCategoriesUseCase,
 ) : ViewModel() {
-
     var uiState by mutableStateOf(SearchUiState())
         private set
 

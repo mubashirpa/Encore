@@ -3,12 +3,11 @@ package domain.repository
 import data.remote.dto.spotify.AccessTokenDto
 import data.remote.dto.spotify.category.CategoriesDto
 import data.remote.dto.spotify.playlists.PlaylistsDto
-import data.remote.dto.spotify.users.top_items.TopTracksDto
 import data.remote.dto.spotify.users.profile.UserDto
 import data.remote.dto.spotify.users.top_items.TopArtistsDto
+import data.remote.dto.spotify.users.top_items.TopTracksDto
 
 interface SpotifyRepository {
-
     /**
      * Get detailed profile information about the current user.
      * @param accessToken String which contains the credentials and permissions that can be used to
@@ -40,7 +39,7 @@ interface SpotifyRepository {
         redirectUri: String,
         state: String? = null,
         scope: String? = null,
-        showDialog: Boolean? = null
+        showDialog: Boolean? = null,
     ): String
 
     /**
@@ -52,7 +51,7 @@ interface SpotifyRepository {
      */
     suspend fun requestAccessToken(
         clientId: String,
-        clientSecret: String
+        clientSecret: String,
     ): AccessTokenDto
 
     /**
@@ -70,7 +69,7 @@ interface SpotifyRepository {
         code: String,
         redirectUri: String,
         clientId: String,
-        clientSecret: String
+        clientSecret: String,
     ): AccessTokenDto
 
     /**
@@ -83,7 +82,7 @@ interface SpotifyRepository {
     suspend fun refreshToken(
         refreshToken: String,
         clientId: String,
-        clientSecret: String
+        clientSecret: String,
     ): AccessTokenDto
 
     /**
@@ -113,7 +112,7 @@ interface SpotifyRepository {
         locale: String? = null,
         timestamp: String? = null,
         limit: Int = 20,
-        offset: Int = 0
+        offset: Int = 0,
     ): PlaylistsDto
 
     /**
@@ -129,7 +128,7 @@ interface SpotifyRepository {
         accessToken: String,
         timeRange: TimeRange = TimeRange.MEDIUM_TERM,
         limit: Int = 20,
-        offset: Int = 0
+        offset: Int = 0,
     ): TopArtistsDto
 
     /**
@@ -145,7 +144,7 @@ interface SpotifyRepository {
         accessToken: String,
         timeRange: TimeRange = TimeRange.MEDIUM_TERM,
         limit: Int = 20,
-        offset: Int = 0
+        offset: Int = 0,
     ): TopTracksDto
 
     /**
@@ -167,18 +166,18 @@ interface SpotifyRepository {
         country: String? = null,
         locale: String? = null,
         limit: Int = 20,
-        offset: Int = 0
+        offset: Int = 0,
     ): CategoriesDto
 }
 
 enum class Type {
     ARTISTS,
-    TRACKS
+    TRACKS,
 }
 
 @Suppress("unused")
 enum class TimeRange {
     LONG_TERM,
     MEDIUM_TERM,
-    SHORT_TERM
+    SHORT_TERM,
 }
