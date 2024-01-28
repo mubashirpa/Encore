@@ -26,6 +26,7 @@ val viewModelModule =
         factory {
             SearchViewModel(
                 getCategoriesUseCase = get(),
+                searchForItemUseCase = get(),
             )
         }
     }
