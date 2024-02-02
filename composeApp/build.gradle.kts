@@ -1,3 +1,6 @@
+import com.android.build.gradle.internal.lint.AndroidLintAnalysisTask
+import com.android.build.gradle.internal.lint.LintModelWriterTask
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
@@ -64,7 +67,7 @@ android {
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
+    sourceSets["main"].resources.srcDirs("src/commonMain/composeResources") // TODO: Verify the correctness
 
     defaultConfig {
         applicationId = "encore.music.app"
@@ -96,4 +99,15 @@ android {
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
+}
+
+// TODO: Remove once https://github.com/JetBrains/compose-multiplatform/issues/4085 is fixed
+// Workaround for error: A problem was found with the configuration of task ':composeApp:generateReleaseLintVitalReportModel' (type 'LintModelWriterTask').
+
+tasks.withType<AndroidLintAnalysisTask> {
+    dependsOn("copyFontsToAndroidAssets")
+}
+
+tasks.withType<LintModelWriterTask> {
+    dependsOn("copyFontsToAndroidAssets")
 }
