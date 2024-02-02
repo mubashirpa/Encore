@@ -1,6 +1,8 @@
 package presentation.home_container
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -12,6 +14,7 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalLayoutDirection
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
@@ -29,6 +32,7 @@ import presentation.search.SearchScreen
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
 fun HomeContainer(component: HomeContainerComponent) {
+    val layoutDirection = LocalLayoutDirection.current
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
             state = rememberTopAppBarState(),
@@ -51,7 +55,12 @@ fun HomeContainer(component: HomeContainerComponent) {
             modifier =
                 Modifier
                     .fillMaxSize()
-                    .padding(innerPadding),
+                    // TODO("Instead exclude top padding from scaffold window insets")
+                    .padding(
+                        start = innerPadding.calculateStartPadding(layoutDirection),
+                        end = innerPadding.calculateEndPadding(layoutDirection),
+                        bottom = innerPadding.calculateBottomPadding(),
+                    ),
             animation = stackAnimation(fade()),
         ) { child ->
             Column(modifier = Modifier.fillMaxSize()) {
