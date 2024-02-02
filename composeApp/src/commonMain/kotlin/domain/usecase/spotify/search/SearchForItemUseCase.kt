@@ -1,7 +1,8 @@
 package domain.usecase.spotify.search
 
 import core.Result
-import data.remote.dto.spotify.search.SearchDto
+import data.mapper.toSearch
+import domain.model.spotify.search.Search
 import domain.repository.SearchItemType
 import domain.repository.SpotifyRepository
 import kotlinx.coroutines.flow.Flow
@@ -16,7 +17,7 @@ class SearchForItemUseCase(private val spotifyRepository: SpotifyRepository) {
         limit: Int = 20,
         offset: Int = 0,
         includeExternal: Boolean = false,
-    ): Flow<Result<SearchDto>> =
+    ): Flow<Result<Search>> =
         flow {
             try {
                 emit(Result.Loading())
@@ -29,7 +30,7 @@ class SearchForItemUseCase(private val spotifyRepository: SpotifyRepository) {
                         limit,
                         offset,
                         includeExternal,
-                    )
+                    ).toSearch()
                 emit(Result.Success(search))
             } catch (e: Exception) {
                 emit(Result.Error(message = e.message.toString()))
