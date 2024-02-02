@@ -3,7 +3,8 @@ package presentation.home_container.components
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.painter.Painter
-import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import encore.composeapp.generated.resources.Res
 import navigation.HomeContainerComponent
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -27,19 +28,19 @@ fun <T> T.NavigationScreen(
 
     content(
         activeChild is HomeContainerComponent.Child.HomeScreen,
-        painterResource("home.xml"),
+        painterResource(Res.drawable.home),
         "Home",
         component::onHomeScreenTabClicked,
     )
     content(
         activeChild is HomeContainerComponent.Child.SearchScreen,
-        painterResource("search.xml"),
+        painterResource(Res.drawable.search),
         "Search",
         component::onSearchScreenTabClicked,
     )
     content(
         activeChild is HomeContainerComponent.Child.LibraryScreen,
-        painterResource("library.xml"),
+        painterResource(Res.drawable.library),
         "Library",
         component::onLibraryScreenTabClicked,
     )
