@@ -12,10 +12,11 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.Children
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.fade
-import com.arkivanov.decompose.extensions.compose.jetbrains.stack.animation.stackAnimation
-import com.arkivanov.decompose.extensions.compose.jetbrains.subscribeAsState
+import com.arkivanov.decompose.extensions.compose.stack.Children
+import com.arkivanov.decompose.extensions.compose.stack.animation.fade
+import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
+import encore.composeapp.generated.resources.Res
 import navigation.HomeContainerComponent
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
@@ -65,7 +66,7 @@ fun HomeContainer(component: HomeContainerComponent) {
                             actions = {
                                 IconButton(onClick = { /* do something */ }) {
                                     Icon(
-                                        painter = painterResource("refresh.xml"),
+                                        painter = painterResource(Res.drawable.refresh),
                                         contentDescription = null,
                                     )
                                 }
@@ -86,13 +87,13 @@ fun HomeContainer(component: HomeContainerComponent) {
                             actions = {
                                 IconButton(onClick = { /* do something */ }) {
                                     Icon(
-                                        painter = painterResource("search.xml"),
+                                        painter = painterResource(Res.drawable.search),
                                         contentDescription = null,
                                     )
                                 }
                                 IconButton(onClick = { /* do something */ }) {
                                     Icon(
-                                        painter = painterResource("add.xml"),
+                                        painter = painterResource(Res.drawable.add),
                                         contentDescription = null,
                                     )
                                 }
@@ -112,7 +113,7 @@ fun HomeContainer(component: HomeContainerComponent) {
                             actions = {
                                 IconButton(onClick = { /* do something */ }) {
                                     Icon(
-                                        painter = painterResource("shazam.xml"),
+                                        painter = painterResource(Res.drawable.shazam),
                                         contentDescription = null,
                                     )
                                 }
