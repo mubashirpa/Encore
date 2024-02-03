@@ -1,10 +1,13 @@
-package presentation.home_container
+package presentation.homeContainer
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.calculateEndPadding
-import androidx.compose.foundation.layout.calculateStartPadding
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -14,7 +17,6 @@ import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.platform.LocalLayoutDirection
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
@@ -24,15 +26,14 @@ import navigation.HomeContainerComponent
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import presentation.home.HomeScreen
-import presentation.home_container.components.HomeAppBar
-import presentation.home_container.components.HomeBottomBar
+import presentation.homeContainer.components.HomeAppBar
+import presentation.homeContainer.components.HomeBottomBar
 import presentation.library.LibraryScreen
 import presentation.search.SearchScreen
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
 fun HomeContainer(component: HomeContainerComponent) {
-    val layoutDirection = LocalLayoutDirection.current
     val scrollBehavior =
         TopAppBarDefaults.exitUntilCollapsedScrollBehavior(
             state = rememberTopAppBarState(),
@@ -45,22 +46,19 @@ fun HomeContainer(component: HomeContainerComponent) {
         modifier =
             Modifier
                 .fillMaxSize()
-                .nestedScroll(scrollBehavior.nestedScrollConnection),
+                .nestedScroll(scrollBehavior.nestedScrollConnection)
+                .imePadding(),
         bottomBar = {
             HomeBottomBar(component)
         },
+        contentWindowInsets = WindowInsets.safeDrawing.exclude(WindowInsets.statusBars),
     ) { innerPadding ->
         Children(
             stack = component.childStack,
             modifier =
                 Modifier
                     .fillMaxSize()
-                    // TODO("Instead exclude top padding from scaffold window insets")
-                    .padding(
-                        start = innerPadding.calculateStartPadding(layoutDirection),
-                        end = innerPadding.calculateEndPadding(layoutDirection),
-                        bottom = innerPadding.calculateBottomPadding(),
-                    ),
+                    .padding(innerPadding),
             animation = stackAnimation(fade()),
         ) { child ->
             Column(modifier = Modifier.fillMaxSize()) {
