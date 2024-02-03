@@ -2,14 +2,15 @@ package presentation.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -20,10 +21,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import core.Result
-import presentation.home.components.HomeGridItem
+import encore.composeapp.generated.resources.Res
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringResource
 import presentation.home.components.HomeListItem
+import presentation.home.components.TopTracksListItem
 
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,
@@ -43,24 +47,33 @@ fun HomeScreen(
         if (uiState.usersTrackItemResult is Result.Success) {
             val tracks = uiState.usersTrackItemResult.data.orEmpty()
             if (tracks.isNotEmpty()) {
-                FlowRow(
+                LazyVerticalGrid(
+                    columns = GridCells.Fixed(2),
                     modifier =
                         Modifier
-                            .wrapContentHeight()
-                            .padding(horizontal = 16.dp, vertical = 12.dp)
-                            .fillMaxWidth(1f),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            .fillMaxWidth()
+                            .heightIn(max = 250.dp),
+                    contentPadding =
+                        PaddingValues(
+                            horizontal = 16.dp,
+                            vertical = 12.dp,
+                        ),
                     verticalArrangement = Arrangement.spacedBy(10.dp),
-                    maxItemsInEachRow = 2,
-                ) {
-                    tracks.forEach { track ->
-                        HomeGridItem(
-                            name = track.name.orEmpty(),
-                            imageUrl = track.album?.images?.firstOrNull()?.url.orEmpty(),
-                            modifier = Modifier.weight(1F, fill = true),
-                        )
-                    }
-                }
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    userScrollEnabled = false,
+                    content = {
+                        items(
+                            items = tracks,
+                            key = { it.id!! },
+                        ) { track ->
+                            TopTracksListItem(
+                                name = track.name.orEmpty(),
+                                imageUrl = track.image.orEmpty(),
+                                onClick = { /*TODO*/ },
+                            )
+                        }
+                    },
+                )
             }
         }
 
@@ -68,7 +81,7 @@ fun HomeScreen(
             val featuredPlaylists = uiState.featuredPlaylistsResult.data.orEmpty()
             if (featuredPlaylists.isNotEmpty()) {
                 Text(
-                    text = "Popular",
+                    text = stringResource(Res.string.popular),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                     style = MaterialTheme.typography.titleMedium,
                 )
@@ -84,11 +97,12 @@ fun HomeScreen(
                     content = {
                         items(
                             items = featuredPlaylists,
-                            key = { "${it.id}" },
+                            key = { it.id!! },
                         ) { playlist ->
                             HomeListItem(
                                 name = playlist.name.orEmpty(),
                                 imageUrl = playlist.images?.firstOrNull()?.url.orEmpty(),
+                                onClick = { /*TODO*/ },
                             )
                         }
                     },
@@ -104,7 +118,7 @@ fun HomeScreen(
 
             if (trendingList.isNotEmpty()) {
                 Text(
-                    text = "Trending Now",
+                    text = stringResource(Res.string.trending_now),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                     style = MaterialTheme.typography.titleMedium,
                 )
@@ -120,11 +134,12 @@ fun HomeScreen(
                     content = {
                         items(
                             items = trendingList,
-                            key = { "${it.id}" },
+                            key = { it.id!! },
                         ) { trending ->
                             HomeListItem(
                                 name = trending.title.orEmpty(),
                                 imageUrl = trending.image.orEmpty(),
+                                onClick = { /*TODO*/ },
                             )
                         }
                     },
@@ -133,7 +148,7 @@ fun HomeScreen(
 
             if (topChartsList.isNotEmpty()) {
                 Text(
-                    text = "Top Charts",
+                    text = stringResource(Res.string.top_charts),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                     style = MaterialTheme.typography.titleMedium,
                 )
@@ -149,11 +164,12 @@ fun HomeScreen(
                     content = {
                         items(
                             items = topChartsList,
-                            key = { "${it.id}" },
+                            key = { it.id!! },
                         ) { topCharts ->
                             HomeListItem(
                                 name = topCharts.title.orEmpty(),
                                 imageUrl = topCharts.image.orEmpty(),
+                                onClick = { /*TODO*/ },
                             )
                         }
                     },
@@ -162,7 +178,7 @@ fun HomeScreen(
 
             if (newAlbumsList.isNotEmpty()) {
                 Text(
-                    text = "New Releases",
+                    text = stringResource(Res.string.new_releases),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                     style = MaterialTheme.typography.titleMedium,
                 )
@@ -178,11 +194,12 @@ fun HomeScreen(
                     content = {
                         items(
                             items = newAlbumsList,
-                            key = { "${it.id}" },
+                            key = { it.id!! },
                         ) { newAlbums ->
                             HomeListItem(
                                 name = newAlbums.title.orEmpty(),
                                 imageUrl = newAlbums.image.orEmpty(),
+                                onClick = { /*TODO*/ },
                             )
                         }
                     },
@@ -191,7 +208,7 @@ fun HomeScreen(
 
             if (topPlaylistsList.isNotEmpty()) {
                 Text(
-                    text = "Editorial Picks",
+                    text = stringResource(Res.string.editorial_picks),
                     modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
                     style = MaterialTheme.typography.titleMedium,
                 )
@@ -207,11 +224,12 @@ fun HomeScreen(
                     content = {
                         items(
                             items = topPlaylistsList,
-                            key = { "${it.id}" },
+                            key = { it.id!! },
                         ) { topPlaylists ->
                             HomeListItem(
                                 name = topPlaylists.title.orEmpty(),
                                 imageUrl = topPlaylists.image.orEmpty(),
+                                onClick = { /*TODO*/ },
                             )
                         }
                     },
