@@ -1,11 +1,11 @@
 package di
 
-import domain.usecase.saavn.launch_data.GetLaunchDataUseCase
+import domain.usecase.saavn.launchData.GetLaunchDataUseCase
 import domain.usecase.spotify.RequestUserAuthorizationUseCase
-import domain.usecase.spotify.access_token.GetAccessTokenUseCase
-import domain.usecase.spotify.access_token.RefreshTokenUseCase
-import domain.usecase.spotify.access_token.RequestAuthAccessTokenUseCase
-import domain.usecase.spotify.access_token.RequestCredentialAccessTokenUseCase
+import domain.usecase.spotify.accessToken.GetAccessTokenUseCase
+import domain.usecase.spotify.accessToken.RefreshTokenUseCase
+import domain.usecase.spotify.accessToken.RequestAuthAccessTokenUseCase
+import domain.usecase.spotify.accessToken.RequestCredentialAccessTokenUseCase
 import domain.usecase.spotify.category.GetCategoriesUseCase
 import domain.usecase.spotify.playlists.GetFeaturedPlaylistsUseCase
 import domain.usecase.spotify.search.SearchForItemUseCase

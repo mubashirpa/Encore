@@ -6,8 +6,8 @@ import data.remote.dto.spotify.category.CategoriesDto
 import data.remote.dto.spotify.playlists.PlaylistsDto
 import data.remote.dto.spotify.search.SearchDto
 import data.remote.dto.spotify.users.profile.UserDto
-import data.remote.dto.spotify.users.top_items.TopArtistsDto
-import data.remote.dto.spotify.users.top_items.TopTracksDto
+import data.remote.dto.spotify.users.topItems.TopArtistsDto
+import data.remote.dto.spotify.users.topItems.TopTracksDto
 import domain.repository.SearchItemType
 import domain.repository.SpotifyRepository
 import domain.repository.UsersTopItemTimeRange

@@ -3,15 +3,15 @@ package data.mapper
 import data.remote.dto.spotify.Followers
 import data.remote.dto.spotify.Image
 import data.remote.dto.spotify.users.profile.UserDto
-import data.remote.dto.spotify.users.top_items.Album
-import data.remote.dto.spotify.users.top_items.ArtistItem
-import data.remote.dto.spotify.users.top_items.TrackItem
+import data.remote.dto.spotify.users.topItems.Album
+import data.remote.dto.spotify.users.topItems.ArtistItem
+import data.remote.dto.spotify.users.topItems.TrackItem
 import domain.model.spotify.users.UsersImage
 import domain.model.spotify.users.profile.User
 import domain.model.spotify.users.profile.UsersFollowers
-import domain.model.spotify.users.top_items.UsersAlbum
-import domain.model.spotify.users.top_items.UsersArtistItem
-import domain.model.spotify.users.top_items.UsersTrackItem
+import domain.model.spotify.users.topItems.UsersAlbum
+import domain.model.spotify.users.topItems.UsersArtistItem
+import domain.model.spotify.users.topItems.UsersTrackItem
 
 fun UserDto.toUser(): User {
     return User(

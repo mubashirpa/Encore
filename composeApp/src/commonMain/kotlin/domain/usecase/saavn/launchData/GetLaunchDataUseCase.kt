@@ -1,4 +1,4 @@
-package domain.usecase.saavn.launch_data
+package domain.usecase.saavn.launchData
 
 import core.Result
 import data.mapper.toLaunchData

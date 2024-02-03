@@ -1,4 +1,4 @@
-package domain.usecase.spotify.access_token
+package domain.usecase.spotify.accessToken
 
 import domain.model.spotify.AccessToken
 import domain.repository.UserPreferencesRepository

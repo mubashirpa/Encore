@@ -1,4 +1,4 @@
-package domain.usecase.spotify.access_token
+package domain.usecase.spotify.accessToken
 
 import core.Result
 import data.mapper.toAccessToken
@@ -8,12 +8,11 @@ import domain.repository.UserPreferencesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class RefreshTokenUseCase(
+class RequestCredentialAccessTokenUseCase(
     private val spotifyRepository: SpotifyRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
 ) {
     operator fun invoke(
-        refreshToken: String,
         clientId: String,
         clientSecret: String,
     ): Flow<Result<AccessToken>> =
@@ -21,7 +20,7 @@ class RefreshTokenUseCase(
             try {
                 emit(Result.Loading())
                 val accessToken =
-                    spotifyRepository.refreshToken(refreshToken, clientId, clientSecret).toAccessToken()
+                    spotifyRepository.requestAccessToken(clientId, clientSecret).toAccessToken()
                 userPreferencesRepository.updateAccessToken(accessToken)
                 emit(Result.Success(accessToken))
             } catch (e: Exception) {

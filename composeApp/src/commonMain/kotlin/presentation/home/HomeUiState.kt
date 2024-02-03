@@ -3,7 +3,7 @@ package presentation.home
 import core.Result
 import domain.model.saavn.LaunchData
 import domain.model.spotify.playlists.PlaylistsItem
-import domain.model.spotify.users.top_items.UsersTrackItem
+import domain.model.spotify.users.topItems.UsersTrackItem
 
 data class HomeUiState(
     val accessToken: String = "",

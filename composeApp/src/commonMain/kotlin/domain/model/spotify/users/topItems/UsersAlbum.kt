@@ -1,4 +1,4 @@
-package domain.model.spotify.users.top_items
+package domain.model.spotify.users.topItems
 
 import domain.model.spotify.users.UsersImage
 
