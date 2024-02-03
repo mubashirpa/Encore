@@ -1,18 +1,12 @@
 package data.mapper
 
-import data.remote.dto.spotify.Image
 import data.remote.dto.spotify.category.Item
-import domain.model.spotify.category.CategoryImage
-import domain.model.spotify.category.CategoryItem
+import domain.model.spotify.category.Category
 
-fun Item.toCategoryItem(): CategoryItem {
-    return CategoryItem(
-        icons?.map { it.toCategoryImage() },
+fun Item.toCategoryItem(): Category {
+    return Category(
+        icons?.firstOrNull()?.url,
         id,
         name,
     )
-}
-
-private fun Image.toCategoryImage(): CategoryImage {
-    return CategoryImage(url)
 }

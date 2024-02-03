@@ -4,22 +4,21 @@ import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
-import androidx.compose.foundation.layout.FlowRow
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -30,20 +29,45 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import core.Result
+import domain.model.spotify.search.AlbumsItem
+import domain.model.spotify.search.ArtistsItem
+import domain.model.spotify.search.PlaylistsItem
+import domain.model.spotify.search.ShowsItem
+import domain.model.spotify.search.TracksItem
+import domain.repository.SearchItemType
+import encore.composeapp.generated.resources.Res
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringResource
+import presentation.search.components.AlbumsListItem
+import presentation.search.components.ArtistsListItem
 import presentation.search.components.CategoriesListItem
+import presentation.search.components.PlalistsListItem
 import presentation.search.components.SearchBar
-import presentation.search.components.SearchListItem
+import presentation.search.components.ShowsListItem
+import presentation.search.components.TracksListItem
+import presentation.utils.header
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
 fun SearchScreen(
     uiState: SearchUiState,
     onEvent: (SearchUiEvent) -> Unit,
     accessToken: String,
 ) {
-    val filterItems = listOf("Top", "Songs", "Playlists", "Albums", "Podcasts & show", "Artists")
+    val focusManager = LocalFocusManager.current
+    val keyboardController = LocalSoftwareKeyboardController.current
+    val filterItems: List<Pair<String, SearchItemType>> =
+        listOf(
+            Pair(stringResource(Res.string.songs), SearchItemType.TRACK),
+            Pair(stringResource(Res.string.albums), SearchItemType.ALBUM),
+            Pair(stringResource(Res.string.playlists), SearchItemType.PLAYLIST),
+            Pair(stringResource(Res.string.artists), SearchItemType.ARTIST),
+            Pair(stringResource(Res.string.podcasts_and_shows), SearchItemType.SHOW),
+        )
 
     LaunchedEffect(accessToken) {
         onEvent(SearchUiEvent.OnGetAccessToken(accessToken))
@@ -56,7 +80,8 @@ fun SearchScreen(
                 onEvent(SearchUiEvent.OnSearchBarQueryChange(it))
             },
             onSearch = {
-                onEvent(SearchUiEvent.SearchForItem)
+                keyboardController?.hide()
+                focusManager.clearFocus()
             },
             active = uiState.isSearchBarActive,
             onActiveChange = {
@@ -65,9 +90,9 @@ fun SearchScreen(
             modifier =
                 Modifier
                     .align(Alignment.CenterHorizontally)
-                    .padding(top = 8.dp),
+                    .padding(vertical = 12.dp),
             placeholder = {
-                Text(text = "What will you listen to?")
+                Text(text = stringResource(Res.string.search_bar_placeholder))
             },
             leadingIcon =
                 if (uiState.isSearchBarActive) {
@@ -78,7 +103,8 @@ fun SearchScreen(
                             },
                         ) {
                             Icon(
-                                imageVector = Icons.Default.ArrowBack,
+                                // TODO("Replace with Icons.AutoMirrored.Filled.ArrowBack once https://github.com/JetBrains/compose-multiplatform/issues/4172 is fixed")
+                                imageVector = Icons.Filled.ArrowBack,
                                 contentDescription = null,
                             )
                         }
@@ -115,15 +141,18 @@ fun SearchScreen(
                     Modifier
                         .fillMaxWidth()
                         .horizontalScroll(rememberScrollState())
-                        .padding(horizontal = 16.dp, vertical = 12.dp),
+                        .padding(horizontal = 16.dp)
+                        .padding(bottom = 12.dp),
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
-                filterItems.forEachIndexed { index, text ->
+                filterItems.forEach { filter ->
                     FilterChip(
-                        selected = index == 0,
-                        onClick = {},
+                        selected = filter.second == uiState.searchItemType,
+                        onClick = {
+                            onEvent(SearchUiEvent.OnSearchItemTypeChange(filter.second))
+                        },
                         label = {
-                            Text(text)
+                            Text(filter.first)
                         },
                     )
                 }
@@ -149,33 +178,22 @@ fun SearchScreen(
 
                 is Result.Loading -> {
                     Box(modifier = Modifier.fillMaxSize()) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                        // TODO("Uncomment once https://github.com/JetBrains/compose-multiplatform/issues/4157 is fixed")
+                        // CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     }
                 }
 
                 is Result.Success -> {
-                    val tracks = searchResult.data?.tracks?.items.orEmpty()
-                    if (tracks.isNotEmpty()) {
-                        LazyColumn(
-                            modifier = Modifier.fillMaxSize(),
-                            content = {
-                                items(
-                                    items = tracks,
-                                    key = { "${it.id}" },
-                                ) { searchItem ->
-                                    SearchListItem(
-                                        title = "${searchItem.name}",
-                                        subtitle =
-                                            searchItem.artists?.joinToString(", ") {
-                                                it.name.toString()
-                                            }.orEmpty(),
-                                        imageUrl = searchItem.album?.images?.firstOrNull()?.url.orEmpty(),
-                                        onClick = { /*TODO*/ },
-                                    )
-                                }
-                            },
-                        )
-                    }
+                    SearchListContent(
+                        searchItemType = uiState.searchItemType,
+                        albums = uiState.searchResult.data?.albums.orEmpty(),
+                        artists = uiState.searchResult.data?.artists.orEmpty(),
+                        playlists = uiState.searchResult.data?.playlists.orEmpty(),
+                        shows = uiState.searchResult.data?.shows.orEmpty(),
+                        tracks = uiState.searchResult.data?.tracks.orEmpty(),
+                        // TODO("Add Modifier.imeNestedScroll() when available")
+                        modifier = Modifier.fillMaxSize(),
+                    )
                 }
             }
         } else {
@@ -200,44 +218,178 @@ fun SearchScreen(
 
                 is Result.Loading -> {
                     Box(modifier = Modifier.fillMaxSize()) {
-                        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                        // TODO("Uncomment once https://github.com/JetBrains/compose-multiplatform/issues/4157 is fixed")
+                        // CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                     }
                 }
 
                 is Result.Success -> {
                     val categories = categoriesResult.data.orEmpty()
                     if (categories.isNotEmpty()) {
-                        Text(
-                            text = "Browse all",
-                            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp),
-                            style = MaterialTheme.typography.titleMedium,
-                        )
-                        FlowRow(
-                            modifier =
-                                Modifier
-                                    .wrapContentHeight()
-                                    .padding(
-                                        start = 16.dp,
-                                        end = 16.dp,
-                                        bottom = 12.dp,
-                                    )
-                                    .fillMaxWidth(1f)
-                                    .verticalScroll(rememberScrollState()),
-                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                        LazyVerticalGrid(
+                            columns = GridCells.Adaptive(minSize = 100.dp),
+                            modifier = Modifier.fillMaxSize(),
+                            contentPadding =
+                                PaddingValues(
+                                    horizontal = 16.dp,
+                                    vertical = 12.dp,
+                                ),
                             verticalArrangement = Arrangement.spacedBy(10.dp),
-                            maxItemsInEachRow = 2,
-                        ) {
-                            categories.forEach { category ->
-                                CategoriesListItem(
-                                    name = category.name.orEmpty(),
-                                    imageUrl = category.icons?.firstOrNull()?.url.orEmpty(),
-                                    modifier = Modifier.weight(1F, fill = true),
-                                )
-                            }
-                        }
+                            horizontalArrangement = Arrangement.spacedBy(10.dp),
+                            content = {
+                                header {
+                                    Text(
+                                        text = stringResource(Res.string.browse_all),
+                                        modifier = Modifier.padding(bottom = 6.dp),
+                                        style = MaterialTheme.typography.titleMedium,
+                                    )
+                                }
+                                items(categories) { category ->
+                                    CategoriesListItem(
+                                        name = category.name.orEmpty(),
+                                        imageUrl = category.icon.orEmpty(),
+                                        onClick = { /*TODO*/ },
+                                    )
+                                }
+                            },
+                        )
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun SearchListContent(
+    searchItemType: SearchItemType,
+    albums: List<AlbumsItem>,
+    artists: List<ArtistsItem>,
+    playlists: List<PlaylistsItem>,
+    shows: List<ShowsItem>,
+    tracks: List<TracksItem>,
+    modifier: Modifier = Modifier,
+) {
+    when (searchItemType) {
+        SearchItemType.ALBUM -> {
+            if (albums.isNotEmpty()) {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(minSize = 160.dp),
+                    modifier = modifier,
+                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    content = {
+                        items(
+                            items = albums,
+                            key = { it.id!! },
+                        ) { album ->
+                            AlbumsListItem(
+                                name = album.name.orEmpty(),
+                                imageUrl = album.image.orEmpty(),
+                                artists = album.artists,
+                                typeAndYear = album.typeAndYear,
+                                onClick = { /*TODO*/ },
+                            )
+                        }
+                    },
+                )
+            }
+        }
+
+        SearchItemType.ARTIST -> {
+            if (artists.isNotEmpty()) {
+                LazyColumn(
+                    modifier = modifier,
+                    content = {
+                        items(
+                            items = artists,
+                            key = { it.id!! },
+                        ) { artist ->
+                            ArtistsListItem(
+                                name = artist.name.orEmpty(),
+                                imageUrl = artist.image.orEmpty(),
+                                onClick = { /*TODO*/ },
+                            )
+                        }
+                    },
+                )
+            }
+        }
+
+        SearchItemType.PLAYLIST -> {
+            if (playlists.isNotEmpty()) {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(minSize = 160.dp),
+                    modifier = modifier,
+                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    content = {
+                        items(
+                            items = playlists,
+                            key = { it.id!! },
+                        ) { playlist ->
+                            PlalistsListItem(
+                                name = playlist.name.orEmpty(),
+                                imageUrl = playlist.image.orEmpty(),
+                                owner = playlist.owner,
+                                onClick = { /*TODO*/ },
+                            )
+                        }
+                    },
+                )
+            }
+        }
+
+        SearchItemType.TRACK -> {
+            if (tracks.isNotEmpty()) {
+                LazyColumn(
+                    modifier = modifier,
+                    content = {
+                        items(
+                            items = tracks,
+                            key = { it.id!! },
+                        ) { track ->
+                            TracksListItem(
+                                name = track.name.orEmpty(),
+                                imageUrl = track.image.orEmpty(),
+                                artists = track.artists.orEmpty(),
+                                onClick = { /*TODO*/ },
+                            )
+                        }
+                    },
+                )
+            }
+        }
+
+        SearchItemType.SHOW -> {
+            if (shows.isNotEmpty()) {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(minSize = 160.dp),
+                    modifier = modifier,
+                    contentPadding = PaddingValues(start = 16.dp, end = 16.dp, bottom = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    content = {
+                        items(
+                            items = shows,
+                            key = { it.id!! },
+                        ) { show ->
+                            ShowsListItem(
+                                name = show.name.orEmpty(),
+                                imageUrl = show.image.orEmpty(),
+                                publisher = show.publisher,
+                                onClick = { /*TODO*/ },
+                            )
+                        }
+                    },
+                )
+            }
+        }
+
+        else -> {
+            // Nothing is shown
         }
     }
 }

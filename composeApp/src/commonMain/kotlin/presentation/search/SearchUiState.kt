@@ -1,13 +1,15 @@
 package presentation.search
 
 import core.Result
-import data.remote.dto.spotify.search.SearchDto
-import domain.model.spotify.category.CategoryItem
+import domain.model.spotify.category.Category
+import domain.model.spotify.search.Search
+import domain.repository.SearchItemType
 
 data class SearchUiState(
     val accessToken: String = "",
-    val categoriesResult: Result<List<CategoryItem>> = Result.Empty(),
+    val categoriesResult: Result<List<Category>> = Result.Empty(),
     val isSearchBarActive: Boolean = false,
-    val searchResult: Result<SearchDto> = Result.Empty(),
+    val searchItemType: SearchItemType = SearchItemType.TRACK,
+    val searchResult: Result<Search> = Result.Empty(),
     val searchQuery: String = "",
 )
