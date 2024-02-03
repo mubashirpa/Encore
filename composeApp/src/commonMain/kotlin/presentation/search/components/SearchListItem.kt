@@ -176,7 +176,7 @@ private fun PlalistsListItemContent(
             contentDescription = null,
             modifier =
                 Modifier
-                    .aspectRatio(1F)
+                    .aspectRatio(1f)
                     .clip(MaterialTheme.shapes.medium)
                     .indication(interactionSource, rememberRipple()),
             contentScale = ContentScale.Crop,
