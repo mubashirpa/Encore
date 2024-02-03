@@ -3,15 +3,13 @@ package data.mapper
 import data.remote.dto.spotify.Followers
 import data.remote.dto.spotify.Image
 import data.remote.dto.spotify.users.profile.UserDto
-import data.remote.dto.spotify.users.topItems.Album
 import data.remote.dto.spotify.users.topItems.ArtistItem
 import data.remote.dto.spotify.users.topItems.TrackItem
-import domain.model.spotify.users.UsersImage
 import domain.model.spotify.users.profile.User
 import domain.model.spotify.users.profile.UsersFollowers
-import domain.model.spotify.users.topItems.UsersAlbum
-import domain.model.spotify.users.topItems.UsersArtistItem
-import domain.model.spotify.users.topItems.UsersTrackItem
+import domain.model.spotify.users.profile.UsersImage
+import domain.model.spotify.users.topItems.UsersTopArtistItem
+import domain.model.spotify.users.topItems.UsersTopTrackItem
 
 fun UserDto.toUser(): User {
     return User(
@@ -23,22 +21,19 @@ fun UserDto.toUser(): User {
     )
 }
 
-fun ArtistItem.toUsersArtistItem(): UsersArtistItem {
-    return UsersArtistItem(
+fun ArtistItem.toUsersTopArtistItem(): UsersTopArtistItem {
+    return UsersTopArtistItem(
         id,
-        images?.map { it.toUsersImage() },
+        images?.firstOrNull()?.url,
         name,
     )
 }
 
-fun TrackItem.toUsersTrackItem(): UsersTrackItem {
-    return UsersTrackItem(
-        album?.toUsersAlbum(),
+fun TrackItem.toUsersTopTrackItem(): UsersTopTrackItem {
+    return UsersTopTrackItem(
         id,
-        isPlayable,
+        album?.images?.firstOrNull()?.url,
         name,
-        previewUrl,
-        uri,
     )
 }
 
@@ -50,10 +45,4 @@ private fun Followers.toUsersFollowers(): UsersFollowers {
 
 private fun Image.toUsersImage(): UsersImage {
     return UsersImage(url)
-}
-
-private fun Album.toUsersAlbum(): UsersAlbum {
-    return UsersAlbum(
-        images?.map { it.toUsersImage() },
-    )
 }

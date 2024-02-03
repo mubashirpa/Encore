@@ -1,8 +1,8 @@
 package domain.usecase.spotify.users
 
 import core.Result
-import data.mapper.toUsersTrackItem
-import domain.model.spotify.users.topItems.UsersTrackItem
+import data.mapper.toUsersTopTrackItem
+import domain.model.spotify.users.topItems.UsersTopTrackItem
 import domain.repository.SpotifyRepository
 import domain.repository.UsersTopItemTimeRange
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +14,7 @@ class GetUsersTopTracksUseCase(private val spotifyRepository: SpotifyRepository)
         timeRange: UsersTopItemTimeRange = UsersTopItemTimeRange.MEDIUM_TERM,
         limit: Int = 20,
         offset: Int = 0,
-    ): Flow<Result<List<UsersTrackItem>>> =
+    ): Flow<Result<List<UsersTopTrackItem>>> =
         flow {
             try {
                 emit(Result.Loading())
@@ -24,7 +24,7 @@ class GetUsersTopTracksUseCase(private val spotifyRepository: SpotifyRepository)
                         timeRange,
                         limit,
                         offset,
-                    ).items?.map { it.toUsersTrackItem() }
+                    ).items?.map { it.toUsersTopTrackItem() }
                 emit(Result.Success(topTracks))
             } catch (e: Exception) {
                 emit(Result.Error(message = e.message.toString()))

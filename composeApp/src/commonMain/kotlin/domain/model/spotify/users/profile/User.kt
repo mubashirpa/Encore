@@ -1,7 +1,5 @@
 package domain.model.spotify.users.profile
 
-import domain.model.spotify.users.UsersImage
-
 data class User(
     val displayName: String? = null,
     val email: String? = null,
