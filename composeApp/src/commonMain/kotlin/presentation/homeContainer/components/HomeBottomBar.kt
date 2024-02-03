@@ -17,18 +17,18 @@ fun HomeBottomBar(component: HomeContainerComponent) {
         contentColor = MaterialTheme.colorScheme.onBackground,
         tonalElevation = 0.dp,
     ) {
-        NavigationScreen(component = component) { isSelected, icon, text, onClick ->
+        NavigationScreen(component = component) { selected, icon, label, onClick ->
             NavigationBarItem(
-                selected = isSelected,
+                selected = selected,
                 onClick = onClick,
                 icon = {
                     Icon(
                         painter = icon,
-                        contentDescription = text,
+                        contentDescription = label,
                     )
                 },
                 label = {
-                    Text(text = text)
+                    Text(text = label)
                 },
                 colors =
                     NavigationBarItemDefaults.colors(
