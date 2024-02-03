@@ -25,6 +25,7 @@ import encore.composeapp.generated.resources.Res
 import navigation.HomeContainerComponent
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 import presentation.home.HomeScreen
 import presentation.homeContainer.components.HomeAppBar
 import presentation.homeContainer.components.HomeBottomBar
@@ -68,7 +69,7 @@ fun HomeContainer(component: HomeContainerComponent) {
                         val viewModel = homeScreenComponent.viewModel
 
                         HomeAppBar(
-                            title = "Go listen!",
+                            title = stringResource(Res.string.title_home_screen),
                             profileImage = "$profileUrl",
                             actions = {
                                 IconButton(onClick = { /* do something */ }) {
@@ -89,7 +90,7 @@ fun HomeContainer(component: HomeContainerComponent) {
 
                     is HomeContainerComponent.Child.LibraryScreen -> {
                         HomeAppBar(
-                            title = "Your library",
+                            title = stringResource(Res.string.title_library_screen),
                             profileImage = "$profileUrl",
                             actions = {
                                 IconButton(onClick = { /* do something */ }) {
@@ -115,7 +116,7 @@ fun HomeContainer(component: HomeContainerComponent) {
                         val viewModel = searchScreenComponent.viewModel
 
                         HomeAppBar(
-                            title = "Let's search",
+                            title = stringResource(Res.string.title_search_screen),
                             profileImage = "$profileUrl",
                             actions = {
                                 IconButton(onClick = { /* do something */ }) {

@@ -27,19 +27,19 @@ fun <T> T.NavigationScreen(
     content(
         activeChild is HomeContainerComponent.Child.HomeScreen,
         painterResource(Res.drawable.home),
-        stringResource(Res.string.label_home),
+        stringResource(Res.string.home),
         component::onHomeScreenTabClicked,
     )
     content(
         activeChild is HomeContainerComponent.Child.SearchScreen,
         painterResource(Res.drawable.search),
-        stringResource(Res.string.label_search),
+        stringResource(Res.string.search),
         component::onSearchScreenTabClicked,
     )
     content(
         activeChild is HomeContainerComponent.Child.LibraryScreen,
         painterResource(Res.drawable.library),
-        stringResource(Res.string.label_library),
+        stringResource(Res.string.library),
         component::onLibraryScreenTabClicked,
     )
 }
