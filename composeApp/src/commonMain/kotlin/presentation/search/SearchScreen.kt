@@ -244,7 +244,10 @@ fun SearchScreen(
                                         style = MaterialTheme.typography.titleMedium,
                                     )
                                 }
-                                items(categories) { category ->
+                                items(
+                                    items = categories,
+                                    key = { it.id!! },
+                                ) { category ->
                                     CategoriesListItem(
                                         name = category.name.orEmpty(),
                                         imageUrl = category.icon.orEmpty(),
