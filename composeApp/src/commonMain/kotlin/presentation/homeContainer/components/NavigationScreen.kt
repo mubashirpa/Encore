@@ -1,4 +1,4 @@
-package presentation.home_container.components
+package presentation.homeContainer.components
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue

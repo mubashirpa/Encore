@@ -1,4 +1,4 @@
-package presentation.home_container.components
+package presentation.homeContainer.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope

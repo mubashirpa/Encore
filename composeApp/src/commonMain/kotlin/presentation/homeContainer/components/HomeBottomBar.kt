@@ -1,4 +1,4 @@
-package presentation.home_container.components
+package presentation.homeContainer.components
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme

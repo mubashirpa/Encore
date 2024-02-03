@@ -18,7 +18,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import navigation.RootComponent
 import org.koin.compose.KoinContext
-import presentation.home_container.HomeContainer
+import presentation.homeContainer.HomeContainer
 import presentation.theme.EncoreTheme
 
 @Composable
