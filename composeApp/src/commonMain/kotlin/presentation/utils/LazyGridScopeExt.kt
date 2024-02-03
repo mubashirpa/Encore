@@ -31,15 +31,3 @@ fun LazyGridScope.header(
         content = content,
     )
 }
-
-/**
- * Adds a [count] of empty items
- *
- * @param count the items count
- */
-fun LazyGridScope.offsetCells(count: Int) {
-    item(
-        span = { GridItemSpan(count) },
-        content = {},
-    )
-}
