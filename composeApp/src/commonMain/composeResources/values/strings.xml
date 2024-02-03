@@ -2,14 +2,19 @@
     <string name="albums">Albums</string>
     <string name="artists">Artists</string>
     <string name="browse_all">Browse all</string>
+    <string name="editorial_picks">Editorial Picks</string>
     <string name="home">Home</string>
     <string name="library">Library</string>
+    <string name="new_releases">New Releases</string>
     <string name="playlists">Playlists</string>
     <string name="podcasts_and_shows">Podcasts &amp; Shows</string>
+    <string name="popular">Popular</string>
     <string name="search">Search</string>
     <string name="search_bar_placeholder">What will you listen to?</string>
     <string name="songs">Songs</string>
     <string name="title_home_screen">Go listen!</string>
     <string name="title_library_screen">Your library</string>
     <string name="title_search_screen">Let's search</string>
+    <string name="top_charts">Top Charts</string>
+    <string name="trending_now">Trending Now</string>
 </resources>
