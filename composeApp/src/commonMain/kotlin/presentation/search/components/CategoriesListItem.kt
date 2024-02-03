@@ -62,7 +62,7 @@ fun CategoriesListItem(
                     .padding(8.dp)
                     .align(Alignment.BottomEnd)
                     .basicMarquee(iterations = 2),
-            color = MaterialTheme.colorScheme.onSurface,
+            color = Color.White,
             fontWeight = FontWeight.Bold,
             maxLines = 1,
             style = MaterialTheme.typography.bodyLarge,
