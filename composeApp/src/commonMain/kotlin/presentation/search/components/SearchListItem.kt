@@ -188,7 +188,7 @@ private fun PlalistsListItemContent(
             fontWeight = FontWeight.Bold,
             overflow = TextOverflow.Ellipsis,
             maxLines = 2,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.labelLarge,
         )
         if (subTitle != null) {
             Spacer(modifier = Modifier.height(4.dp))
@@ -197,7 +197,7 @@ private fun PlalistsListItemContent(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.labelMedium,
             )
         }
         if (moreInfo != null) {
@@ -207,7 +207,7 @@ private fun PlalistsListItemContent(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1,
-                style = MaterialTheme.typography.bodyMedium,
+                style = MaterialTheme.typography.labelMedium,
             )
         }
     }

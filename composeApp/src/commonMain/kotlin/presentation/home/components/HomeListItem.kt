@@ -52,8 +52,9 @@ fun HomeListItem(
         Spacer(modifier = Modifier.height(4.dp))
         Text(
             text = name,
-            maxLines = 2,
+            color = MaterialTheme.colorScheme.onSurface,
             overflow = TextOverflow.Ellipsis,
+            maxLines = 2,
             style = MaterialTheme.typography.labelLarge,
         )
     }
