@@ -29,7 +29,7 @@ class MainViewModel(
     private val clientSecret = "622b4fbad33947c59b95a6ae607de11d"
     private val redirectUrl = "blackhole://spotify/auth"
     private val scope =
-        "user-read-private user-read-email playlist-read-private playlist-read-collaborative user-top-read"
+        "user-read-private user-read-email playlist-read-private playlist-read-collaborative user-top-read user-follow-read"
 
     fun onEvent(event: MainUIEvent) {
         when (event) {
