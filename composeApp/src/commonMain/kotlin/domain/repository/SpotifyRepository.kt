@@ -1,21 +1,17 @@
 package domain.repository
 
-import data.remote.dto.spotify.AccessTokenDto
+import androidx.annotation.IntRange
+import data.remote.dto.spotify.accessToken.AccessTokenDto
 import data.remote.dto.spotify.category.CategoriesDto
-import data.remote.dto.spotify.playlists.PlaylistsDto
+import data.remote.dto.spotify.playlists.currentUsersPlaylists.CurrentUsersPlaylistsDto
+import data.remote.dto.spotify.playlists.featuredPlaylists.FeaturedPlaylistsDto
 import data.remote.dto.spotify.search.SearchDto
-import data.remote.dto.spotify.users.profile.UserDto
-import data.remote.dto.spotify.users.topItems.TopArtistsDto
-import data.remote.dto.spotify.users.topItems.TopTracksDto
+import data.remote.dto.spotify.users.currentUsersProfile.CurrentUsersProfileDto
+import data.remote.dto.spotify.users.followedArtists.FollowedArtistsDto
+import data.remote.dto.spotify.users.usersTopItems.UsersTopArtistsDto
+import data.remote.dto.spotify.users.usersTopItems.UsersTopTracksDto
 
 interface SpotifyRepository {
-    /**
-     * Get detailed profile information about the current user.
-     * @param accessToken String which contains the credentials and permissions that can be used to
-     * access a given resource (e.g artists, albums or tracks) or user's data.
-     */
-    suspend fun getCurrentUsersProfile(accessToken: String): UserDto
-
     /**
      * Request authorization from the user so that our app can access to the Spotify resources on the user's behalf.
      * @param clientId The Client ID generated after registering your application.
@@ -87,6 +83,42 @@ interface SpotifyRepository {
     ): AccessTokenDto
 
     /**
+     * Get a list of categories used to tag items in Spotify.
+     * @param accessToken String which contains the credentials and permissions that can be used to
+     * access a given resource (e.g artists, albums or tracks) or user's data.
+     * @param country An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to
+     * narrow the list of returned categories to those relevant to a particular country. If omitted,
+     * the returned items will be globally relevant.
+     * @param locale The desired language, consisting of an ISO 639-1 language code and an ISO
+     * 3166-1 alpha-2 country code, joined by an underscore. Provide this parameter if you want the
+     * category metadata returned in a particular language.
+     * @param limit The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.
+     * @param offset The index of the first item to return. Default: 0 (the first item). Use with
+     * limit to get the next set of items.
+     */
+    suspend fun getCategories(
+        accessToken: String,
+        country: String? = null,
+        locale: String? = null,
+        limit: Int = 20,
+        offset: Int = 0,
+    ): CategoriesDto
+
+    /**
+     * Get a list of the playlists owned or followed by the current Spotify user.
+     * @param accessToken String which contains the credentials and permissions that can be used to
+     * access a given resource (e.g artists, albums or tracks) or user's data.
+     * @param limit The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.
+     * @param offset The index of the first item to return. Default: 0 (the first item). Use with
+     * limit to get the next set of playlists.
+     */
+    suspend fun getCurrentUsersPlaylists(
+        accessToken: String,
+        @IntRange(from = 1, to = 50) limit: Int = 20,
+        offset: Int = 0,
+    ): CurrentUsersPlaylistsDto
+
+    /**
      * Get a list of Spotify featured playlists (shown, for example, on a Spotify player's 'Browse'
      * tab).
      * @param accessToken String which contains the credentials and permissions that can be used to
@@ -114,61 +146,7 @@ interface SpotifyRepository {
         timestamp: String? = null,
         limit: Int = 20,
         offset: Int = 0,
-    ): PlaylistsDto
-
-    /**
-     * Get the current user's top artists based on calculated affinity.
-     * @param accessToken String which contains the credentials and permissions that can be used to
-     * access a given resource (e.g artists, albums or tracks) or user's data.
-     * @param timeRange Over what time frame the affinities are computed.
-     * @param limit The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.
-     * @param offset The index of the first item to return. Default: 0 (the first item). Use with
-     * limit to get the next set of items.
-     */
-    suspend fun getUsersTopArtists(
-        accessToken: String,
-        timeRange: UsersTopItemTimeRange = UsersTopItemTimeRange.MEDIUM_TERM,
-        limit: Int = 20,
-        offset: Int = 0,
-    ): TopArtistsDto
-
-    /**
-     * Get the current user's top tracks based on calculated affinity.
-     * @param accessToken String which contains the credentials and permissions that can be used to
-     * access a given resource (e.g artists, albums or tracks) or user's data.
-     * @param timeRange Over what time frame the affinities are computed.
-     * @param limit The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.
-     * @param offset The index of the first item to return. Default: 0 (the first item). Use with
-     * limit to get the next set of items.
-     */
-    suspend fun getUsersTopTracks(
-        accessToken: String,
-        timeRange: UsersTopItemTimeRange = UsersTopItemTimeRange.MEDIUM_TERM,
-        limit: Int = 20,
-        offset: Int = 0,
-    ): TopTracksDto
-
-    /**
-     * Get a list of categories used to tag items in Spotify.
-     * @param accessToken String which contains the credentials and permissions that can be used to
-     * access a given resource (e.g artists, albums or tracks) or user's data.
-     * @param country An ISO 3166-1 alpha-2 country code. Provide this parameter if you want to
-     * narrow the list of returned categories to those relevant to a particular country. If omitted,
-     * the returned items will be globally relevant.
-     * @param locale The desired language, consisting of an ISO 639-1 language code and an ISO
-     * 3166-1 alpha-2 country code, joined by an underscore. Provide this parameter if you want the
-     * category metadata returned in a particular language.
-     * @param limit The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.
-     * @param offset The index of the first item to return. Default: 0 (the first item). Use with
-     * limit to get the next set of items.
-     */
-    suspend fun getCategories(
-        accessToken: String,
-        country: String? = null,
-        locale: String? = null,
-        limit: Int = 20,
-        offset: Int = 0,
-    ): CategoriesDto
+    ): FeaturedPlaylistsDto
 
     /**
      * Get Spotify catalog information about albums, artists, playlists, tracks, shows, episodes or
@@ -193,6 +171,58 @@ interface SpotifyRepository {
         offset: Int = 0,
         includeExternal: Boolean = false,
     ): SearchDto
+
+    /**
+     * Get detailed profile information about the current user.
+     * @param accessToken String which contains the credentials and permissions that can be used to
+     * access a given resource (e.g artists, albums or tracks) or user's data.
+     */
+    suspend fun getCurrentUsersProfile(accessToken: String): CurrentUsersProfileDto
+
+    /**
+     * Get the current user's top artists based on calculated affinity.
+     * @param accessToken String which contains the credentials and permissions that can be used to
+     * access a given resource (e.g artists, albums or tracks) or user's data.
+     * @param timeRange Over what time frame the affinities are computed.
+     * @param limit The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.
+     * @param offset The index of the first item to return. Default: 0 (the first item). Use with
+     * limit to get the next set of items.
+     */
+    suspend fun getUsersTopArtists(
+        accessToken: String,
+        timeRange: UsersTopItemTimeRange = UsersTopItemTimeRange.MEDIUM_TERM,
+        limit: Int = 20,
+        offset: Int = 0,
+    ): UsersTopArtistsDto
+
+    /**
+     * Get the current user's top tracks based on calculated affinity.
+     * @param accessToken String which contains the credentials and permissions that can be used to
+     * access a given resource (e.g artists, albums or tracks) or user's data.
+     * @param timeRange Over what time frame the affinities are computed.
+     * @param limit The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.
+     * @param offset The index of the first item to return. Default: 0 (the first item). Use with
+     * limit to get the next set of items.
+     */
+    suspend fun getUsersTopTracks(
+        accessToken: String,
+        timeRange: UsersTopItemTimeRange = UsersTopItemTimeRange.MEDIUM_TERM,
+        limit: Int = 20,
+        offset: Int = 0,
+    ): UsersTopTracksDto
+
+    /**
+     * Get the current user's followed artists.
+     * @param accessToken String which contains the credentials and permissions that can be used to
+     * access a given resource (e.g artists, albums or tracks) or user's data.
+     * @param after The last artist ID retrieved from the previous request.
+     * @param limit The maximum number of items to return. Default: 20. Minimum: 1. Maximum: 50.
+     */
+    suspend fun getFollowedArtists(
+        accessToken: String,
+        after: String? = null,
+        @IntRange(from = 1, to = 50) limit: Int = 20,
+    ): FollowedArtistsDto
 }
 
 @Suppress("unused")

@@ -1,13 +1,15 @@
 package data.repository
 
 import core.Spotify
-import data.remote.dto.spotify.AccessTokenDto
+import data.remote.dto.spotify.accessToken.AccessTokenDto
 import data.remote.dto.spotify.category.CategoriesDto
-import data.remote.dto.spotify.playlists.PlaylistsDto
+import data.remote.dto.spotify.playlists.currentUsersPlaylists.CurrentUsersPlaylistsDto
+import data.remote.dto.spotify.playlists.featuredPlaylists.FeaturedPlaylistsDto
 import data.remote.dto.spotify.search.SearchDto
-import data.remote.dto.spotify.users.profile.UserDto
-import data.remote.dto.spotify.users.topItems.TopArtistsDto
-import data.remote.dto.spotify.users.topItems.TopTracksDto
+import data.remote.dto.spotify.users.currentUsersProfile.CurrentUsersProfileDto
+import data.remote.dto.spotify.users.followedArtists.FollowedArtistsDto
+import data.remote.dto.spotify.users.usersTopItems.UsersTopArtistsDto
+import data.remote.dto.spotify.users.usersTopItems.UsersTopTracksDto
 import domain.repository.SearchItemType
 import domain.repository.SpotifyRepository
 import domain.repository.UsersTopItemTimeRange
@@ -30,15 +32,6 @@ import io.ktor.util.encodeBase64
 class SpotifyRepositoryImpl(
     private val httpClient: HttpClient,
 ) : SpotifyRepository {
-    override suspend fun getCurrentUsersProfile(accessToken: String): UserDto {
-        return httpClient.get(Spotify.API_BASE_URL) {
-            url {
-                appendPathSegments(Spotify.ENDPOINT_CURRENT_USERS_PROFILE)
-            }
-            authorisationHeader(accessToken)
-        }.body()
-    }
-
     override fun requestUserAuthorization(
         clientId: String,
         responseType: String,
@@ -123,69 +116,6 @@ class SpotifyRepositoryImpl(
         }.body()
     }
 
-    override suspend fun getFeaturedPlaylists(
-        accessToken: String,
-        country: String?,
-        locale: String?,
-        timestamp: String?,
-        limit: Int,
-        offset: Int,
-    ): PlaylistsDto {
-        return httpClient.get(Spotify.API_BASE_URL) {
-            url {
-                appendPathSegments(Spotify.ENDPOINT_FEATURED_PLAYLISTS)
-                if (!country.isNullOrEmpty()) {
-                    parameters.append(Spotify.Parameters.COUNTRY, country)
-                }
-                if (!locale.isNullOrEmpty()) {
-                    parameters.append(Spotify.Parameters.LOCALE, locale)
-                }
-                if (!timestamp.isNullOrEmpty()) {
-                    parameters.append(Spotify.Parameters.TIMESTAMP, timestamp)
-                }
-                parameters.append(Spotify.Parameters.LIMIT, limit.toString())
-                parameters.append(Spotify.Parameters.OFFSET, offset.toString())
-            }
-            authorisationHeader(accessToken)
-        }.body()
-    }
-
-    override suspend fun getUsersTopArtists(
-        accessToken: String,
-        timeRange: UsersTopItemTimeRange,
-        limit: Int,
-        offset: Int,
-    ): TopArtistsDto {
-        return httpClient.get(Spotify.API_BASE_URL) {
-            url {
-                appendPathSegments(Spotify.ENDPOINT_USERS_TOP_ITEMS)
-                appendPathSegments(UsersTopItemType.ARTISTS.name.lowercase())
-                parameters.append(Spotify.Parameters.TIME_RANGE, timeRange.name.lowercase())
-                parameters.append(Spotify.Parameters.LIMIT, limit.toString())
-                parameters.append(Spotify.Parameters.OFFSET, offset.toString())
-            }
-            authorisationHeader(accessToken)
-        }.body()
-    }
-
-    override suspend fun getUsersTopTracks(
-        accessToken: String,
-        timeRange: UsersTopItemTimeRange,
-        limit: Int,
-        offset: Int,
-    ): TopTracksDto {
-        return httpClient.get(Spotify.API_BASE_URL) {
-            url {
-                appendPathSegments(Spotify.ENDPOINT_USERS_TOP_ITEMS)
-                appendPathSegments(UsersTopItemType.TRACKS.name.lowercase())
-                parameters.append(Spotify.Parameters.TIME_RANGE, timeRange.name.lowercase())
-                parameters.append(Spotify.Parameters.LIMIT, limit.toString())
-                parameters.append(Spotify.Parameters.OFFSET, offset.toString())
-            }
-            authorisationHeader(accessToken)
-        }.body()
-    }
-
     override suspend fun getCategories(
         accessToken: String,
         country: String?,
@@ -201,6 +131,48 @@ class SpotifyRepositoryImpl(
                 }
                 if (!locale.isNullOrEmpty()) {
                     parameters.append(Spotify.Parameters.LOCALE, locale)
+                }
+                parameters.append(Spotify.Parameters.LIMIT, limit.toString())
+                parameters.append(Spotify.Parameters.OFFSET, offset.toString())
+            }
+            authorisationHeader(accessToken)
+        }.body()
+    }
+
+    override suspend fun getCurrentUsersPlaylists(
+        accessToken: String,
+        limit: Int,
+        offset: Int,
+    ): CurrentUsersPlaylistsDto {
+        return httpClient.get(Spotify.API_BASE_URL) {
+            url {
+                appendPathSegments(Spotify.ENDPOINT_CURRENT_USERS_PLAYLISTS)
+                parameters.append(Spotify.Parameters.LIMIT, limit.toString())
+                parameters.append(Spotify.Parameters.OFFSET, offset.toString())
+            }
+            authorisationHeader(accessToken)
+        }.body()
+    }
+
+    override suspend fun getFeaturedPlaylists(
+        accessToken: String,
+        country: String?,
+        locale: String?,
+        timestamp: String?,
+        limit: Int,
+        offset: Int,
+    ): FeaturedPlaylistsDto {
+        return httpClient.get(Spotify.API_BASE_URL) {
+            url {
+                appendPathSegments(Spotify.ENDPOINT_FEATURED_PLAYLISTS)
+                if (!country.isNullOrEmpty()) {
+                    parameters.append(Spotify.Parameters.COUNTRY, country)
+                }
+                if (!locale.isNullOrEmpty()) {
+                    parameters.append(Spotify.Parameters.LOCALE, locale)
+                }
+                if (!timestamp.isNullOrEmpty()) {
+                    parameters.append(Spotify.Parameters.TIMESTAMP, timestamp)
                 }
                 parameters.append(Spotify.Parameters.LIMIT, limit.toString())
                 parameters.append(Spotify.Parameters.OFFSET, offset.toString())
@@ -234,6 +206,69 @@ class SpotifyRepositoryImpl(
                 if (includeExternal) {
                     parameters.append(Spotify.Parameters.INCLUDE_EXTERNAL, Spotify.Parameters.AUDIO)
                 }
+            }
+            authorisationHeader(accessToken)
+        }.body()
+    }
+
+    override suspend fun getCurrentUsersProfile(accessToken: String): CurrentUsersProfileDto {
+        return httpClient.get(Spotify.API_BASE_URL) {
+            url {
+                appendPathSegments(Spotify.ENDPOINT_CURRENT_USERS_PROFILE)
+            }
+            authorisationHeader(accessToken)
+        }.body()
+    }
+
+    override suspend fun getUsersTopArtists(
+        accessToken: String,
+        timeRange: UsersTopItemTimeRange,
+        limit: Int,
+        offset: Int,
+    ): UsersTopArtistsDto {
+        return httpClient.get(Spotify.API_BASE_URL) {
+            url {
+                appendPathSegments(Spotify.ENDPOINT_USERS_TOP_ITEMS)
+                appendPathSegments(UsersTopItemType.ARTISTS.name.lowercase())
+                parameters.append(Spotify.Parameters.TIME_RANGE, timeRange.name.lowercase())
+                parameters.append(Spotify.Parameters.LIMIT, limit.toString())
+                parameters.append(Spotify.Parameters.OFFSET, offset.toString())
+            }
+            authorisationHeader(accessToken)
+        }.body()
+    }
+
+    override suspend fun getUsersTopTracks(
+        accessToken: String,
+        timeRange: UsersTopItemTimeRange,
+        limit: Int,
+        offset: Int,
+    ): UsersTopTracksDto {
+        return httpClient.get(Spotify.API_BASE_URL) {
+            url {
+                appendPathSegments(Spotify.ENDPOINT_USERS_TOP_ITEMS)
+                appendPathSegments(UsersTopItemType.TRACKS.name.lowercase())
+                parameters.append(Spotify.Parameters.TIME_RANGE, timeRange.name.lowercase())
+                parameters.append(Spotify.Parameters.LIMIT, limit.toString())
+                parameters.append(Spotify.Parameters.OFFSET, offset.toString())
+            }
+            authorisationHeader(accessToken)
+        }.body()
+    }
+
+    override suspend fun getFollowedArtists(
+        accessToken: String,
+        after: String?,
+        limit: Int,
+    ): FollowedArtistsDto {
+        return httpClient.get(Spotify.API_BASE_URL) {
+            url {
+                appendPathSegments(Spotify.ENDPOINT_FOLLOWED_ARTISTS)
+                parameters.append(Spotify.Parameters.TYPE, Spotify.Parameters.ARTIST)
+                if (!after.isNullOrEmpty()) {
+                    parameters.append(Spotify.Parameters.AFTER, after)
+                }
+                parameters.append(Spotify.Parameters.LIMIT, limit.toString())
             }
             authorisationHeader(accessToken)
         }.body()
