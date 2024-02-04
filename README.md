@@ -1,14 +1,23 @@
-This is a Kotlin Multiplatform project targeting Android, iOS.
+# Encore
 
-* `/composeApp` is for code that will be shared across your Compose Multiplatform applications.
-  It contains several subfolders:
-  - `commonMain` is for code that’s common for all targets.
-  - Other folders are for Kotlin code that will be compiled for only the platform indicated in the folder name.
-    For example, if you want to use Apple’s CoreCrypto for the iOS part of your Kotlin app,
-    `iosMain` would be the right folder for such calls.
+Welcome to Encore, a music player application built with Compose Multiplatform and integrated with the Spotify API! This app allows you to explore and enjoy music across various platforms, including Android and iOS.
 
-* `/iosApp` contains iOS applications. Even if you’re sharing your UI with Compose Multiplatform, 
-  you need this entry point for your iOS app. This is also where you should add SwiftUI code for your project.
+### Status: 🚧 In progress 🚧
 
+Encore is still in the early stages of development and some features are not yet implemented.
 
-Learn more about [Kotlin Multiplatform](https://www.jetbrains.com/help/kotlin-multiplatform-dev/get-started.html)…
+## Contributing
+
+Feel free to contribute to the project by submitting bug reports, feature requests, or pull requests. Follow the guidelines outlined in the [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
+## License
+
+Copyright 2024 Mubashir P A
+
+This project is licensed under the [GNU AGPLv3](https://www.gnu.org/licenses/agpl-3.0.html)
+
+## Disclaimer
+
+```
+Encore does not own or have any affiliation with the songs and other content available through the app. All songs and other content are the property of their respective owners and are protected by copyright law. Encore is not responsible for any infringement of copyright or other intellectual property rights that may result from the use of the songs and other content available through the app. Encore uses third-party plugins and is not responsible for any harm or damage to the respective owners or any other parties resulting from the use of the songs and other content through the third-party plugins. By using the app, you agree to use the songs and other content only for personal, non-commercial purposes and in compliance with all applicable laws and regulations.
+```
