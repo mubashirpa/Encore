@@ -7,6 +7,7 @@ data class UsersTopArtistItem(
 )
 
 data class UsersTopTrackItem(
+    val artists: String? = null,
     val id: String? = null,
     val image: String? = null,
     val name: String? = null,

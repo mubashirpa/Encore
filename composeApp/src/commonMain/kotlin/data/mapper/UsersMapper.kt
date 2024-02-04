@@ -36,6 +36,7 @@ fun ArtistItem.toUsersTopArtistItem(): UsersTopArtistItem {
 
 fun TrackItem.toUsersTopTrackItem(): UsersTopTrackItem {
     return UsersTopTrackItem(
+        artists?.joinToString(", ") { it.name.toString() },
         id,
         album?.images?.firstOrNull()?.url,
         name,

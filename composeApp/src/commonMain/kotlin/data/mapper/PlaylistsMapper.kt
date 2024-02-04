@@ -9,6 +9,7 @@ fun CurrentUsersPlaylistsItem.toCurrentUsersPlaylistsItem(): PlaylistsItem {
         id,
         images?.firstOrNull()?.url,
         name,
+        owner?.displayName,
     )
 }
 
@@ -17,5 +18,6 @@ fun FeaturedPlaylistsItem.toFeaturedPlaylistsItem(): PlaylistsItem {
         id,
         images?.firstOrNull()?.url,
         name,
+        owner?.displayName,
     )
 }
