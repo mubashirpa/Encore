@@ -31,8 +31,8 @@ class HomeViewModel(
             is HomeUiEvent.OnGetAccessToken -> {
                 if (event.accessToken != uiState.accessToken) {
                     uiState = uiState.copy(accessToken = event.accessToken)
-                    getFeaturedPlaylists(uiState.accessToken)
-                    getUsersTopItems(uiState.accessToken)
+                    getFeaturedPlaylists(event.accessToken)
+                    getUsersTopItems(event.accessToken)
                 }
             }
         }

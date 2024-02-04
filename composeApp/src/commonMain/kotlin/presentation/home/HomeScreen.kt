@@ -101,7 +101,7 @@ fun HomeScreen(
                         ) { playlist ->
                             HomeListItem(
                                 name = playlist.name.orEmpty(),
-                                imageUrl = playlist.images?.firstOrNull()?.url.orEmpty(),
+                                imageUrl = playlist.image.orEmpty(),
                                 onClick = { /*TODO*/ },
                             )
                         }
