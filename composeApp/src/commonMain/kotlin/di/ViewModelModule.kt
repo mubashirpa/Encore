@@ -3,6 +3,7 @@ package di
 import org.koin.dsl.module
 import presentation.MainViewModel
 import presentation.home.HomeViewModel
+import presentation.library.LibraryViewModel
 import presentation.search.SearchViewModel
 
 val viewModelModule =
@@ -11,6 +12,13 @@ val viewModelModule =
             HomeViewModel(
                 getFeaturedPlaylistsUseCase = get(),
                 getLaunchDataUseCase = get(),
+                getUsersTopTracksUseCase = get(),
+            )
+        }
+        factory {
+            LibraryViewModel(
+                getCurrentUsersPlaylistsUseCase = get(),
+                getFollowedArtistsUseCase = get(),
                 getUsersTopTracksUseCase = get(),
             )
         }

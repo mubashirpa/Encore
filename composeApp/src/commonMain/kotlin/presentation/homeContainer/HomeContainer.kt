@@ -41,7 +41,7 @@ fun HomeContainer(component: HomeContainerComponent) {
         )
     val uiState = component.uiState.subscribeAsState()
     val accessToken = uiState.value.accessToken
-    val profileUrl = uiState.value.currentUsersProfile?.images?.firstOrNull()?.url
+    val profileUrl = uiState.value.currentUsersProfile?.image
 
     Scaffold(
         modifier =
@@ -89,6 +89,9 @@ fun HomeContainer(component: HomeContainerComponent) {
                     }
 
                     is HomeContainerComponent.Child.LibraryScreen -> {
+                        val libraryScreenComponent = instance.component
+                        val viewModel = libraryScreenComponent.viewModel
+
                         HomeAppBar(
                             title = stringResource(Res.string.title_library_screen),
                             profileImage = "$profileUrl",
@@ -108,7 +111,11 @@ fun HomeContainer(component: HomeContainerComponent) {
                             },
                             scrollBehavior = scrollBehavior,
                         )
-                        LibraryScreen()
+                        LibraryScreen(
+                            uiState = viewModel.uiState,
+                            onEvent = viewModel::onEvent,
+                            accessToken = accessToken,
+                        )
                     }
 
                     is HomeContainerComponent.Child.SearchScreen -> {
