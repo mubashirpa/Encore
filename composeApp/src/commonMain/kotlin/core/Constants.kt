@@ -12,7 +12,8 @@ object PreferencesKeys {
 }
 
 object Saavn {
-    const val API_BASE_URL = "https://www.jiosaavn.com/api.php?_format=json&_marker=0&api_version=4&ctx=web6dot0"
+    const val API_BASE_URL =
+        "https://www.jiosaavn.com/api.php?_format=json&_marker=0&api_version=4&ctx=web6dot0"
     const val ENDPOINT_LAUNCH_DATA = "&__call=webapi.getLaunchData"
 }
 
@@ -20,13 +21,17 @@ object Spotify {
     const val API_BASE_URL = "https://api.spotify.com/v1"
     const val AUTHORIZE_ENDPOINT_URI = "https://accounts.spotify.com/authorize"
     const val ENDPOINT_BROWSE_CATEGORIES = "browse/categories"
+    const val ENDPOINT_CURRENT_USERS_PLAYLISTS = "me/playlists"
     const val ENDPOINT_CURRENT_USERS_PROFILE = "me"
     const val ENDPOINT_FEATURED_PLAYLISTS = "browse/featured-playlists"
+    const val ENDPOINT_FOLLOWED_ARTISTS = "me/following"
     const val ENDPOINT_SEARCH = "search"
     const val ENDPOINT_USERS_TOP_ITEMS = "me/top"
     const val TOKEN_ENDPOINT_URI = "https://accounts.spotify.com/api/token"
 
     object Parameters {
+        const val AFTER = "after"
+        const val ARTIST = "artist"
         const val AUDIO = "audio"
         const val AUTHORIZATION_CODE = "authorization_code"
         const val CLIENT_CREDENTIALS = "client_credentials"

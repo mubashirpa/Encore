@@ -1,9 +1,9 @@
-package data.remote.dto.spotify.users.topItems
+package data.remote.dto.spotify.users.usersTopItems
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TopArtistsDto(
+data class UsersTopArtistsDto(
     val href: String? = null,
     val items: List<ArtistItem>? = null,
     val limit: Int? = null,

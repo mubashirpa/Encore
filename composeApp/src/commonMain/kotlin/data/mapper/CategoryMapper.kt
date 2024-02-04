@@ -1,10 +1,10 @@
 package data.mapper
 
 import data.remote.dto.spotify.category.Item
-import domain.model.spotify.category.Category
+import domain.model.spotify.category.CategoriesItem
 
-fun Item.toCategoryItem(): Category {
-    return Category(
+fun Item.toCategoriesItem(): CategoriesItem {
+    return CategoriesItem(
         icons?.firstOrNull()?.url,
         id,
         name,

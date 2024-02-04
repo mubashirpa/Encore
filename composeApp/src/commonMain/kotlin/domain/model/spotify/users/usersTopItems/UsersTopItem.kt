@@ -1,4 +1,4 @@
-package domain.model.spotify.users.topItems
+package domain.model.spotify.users.usersTopItems
 
 data class UsersTopArtistItem(
     val id: String? = null,

@@ -2,6 +2,8 @@ package data.remote.dto.spotify.search.playlists
 
 import data.remote.dto.spotify.ExternalUrls
 import data.remote.dto.spotify.Image
+import data.remote.dto.spotify.Owner
+import data.remote.dto.spotify.Tracks
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

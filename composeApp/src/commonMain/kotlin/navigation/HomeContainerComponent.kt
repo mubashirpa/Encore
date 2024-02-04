@@ -7,7 +7,7 @@ import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import core.Result
-import domain.model.spotify.users.profile.User
+import domain.model.spotify.users.currentUsersProfile.CurrentUsersProfile
 import domain.usecase.spotify.accessToken.GetAccessTokenUseCase
 import domain.usecase.spotify.users.GetCurrentUsersProfileUseCase
 import kotlinx.coroutines.channels.Channel
@@ -39,7 +39,7 @@ interface HomeContainerComponent {
 
     data class HomeContainerUiState(
         val accessToken: String = "",
-        val currentUsersProfile: User? = null,
+        val currentUsersProfile: CurrentUsersProfile? = null,
     )
 
     sealed class Child {

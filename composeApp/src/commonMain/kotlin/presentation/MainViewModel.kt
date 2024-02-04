@@ -3,10 +3,10 @@ package presentation
 import core.Result
 import core.utils.UrlLauncher
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
-import domain.usecase.spotify.RequestUserAuthorizationUseCase
 import domain.usecase.spotify.accessToken.GetAccessTokenUseCase
 import domain.usecase.spotify.accessToken.RefreshTokenUseCase
 import domain.usecase.spotify.accessToken.RequestAuthAccessTokenUseCase
+import domain.usecase.spotify.authorization.RequestUserAuthorizationUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first

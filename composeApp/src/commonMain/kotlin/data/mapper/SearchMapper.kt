@@ -15,7 +15,7 @@ import data.remote.dto.spotify.search.tracks.Item as TracksItemDto
 
 fun SearchDto.toSearch(): Search {
     return Search(
-        albums?.items?.map { it.toSearchItem() },
+        albums?.items?.map { it.toAlbumsItem() },
         artists?.items?.map { it.toArtistsItem() },
         playlists?.items?.map { it.toPlaylistsItem() },
         shows?.items?.map { it.toShowsItem() },
@@ -23,7 +23,7 @@ fun SearchDto.toSearch(): Search {
     )
 }
 
-fun AlbumsItemDto.toSearchItem(): AlbumsItem {
+fun AlbumsItemDto.toAlbumsItem(): AlbumsItem {
     val typeAndYear = (if (totalTracks == 1) "Single • " else "").plus(releaseDate?.take(4))
     return AlbumsItem(
         artists?.joinToString(", ") { it.name.toString() },

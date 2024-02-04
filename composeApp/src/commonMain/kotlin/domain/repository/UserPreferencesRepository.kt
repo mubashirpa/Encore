@@ -1,6 +1,6 @@
 package domain.repository
 
-import domain.model.spotify.AccessToken
+import domain.model.spotify.accessToken.AccessToken
 import kotlinx.coroutines.flow.Flow
 
 interface UserPreferencesRepository {

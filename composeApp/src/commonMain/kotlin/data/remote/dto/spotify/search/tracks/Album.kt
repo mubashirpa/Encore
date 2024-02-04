@@ -1,9 +1,9 @@
 package data.remote.dto.spotify.search.tracks
 
-import data.remote.dto.spotify.Artist
 import data.remote.dto.spotify.ExternalUrls
 import data.remote.dto.spotify.Image
 import data.remote.dto.spotify.Restrictions
+import data.remote.dto.spotify.search.Artist
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

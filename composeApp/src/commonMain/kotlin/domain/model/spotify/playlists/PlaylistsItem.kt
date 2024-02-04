@@ -2,6 +2,6 @@ package domain.model.spotify.playlists
 
 data class PlaylistsItem(
     val id: String? = null,
-    val images: List<PlaylistsImage>? = null,
+    val image: String? = null,
     val name: String? = null,
 )

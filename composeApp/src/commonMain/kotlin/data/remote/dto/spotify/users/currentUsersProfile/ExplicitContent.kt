@@ -1,4 +1,4 @@
-package data.remote.dto.spotify.users.profile
+package data.remote.dto.spotify.users.currentUsersProfile
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

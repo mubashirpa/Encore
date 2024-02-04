@@ -1,10 +1,11 @@
-package data.remote.dto.spotify
+package data.remote.dto.spotify.users.usersTopItems
 
+import data.remote.dto.spotify.ExternalUrls
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Artist(
+data class Artists(
     @SerialName("external_urls")
     val externalUrls: ExternalUrls? = null,
     val href: String? = null,

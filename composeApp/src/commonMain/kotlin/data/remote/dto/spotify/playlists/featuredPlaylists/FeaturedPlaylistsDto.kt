@@ -1,9 +1,9 @@
-package data.remote.dto.spotify.playlists
+package data.remote.dto.spotify.playlists.featuredPlaylists
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PlaylistsDto(
+data class FeaturedPlaylistsDto(
     val message: String? = null,
     val playlists: Playlists? = null,
 )

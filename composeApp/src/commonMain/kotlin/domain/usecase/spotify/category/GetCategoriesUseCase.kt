@@ -1,8 +1,8 @@
 package domain.usecase.spotify.category
 
 import core.Result
-import data.mapper.toCategoryItem
-import domain.model.spotify.category.Category
+import data.mapper.toCategoriesItem
+import domain.model.spotify.category.CategoriesItem
 import domain.repository.SpotifyRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -14,7 +14,7 @@ class GetCategoriesUseCase(private val spotifyRepository: SpotifyRepository) {
         locale: String? = null,
         limit: Int = 20,
         offset: Int = 0,
-    ): Flow<Result<List<Category>>> =
+    ): Flow<Result<List<CategoriesItem>>> =
         flow {
             try {
                 emit(Result.Loading())
@@ -25,7 +25,7 @@ class GetCategoriesUseCase(private val spotifyRepository: SpotifyRepository) {
                         locale,
                         limit,
                         offset,
-                    ).categories?.items?.map { it.toCategoryItem() }
+                    ).categories?.items?.map { it.toCategoriesItem() }
                 emit(Result.Success(categories))
             } catch (e: Exception) {
                 emit(Result.Error(message = e.message.toString()))

@@ -1,8 +1,8 @@
 package data.remote.dto.spotify.search.audiobooks
 
-import data.remote.dto.spotify.Copyright
 import data.remote.dto.spotify.ExternalUrls
 import data.remote.dto.spotify.Image
+import data.remote.dto.spotify.search.Copyright
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

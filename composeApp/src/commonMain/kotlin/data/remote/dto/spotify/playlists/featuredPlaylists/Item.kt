@@ -1,7 +1,9 @@
-package data.remote.dto.spotify.playlists
+package data.remote.dto.spotify.playlists.featuredPlaylists
 
 import data.remote.dto.spotify.ExternalUrls
 import data.remote.dto.spotify.Image
+import data.remote.dto.spotify.Owner
+import data.remote.dto.spotify.Tracks
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -18,7 +20,7 @@ data class Item(
     val owner: Owner? = null,
     @SerialName("primary_color")
     val primaryColor: String? = null,
-    val `public`: Boolean? = null,
+    val public: Boolean? = null,
     @SerialName("snapshot_id")
     val snapshotId: String? = null,
     val tracks: Tracks? = null,

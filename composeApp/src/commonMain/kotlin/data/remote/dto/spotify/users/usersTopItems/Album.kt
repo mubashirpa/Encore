@@ -1,4 +1,4 @@
-package data.remote.dto.spotify.users.topItems
+package data.remote.dto.spotify.users.usersTopItems
 
 import data.remote.dto.spotify.ExternalUrls
 import data.remote.dto.spotify.Image

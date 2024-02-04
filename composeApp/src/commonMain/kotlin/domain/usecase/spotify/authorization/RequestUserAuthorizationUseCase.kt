@@ -1,4 +1,4 @@
-package domain.usecase.spotify
+package domain.usecase.spotify.authorization
 
 import domain.repository.SpotifyRepository
 

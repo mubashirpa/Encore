@@ -2,7 +2,7 @@ package domain.usecase.spotify.accessToken
 
 import core.Result
 import data.mapper.toAccessToken
-import domain.model.spotify.AccessToken
+import domain.model.spotify.accessToken.AccessToken
 import domain.repository.SpotifyRepository
 import domain.repository.UserPreferencesRepository
 import kotlinx.coroutines.flow.Flow

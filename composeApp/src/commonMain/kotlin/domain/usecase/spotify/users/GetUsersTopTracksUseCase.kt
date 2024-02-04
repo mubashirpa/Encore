@@ -2,7 +2,7 @@ package domain.usecase.spotify.users
 
 import core.Result
 import data.mapper.toUsersTopTrackItem
-import domain.model.spotify.users.topItems.UsersTopTrackItem
+import domain.model.spotify.users.usersTopItems.UsersTopTrackItem
 import domain.repository.SpotifyRepository
 import domain.repository.UsersTopItemTimeRange
 import kotlinx.coroutines.flow.Flow

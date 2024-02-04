@@ -1,23 +1,28 @@
 package data.mapper
 
-import data.remote.dto.spotify.Followers
-import data.remote.dto.spotify.Image
-import data.remote.dto.spotify.users.profile.UserDto
-import data.remote.dto.spotify.users.topItems.ArtistItem
-import data.remote.dto.spotify.users.topItems.TrackItem
-import domain.model.spotify.users.profile.User
-import domain.model.spotify.users.profile.UsersFollowers
-import domain.model.spotify.users.profile.UsersImage
-import domain.model.spotify.users.topItems.UsersTopArtistItem
-import domain.model.spotify.users.topItems.UsersTopTrackItem
+import data.remote.dto.spotify.users.currentUsersProfile.CurrentUsersProfileDto
+import data.remote.dto.spotify.users.usersTopItems.ArtistItem
+import data.remote.dto.spotify.users.usersTopItems.TrackItem
+import domain.model.spotify.users.currentUsersProfile.CurrentUsersProfile
+import domain.model.spotify.users.followedArtists.FollowedArtistsItem
+import domain.model.spotify.users.usersTopItems.UsersTopArtistItem
+import domain.model.spotify.users.usersTopItems.UsersTopTrackItem
+import data.remote.dto.spotify.users.followedArtists.Item as FollowedArtistsItemDto
 
-fun UserDto.toUser(): User {
-    return User(
+fun CurrentUsersProfileDto.toCurrentUsersProfile(): CurrentUsersProfile {
+    return CurrentUsersProfile(
         displayName,
         email,
-        followers?.toUsersFollowers(),
         id,
-        images?.map { it.toUsersImage() },
+        images?.firstOrNull()?.url,
+    )
+}
+
+fun FollowedArtistsItemDto.toFollowedArtistsItem(): FollowedArtistsItem {
+    return FollowedArtistsItem(
+        id,
+        images?.firstOrNull()?.url,
+        name,
     )
 }
 
@@ -35,14 +40,4 @@ fun TrackItem.toUsersTopTrackItem(): UsersTopTrackItem {
         album?.images?.firstOrNull()?.url,
         name,
     )
-}
-
-private fun Followers.toUsersFollowers(): UsersFollowers {
-    return UsersFollowers(
-        total,
-    )
-}
-
-private fun Image.toUsersImage(): UsersImage {
-    return UsersImage(url)
 }

@@ -1,7 +1,5 @@
-package data.remote.dto.spotify.search.playlists
+package data.remote.dto.spotify
 
-import data.remote.dto.spotify.ExternalUrls
-import data.remote.dto.spotify.Followers
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
