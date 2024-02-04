@@ -1,4 +1,4 @@
-package data.remote.dto.spotify
+package data.remote.dto.spotify.accessToken
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
