@@ -7,7 +7,10 @@ import domain.model.saavn.playlists.PlaylistItems
 
 fun PlaylistItemsDto.toPlaylistItems(): PlaylistItems {
     return PlaylistItems(
+        image,
         list?.map { it.toPlaylistItem() },
+        subtitle,
+        title,
     )
 }
 

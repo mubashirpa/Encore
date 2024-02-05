@@ -74,6 +74,9 @@ private fun EncoreApp(
                         uiState = viewModel.uiState,
                         onEvent = viewModel::onEvent,
                         playlistId = playlistScreenComponent.playlistId,
+                        onBackClicked = {
+                            playlistScreenComponent.onBackClicked()
+                        },
                     )
                 }
             }
