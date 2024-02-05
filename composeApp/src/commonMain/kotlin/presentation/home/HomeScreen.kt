@@ -33,6 +33,7 @@ fun HomeScreen(
     uiState: HomeUiState,
     onEvent: (HomeUiEvent) -> Unit,
     accessToken: String,
+    navigateToPlaylistScreen: (playlistId: String) -> Unit,
 ) {
     LaunchedEffect(accessToken) {
         onEvent(HomeUiEvent.OnGetAccessToken(accessToken))
@@ -139,7 +140,11 @@ fun HomeScreen(
                             HomeListItem(
                                 name = trending.title.orEmpty(),
                                 imageUrl = trending.image.orEmpty(),
-                                onClick = { /*TODO*/ },
+                                onClick = {
+                                    trending.id?.also {
+                                        navigateToPlaylistScreen(it)
+                                    }
+                                },
                             )
                         }
                     },

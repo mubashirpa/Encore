@@ -37,6 +37,8 @@ interface HomeContainerComponent {
 
     fun onSearchScreenTabClicked()
 
+    fun navigateToPlaylistScreen(playlistId: String)
+
     data class HomeContainerUiState(
         val accessToken: String = "",
         val currentUsersProfile: CurrentUsersProfile? = null,
@@ -53,6 +55,7 @@ interface HomeContainerComponent {
 
 class DefaultHomeContainerComponent(
     componentContext: ComponentContext,
+    private val onNavigateToPlaylistScreen: (playlistId: String) -> Unit,
 ) : HomeContainerComponent, ComponentContext by componentContext, KoinComponent {
     private val navigation = StackNavigation<Configuration>()
 
@@ -91,6 +94,10 @@ class DefaultHomeContainerComponent(
 
     override fun onSearchScreenTabClicked() {
         navigation.bringToFront(Configuration.SearchScreen)
+    }
+
+    override fun navigateToPlaylistScreen(playlistId: String) {
+        onNavigateToPlaylistScreen(playlistId)
     }
 
     private fun createChild(

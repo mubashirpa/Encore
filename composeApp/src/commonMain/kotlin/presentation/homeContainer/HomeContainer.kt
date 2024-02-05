@@ -85,6 +85,7 @@ fun HomeContainer(component: HomeContainerComponent) {
                             uiState = viewModel.uiState,
                             onEvent = viewModel::onEvent,
                             accessToken = accessToken,
+                            navigateToPlaylistScreen = component::navigateToPlaylistScreen,
                         )
                     }
 
