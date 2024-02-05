@@ -1,7 +1,7 @@
 package presentation.home
 
 import core.Result
-import domain.model.saavn.LaunchData
+import domain.model.saavn.launchData.LaunchData
 import domain.model.spotify.playlists.PlaylistsItem
 import domain.model.spotify.users.usersTopItems.UsersTopTrackItem
 
