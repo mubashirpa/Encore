@@ -35,6 +35,7 @@ kotlin {
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
 
+            implementation(libs.bundles.media3.android)
             implementation(libs.androidx.core.splashscreen)
             implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
@@ -50,7 +51,6 @@ kotlin {
             implementation(libs.bundles.koin.common)
             implementation(libs.bundles.ktor.common)
             implementation(libs.bundles.moko.mvvm.common)
-
             implementation(libs.aakira.napier)
             implementation(libs.datastore.preferences.core)
             implementation(libs.media.kamel.image)
