@@ -19,6 +19,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import navigation.RootComponent
 import org.koin.compose.KoinContext
 import presentation.homeContainer.HomeContainer
+import presentation.playlist.PlaylistScreen
 import presentation.theme.EncoreTheme
 
 @Composable
@@ -64,6 +65,11 @@ private fun EncoreApp(
             when (val instance = child.instance) {
                 is RootComponent.Child.HomeContainer -> {
                     HomeContainer(component = instance.component)
+                }
+
+                is RootComponent.Child.PlaylistScreen -> {
+                    val viewModel = instance.component.viewModel
+                    PlaylistScreen(uiState = viewModel.uiState)
                 }
             }
         }
