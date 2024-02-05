@@ -1,4 +1,4 @@
-package domain.model.saavn
+package domain.model.saavn.launchData
 
 data class LaunchData(
     val charts: List<LaunchDataItem>? = null,
