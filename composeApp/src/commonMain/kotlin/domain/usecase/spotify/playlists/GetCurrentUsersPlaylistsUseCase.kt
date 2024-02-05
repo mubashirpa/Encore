@@ -1,7 +1,7 @@
 package domain.usecase.spotify.playlists
 
 import core.Result
-import data.mapper.toCurrentUsersPlaylistsItem
+import data.mapper.spotify.toCurrentUsersPlaylistsItem
 import domain.model.spotify.playlists.PlaylistsItem
 import domain.repository.SpotifyRepository
 import kotlinx.coroutines.flow.Flow

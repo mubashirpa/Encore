@@ -1,7 +1,7 @@
 package domain.usecase.spotify.accessToken
 
 import core.Result
-import data.mapper.toAccessToken
+import data.mapper.spotify.toAccessToken
 import domain.model.spotify.accessToken.AccessToken
 import domain.repository.SpotifyRepository
 import domain.repository.UserPreferencesRepository

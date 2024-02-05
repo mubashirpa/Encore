@@ -1,4 +1,4 @@
-package data.mapper
+package data.mapper.spotify
 
 import data.remote.dto.spotify.users.currentUsersProfile.CurrentUsersProfileDto
 import data.remote.dto.spotify.users.usersTopItems.ArtistItem

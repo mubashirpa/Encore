@@ -1,7 +1,7 @@
 package domain.usecase.spotify.users
 
 import core.Result
-import data.mapper.toCurrentUsersProfile
+import data.mapper.spotify.toCurrentUsersProfile
 import domain.model.spotify.users.currentUsersProfile.CurrentUsersProfile
 import domain.repository.SpotifyRepository
 import kotlinx.coroutines.flow.Flow

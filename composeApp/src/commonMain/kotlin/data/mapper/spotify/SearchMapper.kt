@@ -1,4 +1,4 @@
-package data.mapper
+package data.mapper.spotify
 
 import data.remote.dto.spotify.search.SearchDto
 import domain.model.spotify.search.AlbumsItem

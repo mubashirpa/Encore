@@ -1,7 +1,7 @@
 package domain.usecase.spotify.users
 
 import core.Result
-import data.mapper.toUsersTopTrackItem
+import data.mapper.spotify.toUsersTopTrackItem
 import domain.model.spotify.users.usersTopItems.UsersTopTrackItem
 import domain.repository.SpotifyRepository
 import domain.repository.UsersTopItemTimeRange

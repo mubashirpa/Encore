@@ -1,7 +1,7 @@
 package domain.usecase.spotify.users
 
 import core.Result
-import data.mapper.toFollowedArtistsItem
+import data.mapper.spotify.toFollowedArtistsItem
 import domain.model.spotify.users.followedArtists.FollowedArtistsItem
 import domain.repository.SpotifyRepository
 import kotlinx.coroutines.flow.Flow

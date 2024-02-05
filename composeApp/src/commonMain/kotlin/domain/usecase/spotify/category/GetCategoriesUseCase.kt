@@ -1,7 +1,7 @@
 package domain.usecase.spotify.category
 
 import core.Result
-import data.mapper.toCategoriesItem
+import data.mapper.spotify.toCategoriesItem
 import domain.model.spotify.category.CategoriesItem
 import domain.repository.SpotifyRepository
 import kotlinx.coroutines.flow.Flow

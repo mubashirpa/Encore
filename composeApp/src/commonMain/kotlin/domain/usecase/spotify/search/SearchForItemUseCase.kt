@@ -1,7 +1,7 @@
 package domain.usecase.spotify.search
 
 import core.Result
-import data.mapper.toSearch
+import data.mapper.spotify.toSearch
 import domain.model.spotify.search.Search
 import domain.repository.SearchItemType
 import domain.repository.SpotifyRepository

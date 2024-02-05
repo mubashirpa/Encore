@@ -1,4 +1,4 @@
-package data.mapper
+package data.mapper.spotify
 
 import data.remote.dto.spotify.category.Item
 import domain.model.spotify.category.CategoriesItem
