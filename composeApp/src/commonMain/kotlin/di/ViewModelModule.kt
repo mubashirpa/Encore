@@ -4,6 +4,7 @@ import org.koin.dsl.module
 import presentation.MainViewModel
 import presentation.home.HomeViewModel
 import presentation.library.LibraryViewModel
+import presentation.playlist.PlaylistViewModel
 import presentation.search.SearchViewModel
 
 val viewModelModule =
@@ -29,6 +30,11 @@ val viewModelModule =
                 requestAuthAccessTokenUseCase = get(),
                 requestUserAuthorizationUseCase = get(),
                 urlLauncher = get(),
+            )
+        }
+        factory {
+            PlaylistViewModel(
+                getPlaylistItemsUseCase = get(),
             )
         }
         factory {
