@@ -1,10 +1,10 @@
-package data.remote.dto.saavn.albums
+package data.remote.dto.saavn.newAlbums
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PrimaryArtist(
+data class Artist(
     val id: String? = null,
     val image: String? = null,
     val name: String? = null,

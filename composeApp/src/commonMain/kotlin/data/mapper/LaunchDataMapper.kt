@@ -1,10 +1,10 @@
 package data.mapper
 
-import data.remote.dto.saavn.LaunchDataDto
-import data.remote.dto.saavn.albums.NewAlbums
 import data.remote.dto.saavn.charts.Charts
-import data.remote.dto.saavn.playlists.TopPlaylists
-import data.remote.dto.saavn.trending.NewTrending
+import data.remote.dto.saavn.launchData.LaunchDataDto
+import data.remote.dto.saavn.newAlbums.NewAlbums
+import data.remote.dto.saavn.newTrending.NewTrending
+import data.remote.dto.saavn.topPlaylists.TopPlaylists
 import domain.model.saavn.LaunchData
 import domain.model.saavn.LaunchDataItem
 

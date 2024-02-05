@@ -1,4 +1,4 @@
-package data.remote.dto.saavn.trending
+package data.remote.dto.saavn.newTrending
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -17,6 +17,7 @@ data class NewTrending(
     val listCount: String? = null,
     @SerialName("list_type")
     val listType: String? = null,
+    // val modules: Any? = null,
     @SerialName("more_info")
     val moreInfo: MoreInfo? = null,
     @SerialName("perma_url")

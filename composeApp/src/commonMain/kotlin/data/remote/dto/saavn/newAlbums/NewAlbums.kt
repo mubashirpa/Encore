@@ -1,4 +1,4 @@
-package data.remote.dto.saavn.albums
+package data.remote.dto.saavn.newAlbums
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

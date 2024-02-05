@@ -1,4 +1,4 @@
-package data.remote.dto.saavn.trending
+package data.remote.dto.saavn.playlist
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
