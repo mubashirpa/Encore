@@ -46,7 +46,7 @@ class DefaultRootComponent(
             }
 
             is Configuration.PlaylistScreen -> {
-                PlaylistScreen(playlistScreenComponent(componentContext))
+                PlaylistScreen(playlistScreenComponent(componentContext, configuration))
             }
         }
 
@@ -58,8 +58,14 @@ class DefaultRootComponent(
             },
         )
 
-    private fun playlistScreenComponent(componentContext: ComponentContext): PlaylistScreenComponent =
-        DefaultPlaylistScreenComponent(componentContext = componentContext)
+    private fun playlistScreenComponent(
+        componentContext: ComponentContext,
+        configuration: Configuration.PlaylistScreen,
+    ): PlaylistScreenComponent =
+        DefaultPlaylistScreenComponent(
+            componentContext = componentContext,
+            playlistId = configuration.playlistId,
+        )
 
     @Serializable // kotlinx-serialization plugin must be applied
     private sealed interface Configuration {

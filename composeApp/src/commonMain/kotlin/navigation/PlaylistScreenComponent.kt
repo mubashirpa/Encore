@@ -7,10 +7,12 @@ import presentation.playlist.PlaylistViewModel
 
 interface PlaylistScreenComponent {
     val viewModel: PlaylistViewModel
+    val playlistId: String
 }
 
 class DefaultPlaylistScreenComponent(
     componentContext: ComponentContext,
+    override val playlistId: String,
 ) : PlaylistScreenComponent, ComponentContext by componentContext, KoinComponent {
     override val viewModel: PlaylistViewModel by inject()
 }

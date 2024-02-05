@@ -4,26 +4,35 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import core.Result
-import presentation.search.components.TracksListItem
+import presentation.playlist.components.PlaylistListItem
 
 @Composable
-fun PlaylistScreen(uiState: PlaylistUiState) {
+fun PlaylistScreen(
+    uiState: PlaylistUiState,
+    onEvent: (PlaylistUiEvent) -> Unit,
+    playlistId: String,
+) {
+    LaunchedEffect(playlistId) {
+        onEvent(PlaylistUiEvent.OnGetPlaylistId(playlistId))
+    }
+
     if (uiState.playlistItemsResult is Result.Success) {
-        val tracks = uiState.playlistItemsResult.data?.list.orEmpty()
-        if (tracks.isNotEmpty()) {
+        val playlistItems = uiState.playlistItemsResult.data?.list.orEmpty()
+        if (playlistItems.isNotEmpty()) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize(),
                 content = {
                     items(
-                        items = tracks,
+                        items = playlistItems,
                         key = { it.id!! },
-                    ) { track ->
-                        TracksListItem(
-                            name = track.title.orEmpty(),
-                            imageUrl = track.image.orEmpty(),
-                            artists = track.subtitle.orEmpty(),
+                    ) { playlistItem ->
+                        PlaylistListItem(
+                            name = playlistItem.title.orEmpty(),
+                            imageUrl = playlistItem.image.orEmpty(),
+                            artists = playlistItem.subtitle.orEmpty(),
                             onClick = { /*TODO*/ },
                         )
                     }

@@ -68,8 +68,13 @@ private fun EncoreApp(
                 }
 
                 is RootComponent.Child.PlaylistScreen -> {
-                    val viewModel = instance.component.viewModel
-                    PlaylistScreen(uiState = viewModel.uiState)
+                    val playlistScreenComponent = instance.component
+                    val viewModel = playlistScreenComponent.viewModel
+                    PlaylistScreen(
+                        uiState = viewModel.uiState,
+                        onEvent = viewModel::onEvent,
+                        playlistId = playlistScreenComponent.playlistId,
+                    )
                 }
             }
         }

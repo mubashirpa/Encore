@@ -14,8 +14,14 @@ class PlaylistViewModel(
     var uiState by mutableStateOf(PlaylistUiState())
         private set
 
-    init {
-        getPlaylistItems("157594140")
+    fun onEvent(event: PlaylistUiEvent) {
+        when (event) {
+            is PlaylistUiEvent.OnGetPlaylistId -> {
+                if (event.playlistId != uiState.playlistId) {
+                    getPlaylistItems(event.playlistId)
+                }
+            }
+        }
     }
 
     private fun getPlaylistItems(playlistId: String) {
