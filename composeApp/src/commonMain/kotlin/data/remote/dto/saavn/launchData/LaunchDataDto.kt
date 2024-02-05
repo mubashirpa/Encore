@@ -3,7 +3,7 @@ package data.remote.dto.saavn.launchData
 import data.remote.dto.saavn.charts.Charts
 import data.remote.dto.saavn.newAlbums.NewAlbums
 import data.remote.dto.saavn.newTrending.NewTrending
-import data.remote.dto.saavn.topPlaylists.TopPlaylists
+import data.remote.dto.saavn.playlists.topPlaylists.TopPlaylists
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

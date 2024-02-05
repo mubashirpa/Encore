@@ -1,12 +1,12 @@
-package data.mapper
+package data.mapper.saavn
 
 import data.remote.dto.saavn.charts.Charts
 import data.remote.dto.saavn.launchData.LaunchDataDto
 import data.remote.dto.saavn.newAlbums.NewAlbums
 import data.remote.dto.saavn.newTrending.NewTrending
-import data.remote.dto.saavn.topPlaylists.TopPlaylists
-import domain.model.saavn.LaunchData
-import domain.model.saavn.LaunchDataItem
+import data.remote.dto.saavn.playlists.topPlaylists.TopPlaylists
+import domain.model.saavn.launchData.LaunchData
+import domain.model.saavn.launchData.LaunchDataItem
 
 fun LaunchDataDto.toLaunchData(): LaunchData {
     return LaunchData(

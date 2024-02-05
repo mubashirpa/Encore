@@ -1,6 +1,7 @@
 package di
 
 import domain.usecase.saavn.launchData.GetLaunchDataUseCase
+import domain.usecase.saavn.playlists.GetPlaylistItemsUseCase
 import domain.usecase.spotify.accessToken.GetAccessTokenUseCase
 import domain.usecase.spotify.accessToken.RefreshTokenUseCase
 import domain.usecase.spotify.accessToken.RequestAuthAccessTokenUseCase
@@ -24,6 +25,7 @@ val useCaseModule =
         single { GetFeaturedPlaylistsUseCase(get()) }
         single { GetFollowedArtistsUseCase(get()) }
         single { GetLaunchDataUseCase(get()) }
+        single { GetPlaylistItemsUseCase(get()) }
         single { GetUsersTopTracksUseCase(get()) }
         single { RefreshTokenUseCase(get(), get()) }
         single { RequestAuthAccessTokenUseCase(get(), get()) }

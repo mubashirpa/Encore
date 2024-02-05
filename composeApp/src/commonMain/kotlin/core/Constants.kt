@@ -15,6 +15,7 @@ object Saavn {
     const val API_BASE_URL =
         "https://www.jiosaavn.com/api.php?_format=json&_marker=0&api_version=4&ctx=web6dot0"
     const val ENDPOINT_LAUNCH_DATA = "&__call=webapi.getLaunchData"
+    const val ENDPOINT_PLAYLIST_ITEMS = "&__call=playlist.getDetails"
 }
 
 object Spotify {

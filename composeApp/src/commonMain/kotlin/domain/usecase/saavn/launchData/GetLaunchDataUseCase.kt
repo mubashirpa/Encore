@@ -1,8 +1,8 @@
 package domain.usecase.saavn.launchData
 
 import core.Result
-import data.mapper.toLaunchData
-import domain.model.saavn.LaunchData
+import data.mapper.saavn.toLaunchData
+import domain.model.saavn.launchData.LaunchData
 import domain.repository.SaavnRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
