@@ -174,7 +174,11 @@ fun HomeScreen(
                             HomeListItem(
                                 name = topCharts.title.orEmpty(),
                                 imageUrl = topCharts.image.orEmpty(),
-                                onClick = { /*TODO*/ },
+                                onClick = {
+                                    topCharts.id?.also {
+                                        navigateToPlaylistScreen(it)
+                                    }
+                                },
                             )
                         }
                     },
@@ -234,7 +238,11 @@ fun HomeScreen(
                             HomeListItem(
                                 name = topPlaylists.title.orEmpty(),
                                 imageUrl = topPlaylists.image.orEmpty(),
-                                onClick = { /*TODO*/ },
+                                onClick = {
+                                    topPlaylists.id?.also {
+                                        navigateToPlaylistScreen(it)
+                                    }
+                                },
                             )
                         }
                     },
