@@ -12,13 +12,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
+import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import navigation.RootComponent
 import org.koin.compose.KoinContext
 import presentation.homeContainer.HomeContainer
+import presentation.player.PlayerScreen
 import presentation.playlist.PlaylistScreen
 import presentation.theme.EncoreTheme
 
@@ -48,6 +51,8 @@ private fun EncoreApp(
     component: RootComponent,
     modifier: Modifier = Modifier,
 ) {
+    val playerSlot by component.player.subscribeAsState()
+
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0),
@@ -74,12 +79,19 @@ private fun EncoreApp(
                         uiState = viewModel.uiState,
                         onEvent = viewModel::onEvent,
                         playlistId = playlistScreenComponent.playlistId,
-                        onBackClicked = {
-                            playlistScreenComponent.onBackClicked()
-                        },
+                        onPlaylistItemClicked = playlistScreenComponent::onPlaylistItemClicked,
+                        onCloseClicked = playlistScreenComponent::onCloseClicked,
                     )
                 }
             }
+        }
+        playerSlot.child?.instance?.also { playerComponent ->
+            val viewModel = playerComponent.viewModel
+            PlayerScreen(
+                uiState = viewModel.uiState,
+                onEvent = viewModel::onEvent,
+                trackId = playerComponent.trackId,
+            )
         }
     }
 }

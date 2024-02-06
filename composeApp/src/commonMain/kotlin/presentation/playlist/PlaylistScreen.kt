@@ -46,6 +46,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import core.Result
+import domain.model.saavn.playlists.PlaylistItem
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import presentation.playlist.components.PlaylistListItem
@@ -56,7 +57,8 @@ fun PlaylistScreen(
     uiState: PlaylistUiState,
     onEvent: (PlaylistUiEvent) -> Unit,
     playlistId: String,
-    onBackClicked: () -> Unit,
+    onPlaylistItemClicked: (playlistItem: PlaylistItem) -> Unit,
+    onCloseClicked: () -> Unit,
 ) {
     val layoutDirection = LocalLayoutDirection.current
 
@@ -134,7 +136,7 @@ fun PlaylistScreen(
                                         title = {},
                                         navigationIcon = {
                                             FilledIconButton(
-                                                onClick = onBackClicked,
+                                                onClick = onCloseClicked,
                                                 colors =
                                                     IconButtonDefaults.iconButtonColors(
                                                         containerColor = MaterialTheme.colorScheme.surface,
@@ -202,7 +204,9 @@ fun PlaylistScreen(
                                 name = playlistItem.title.orEmpty(),
                                 imageUrl = playlistItem.image.orEmpty(),
                                 artists = playlistItem.subtitle.orEmpty(),
-                                onClick = { /*TODO*/ },
+                                onClick = {
+                                    onPlaylistItemClicked(playlistItem)
+                                },
                             )
                         }
                     },
