@@ -4,11 +4,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import core.Result
-import core.utils.CryptoManager
 import org.koin.compose.koinInject
 import player.MediaPlayerController
 import player.MediaPlayerListener
@@ -21,7 +19,6 @@ fun PlayerScreen(
     trackId: String,
 ) {
     val mediaPlayerController: MediaPlayerController = koinInject()
-    val cryptoManager = remember { CryptoManager() }
 
     LaunchedEffect(trackId) {
         onEvent(PlayerUiEvent.OnGetTrackId(trackId))
@@ -29,20 +26,33 @@ fun PlayerScreen(
 
     if (uiState.trackResult is Result.Success) {
         val track = uiState.trackResult.data
-        val encryptedMediaUrl = track?.encryptedMediaUrl
-        if (encryptedMediaUrl != null) {
-            LaunchedEffect(encryptedMediaUrl) {
-                val trackUrl = cryptoManager.decrypt(track.encryptedMediaUrl)
-                playTrack(
-                    trackUrl = trackUrl,
-                    mediaPlayerController = mediaPlayerController,
+        if (track != null) {
+            val mediaUrl = track.decryptedMediaUrl
+
+            LaunchedEffect(mediaUrl) {
+                if (mediaUrl != null) {
+                    playTrack(
+                        trackUrl = mediaUrl,
+                        mediaPlayerController = mediaPlayerController,
+                    )
+                }
+            }
+
+            Box(modifier = Modifier.fillMaxSize()) {
+                PlayerBar(
+                    title = track.name.orEmpty(),
+                    imageUrl = track.image.orEmpty(),
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                    onPlayClicked = {
+                        if (mediaPlayerController.isPlaying()) {
+                            mediaPlayerController.pause()
+                        } else {
+                            mediaPlayerController.start()
+                        }
+                    },
                 )
             }
         }
-    }
-
-    Box(modifier = Modifier.fillMaxSize()) {
-        PlayerBar(modifier = Modifier.align(Alignment.BottomCenter))
     }
 }
 

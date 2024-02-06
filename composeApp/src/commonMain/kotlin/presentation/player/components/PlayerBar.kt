@@ -2,6 +2,7 @@ package presentation.player.components
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.basicMarquee
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,7 +26,12 @@ import io.kamel.image.asyncPainterResource
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun PlayerBar(modifier: Modifier = Modifier) {
+fun PlayerBar(
+    title: String,
+    imageUrl: String,
+    modifier: Modifier = Modifier,
+    onPlayClicked: () -> Unit,
+) {
     Surface(
         modifier = modifier.padding(16.dp),
         shape = MaterialTheme.shapes.extraSmall,
@@ -43,9 +49,7 @@ fun PlayerBar(modifier: Modifier = Modifier) {
         ) {
             KamelImage(
                 resource =
-                    asyncPainterResource(
-                        "https://c.saavncdn.com/153/Kalapakkaara-From-King-of-Kotha-Malayalam-2023-20230728151014-150x150.jpg",
-                    ),
+                    asyncPainterResource(imageUrl),
                 contentDescription = null,
                 modifier =
                     Modifier
@@ -54,7 +58,7 @@ fun PlayerBar(modifier: Modifier = Modifier) {
                 contentScale = ContentScale.Crop,
             )
             Text(
-                text = "Kalapakkaara",
+                text = title,
                 modifier = Modifier.weight(1f).basicMarquee(),
                 color = MaterialTheme.colorScheme.onSurface,
                 fontWeight = FontWeight.Bold,
@@ -64,6 +68,7 @@ fun PlayerBar(modifier: Modifier = Modifier) {
             Icon(
                 imageVector = Icons.Default.PlayArrow,
                 contentDescription = null,
+                modifier = Modifier.clickable(onClick = onPlayClicked),
             )
         }
     }
