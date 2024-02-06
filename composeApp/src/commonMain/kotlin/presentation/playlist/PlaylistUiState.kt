@@ -1,9 +1,9 @@
 package presentation.playlist
 
 import core.Result
-import domain.model.saavn.playlists.PlaylistItems
+import domain.model.playlists.Playlist
 
 data class PlaylistUiState(
     val playlistId: String = "",
-    val playlistItemsResult: Result<PlaylistItems> = Result.Empty(),
+    val playlistItemsResult: Result<Playlist> = Result.Empty(),
 )

@@ -46,7 +46,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import core.Result
-import domain.model.saavn.playlists.PlaylistItem
+import domain.model.tracks.Track
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
 import presentation.playlist.components.PlaylistListItem
@@ -57,7 +57,7 @@ fun PlaylistScreen(
     uiState: PlaylistUiState,
     onEvent: (PlaylistUiEvent) -> Unit,
     playlistId: String,
-    onPlaylistItemClicked: (playlistItem: PlaylistItem) -> Unit,
+    onPlaylistItemClicked: (track: Track) -> Unit,
     onCloseClicked: () -> Unit,
 ) {
     val layoutDirection = LocalLayoutDirection.current
@@ -69,7 +69,7 @@ fun PlaylistScreen(
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         if (uiState.playlistItemsResult is Result.Success) {
             val playlist = uiState.playlistItemsResult.data
-            val playlistItems = playlist?.list.orEmpty()
+            val playlistItems = playlist?.tracks.orEmpty()
             if (playlistItems.isNotEmpty()) {
                 LazyColumn(
                     modifier = Modifier.fillMaxSize(),
@@ -117,7 +117,7 @@ fun PlaylistScreen(
                                         verticalArrangement = Arrangement.spacedBy(6.dp),
                                     ) {
                                         Text(
-                                            text = playlist?.title.orEmpty(),
+                                            text = playlist?.name.orEmpty(),
                                             color = MaterialTheme.colorScheme.onSurface,
                                             fontWeight = FontWeight.Bold,
                                             overflow = TextOverflow.Ellipsis,
@@ -125,7 +125,7 @@ fun PlaylistScreen(
                                             style = MaterialTheme.typography.headlineMedium,
                                         )
                                         Text(
-                                            text = playlist?.subtitle.orEmpty(),
+                                            text = playlist?.description.orEmpty(),
                                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                                             overflow = TextOverflow.Ellipsis,
                                             maxLines = 1,
@@ -201,9 +201,9 @@ fun PlaylistScreen(
                             key = { it.id!! },
                         ) { playlistItem ->
                             PlaylistListItem(
-                                name = playlistItem.title.orEmpty(),
+                                name = playlistItem.name.orEmpty(),
                                 imageUrl = playlistItem.image.orEmpty(),
-                                artists = playlistItem.subtitle.orEmpty(),
+                                artists = playlistItem.artistsNames.orEmpty(),
                                 onClick = {
                                     onPlaylistItemClicked(playlistItem)
                                 },

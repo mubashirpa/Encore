@@ -1,9 +1,9 @@
 package presentation.player
 
 import core.Result
-import domain.model.saavn.tracks.SongItem
+import domain.model.tracks.Track
 
 data class PlayerUiState(
     val trackId: String = "",
-    val trackResult: Result<SongItem> = Result.Empty(),
+    val trackResult: Result<Track> = Result.Empty(),
 )

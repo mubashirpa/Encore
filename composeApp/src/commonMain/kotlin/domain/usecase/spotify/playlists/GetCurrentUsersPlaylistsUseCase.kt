@@ -1,8 +1,8 @@
 package domain.usecase.spotify.playlists
 
 import core.Result
-import data.mapper.spotify.toCurrentUsersPlaylistsItem
-import domain.model.spotify.playlists.PlaylistsItem
+import data.mapper.spotify.toPlaylist
+import domain.model.playlists.Playlist
 import domain.repository.SpotifyRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -12,7 +12,7 @@ class GetCurrentUsersPlaylistsUseCase(private val spotifyRepository: SpotifyRepo
         accessToken: String,
         limit: Int = 20,
         offset: Int = 0,
-    ): Flow<Result<List<PlaylistsItem>>> =
+    ): Flow<Result<List<Playlist>>> =
         flow {
             try {
                 emit(Result.Loading())
@@ -21,7 +21,7 @@ class GetCurrentUsersPlaylistsUseCase(private val spotifyRepository: SpotifyRepo
                         accessToken,
                         limit,
                         offset,
-                    ).items?.map { it.toCurrentUsersPlaylistsItem() }
+                    ).items?.map { it.toPlaylist() }
                 emit(Result.Success(playlists))
             } catch (e: Exception) {
                 emit(Result.Error(message = e.message.toString()))

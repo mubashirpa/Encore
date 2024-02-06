@@ -1,23 +1,27 @@
 package data.mapper.spotify
 
-import domain.model.spotify.playlists.PlaylistsItem
+import domain.model.playlists.Playlist
 import data.remote.dto.spotify.playlists.currentUsersPlaylists.Item as CurrentUsersPlaylistsItem
 import data.remote.dto.spotify.playlists.featuredPlaylists.Item as FeaturedPlaylistsItem
 
-fun CurrentUsersPlaylistsItem.toCurrentUsersPlaylistsItem(): PlaylistsItem {
-    return PlaylistsItem(
-        id,
-        images?.firstOrNull()?.url,
-        name,
-        owner?.displayName,
+fun CurrentUsersPlaylistsItem.toPlaylist(): Playlist {
+    return Playlist(
+        description = description,
+        id = id,
+        image = images?.firstOrNull()?.url,
+        name = name,
+        owner = owner?.displayName,
+        tracks = null,
     )
 }
 
-fun FeaturedPlaylistsItem.toFeaturedPlaylistsItem(): PlaylistsItem {
-    return PlaylistsItem(
-        id,
-        images?.firstOrNull()?.url,
-        name,
-        owner?.displayName,
+fun FeaturedPlaylistsItem.toPlaylist(): Playlist {
+    return Playlist(
+        description = description,
+        id = id,
+        image = images?.firstOrNull()?.url,
+        name = name,
+        owner = owner?.displayName,
+        tracks = null,
     )
 }
