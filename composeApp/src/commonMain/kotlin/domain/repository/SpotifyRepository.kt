@@ -2,7 +2,7 @@ package domain.repository
 
 import androidx.annotation.IntRange
 import data.remote.dto.spotify.accessToken.AccessTokenDto
-import data.remote.dto.spotify.category.CategoriesDto
+import data.remote.dto.spotify.categories.CategoriesDto
 import data.remote.dto.spotify.playlists.currentUsersPlaylists.CurrentUsersPlaylistsDto
 import data.remote.dto.spotify.playlists.featuredPlaylists.FeaturedPlaylistsDto
 import data.remote.dto.spotify.search.SearchDto

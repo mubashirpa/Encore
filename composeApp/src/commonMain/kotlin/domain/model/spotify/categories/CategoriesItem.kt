@@ -1,4 +1,4 @@
-package domain.model.spotify.category
+package domain.model.spotify.categories
 
 data class CategoriesItem(
     val icon: String? = null,

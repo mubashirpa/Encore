@@ -1,4 +1,4 @@
-package data.remote.dto.spotify.category
+package data.remote.dto.spotify.categories
 
 import kotlinx.serialization.Serializable
 

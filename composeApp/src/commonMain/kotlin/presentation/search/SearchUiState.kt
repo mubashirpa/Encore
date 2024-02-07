@@ -1,7 +1,7 @@
 package presentation.search
 
 import core.Result
-import domain.model.spotify.category.CategoriesItem
+import domain.model.spotify.categories.CategoriesItem
 import domain.model.spotify.search.Search
 import domain.repository.SearchItemType
 
