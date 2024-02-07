@@ -60,5 +60,10 @@ fun EncoreDynamicTheme(
                     label = "On primary color animation",
                 ).value,
         )
-    MaterialTheme(colorScheme = colorScheme, content = content)
+    MaterialTheme(
+        colorScheme = colorScheme,
+        shapes = Shapes,
+        typography = Typography,
+        content = content,
+    )
 }
