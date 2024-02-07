@@ -74,7 +74,7 @@ fun HomeContainer(component: HomeContainerComponent) {
                             actions = {
                                 IconButton(onClick = { /* do something */ }) {
                                     Icon(
-                                        painter = painterResource(Res.drawable.refresh),
+                                        painter = painterResource(Res.drawable.ic_refresh),
                                         contentDescription = null,
                                     )
                                 }
@@ -99,13 +99,13 @@ fun HomeContainer(component: HomeContainerComponent) {
                             actions = {
                                 IconButton(onClick = { /* do something */ }) {
                                     Icon(
-                                        painter = painterResource(Res.drawable.search),
+                                        painter = painterResource(Res.drawable.ic_search),
                                         contentDescription = null,
                                     )
                                 }
                                 IconButton(onClick = { /* do something */ }) {
                                     Icon(
-                                        painter = painterResource(Res.drawable.add),
+                                        painter = painterResource(Res.drawable.ic_add),
                                         contentDescription = null,
                                     )
                                 }
@@ -129,7 +129,7 @@ fun HomeContainer(component: HomeContainerComponent) {
                             actions = {
                                 IconButton(onClick = { /* do something */ }) {
                                     Icon(
-                                        painter = painterResource(Res.drawable.shazam),
+                                        painter = painterResource(Res.drawable.ic_shazam),
                                         contentDescription = null,
                                     )
                                 }
