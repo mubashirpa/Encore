@@ -15,11 +15,12 @@ data class Track(
         artists?.joinToString(", ") {
             it.name.toString()
         }
-    val decryptedMediaUrl: String? =
+    val decryptedMediaUrl: String? by lazy {
         if (mediaUrl.isNullOrEmpty()) {
             null
         } else {
             cryptoManager.decrypt(mediaUrl)
         }
+    }
     val formattedName = name?.replace("&quot;", "\"")?.replace("&#039;", "'")?.replace("&amp;", "&")
 }
