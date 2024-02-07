@@ -94,7 +94,7 @@ class DefaultRootComponent(
             playlistId = configuration.playlistId,
             onFinished = navigation::pop,
             onPlayTrack = {
-                it.id?.also { id ->
+                it.first().id?.also { id ->
                     showPlayer(id)
                 }
             },

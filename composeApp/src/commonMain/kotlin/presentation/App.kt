@@ -79,7 +79,7 @@ private fun EncoreApp(
                         uiState = viewModel.uiState,
                         onEvent = viewModel::onEvent,
                         playlistId = playlistScreenComponent.playlistId,
-                        onPlaylistItemClicked = playlistScreenComponent::onPlaylistItemClicked,
+                        onPlayClicked = playlistScreenComponent::onPlayClicked,
                         onCloseClicked = playlistScreenComponent::onCloseClicked,
                     )
                 }
