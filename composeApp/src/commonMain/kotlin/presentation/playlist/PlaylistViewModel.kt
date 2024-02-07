@@ -22,6 +22,10 @@ class PlaylistViewModel(
                     getPlaylistItems(event.playlistId)
                 }
             }
+
+            PlaylistUiEvent.OnRetry -> {
+                getPlaylistItems(uiState.playlistId)
+            }
         }
     }
 

@@ -49,13 +49,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import core.Result
 import domain.model.tracks.Track
+import encore.composeapp.generated.resources.Res
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.stringResource
 import presentation.playlist.components.PlaylistListItem
 import presentation.theme.EncoreDynamicTheme
 import presentation.utils.verticalGradientScrim
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
 @Composable
 fun PlaylistScreen(
     uiState: PlaylistUiState,
@@ -78,7 +81,28 @@ fun PlaylistScreen(
                 }
 
                 is Result.Error -> {
-                    // TODO
+                    Column(
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .padding(innerPadding)
+                                .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+                        Text(
+                            text = playlistItemsResult.message.orEmpty(),
+                            textAlign = TextAlign.Center,
+                        )
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Button(
+                            onClick = {
+                                onEvent(PlaylistUiEvent.OnRetry)
+                            },
+                        ) {
+                            Text(text = stringResource(Res.string.retry))
+                        }
+                    }
                 }
 
                 is Result.Loading -> {
@@ -196,7 +220,7 @@ fun PlaylistScreen(
                                                 modifier = Modifier.size(ButtonDefaults.IconSize),
                                             )
                                             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-                                            Text(text = "Shuffle")
+                                            Text(text = stringResource(Res.string.shuffle))
                                         }
                                         Spacer(modifier = Modifier.width(8.dp))
                                         Button(
@@ -211,7 +235,7 @@ fun PlaylistScreen(
                                                 modifier = Modifier.size(ButtonDefaults.IconSize),
                                             )
                                             Spacer(modifier = Modifier.size(ButtonDefaults.IconSpacing))
-                                            Text(text = "Play")
+                                            Text(text = stringResource(Res.string.play))
                                         }
                                     }
                                 }
