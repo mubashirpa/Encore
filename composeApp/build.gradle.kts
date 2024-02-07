@@ -37,6 +37,8 @@ kotlin {
 
             implementation(libs.bundles.media3.android)
             implementation(libs.androidx.core.splashscreen)
+            implementation(libs.androidx.palette)
+            implementation(libs.coil.kt.comopose)
             implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
         }
