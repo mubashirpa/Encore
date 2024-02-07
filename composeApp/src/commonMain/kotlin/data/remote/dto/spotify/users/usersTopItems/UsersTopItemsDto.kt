@@ -12,3 +12,14 @@ data class UsersTopArtistsDto(
     val previous: String? = null,
     val total: Int? = null,
 )
+
+@Serializable
+data class UsersTopTracksDto(
+    val href: String? = null,
+    val items: List<TrackItem>? = null,
+    val limit: Int? = null,
+    val next: String? = null,
+    val offset: Int? = null,
+    val previous: String? = null,
+    val total: Int? = null,
+)

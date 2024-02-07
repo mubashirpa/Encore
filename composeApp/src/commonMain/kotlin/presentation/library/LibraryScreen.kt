@@ -119,7 +119,7 @@ fun LibraryScreen(
                     TracksListItem(
                         name = track.name.orEmpty(),
                         imageUrl = track.image.orEmpty(),
-                        artists = track.artists.orEmpty(),
+                        artists = track.artistsNames.orEmpty(),
                         onClick = { /*TODO*/ },
                     )
                 }

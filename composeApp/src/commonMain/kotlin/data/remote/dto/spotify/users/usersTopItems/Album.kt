@@ -10,7 +10,7 @@ import kotlinx.serialization.Serializable
 data class Album(
     @SerialName("album_type")
     val albumType: String? = null,
-    val artists: List<Artists>? = null,
+    val artists: List<Artist>? = null,
     @SerialName("available_markets")
     val availableMarkets: List<String>? = null,
     @SerialName("external_urls")

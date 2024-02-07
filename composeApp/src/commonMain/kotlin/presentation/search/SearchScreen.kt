@@ -33,11 +33,11 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import core.Result
+import domain.model.artists.Artist
+import domain.model.playlists.Playlist
 import domain.model.spotify.search.AlbumsItem
-import domain.model.spotify.search.ArtistsItem
-import domain.model.spotify.search.PlaylistsItem
 import domain.model.spotify.search.ShowsItem
-import domain.model.spotify.search.TracksItem
+import domain.model.tracks.Track
 import domain.repository.SearchItemType
 import encore.composeapp.generated.resources.Res
 import org.jetbrains.compose.resources.ExperimentalResourceApi
@@ -267,10 +267,10 @@ fun SearchScreen(
 private fun SearchListContent(
     searchItemType: SearchItemType,
     albums: List<AlbumsItem>,
-    artists: List<ArtistsItem>,
-    playlists: List<PlaylistsItem>,
+    artists: List<Artist>,
+    playlists: List<Playlist>,
     shows: List<ShowsItem>,
-    tracks: List<TracksItem>,
+    tracks: List<Track>,
     modifier: Modifier = Modifier,
 ) {
     when (searchItemType) {
@@ -357,7 +357,7 @@ private fun SearchListContent(
                             TracksListItem(
                                 name = track.name.orEmpty(),
                                 imageUrl = track.image.orEmpty(),
-                                artists = track.artists.orEmpty(),
+                                artists = track.artistsNames.orEmpty(),
                                 onClick = { /*TODO*/ },
                             )
                         }

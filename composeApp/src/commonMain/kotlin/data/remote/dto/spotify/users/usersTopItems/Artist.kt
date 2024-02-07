@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Artists(
+data class Artist(
     @SerialName("external_urls")
     val externalUrls: ExternalUrls? = null,
     val href: String? = null,

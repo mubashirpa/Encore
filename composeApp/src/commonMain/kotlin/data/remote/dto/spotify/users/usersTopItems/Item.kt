@@ -26,7 +26,7 @@ data class ArtistItem(
 @Serializable
 data class TrackItem(
     val album: Album? = null,
-    val artists: List<Artists>? = null,
+    val artists: List<Artist>? = null,
     @SerialName("available_markets")
     val availableMarkets: List<String>? = null,
     @SerialName("disc_number")

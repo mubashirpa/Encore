@@ -201,7 +201,7 @@ fun PlaylistScreen(
                             key = { it.id!! },
                         ) { playlistItem ->
                             PlaylistListItem(
-                                name = playlistItem.name.orEmpty(),
+                                name = playlistItem.formattedName.orEmpty(),
                                 imageUrl = playlistItem.image.orEmpty(),
                                 artists = playlistItem.artistsNames.orEmpty(),
                                 onClick = {

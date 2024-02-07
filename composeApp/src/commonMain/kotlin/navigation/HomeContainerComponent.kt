@@ -7,7 +7,7 @@ import com.arkivanov.decompose.router.stack.bringToFront
 import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.value.Value
 import core.Result
-import domain.model.spotify.users.currentUsersProfile.CurrentUsersProfile
+import domain.model.spotify.users.CurrentUsersProfile
 import domain.usecase.spotify.accessToken.GetAccessTokenUseCase
 import domain.usecase.spotify.users.GetCurrentUsersProfileUseCase
 import kotlinx.coroutines.channels.Channel

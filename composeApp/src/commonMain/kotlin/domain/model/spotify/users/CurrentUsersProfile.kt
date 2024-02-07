@@ -1,4 +1,4 @@
-package domain.model.spotify.users.currentUsersProfile
+package domain.model.spotify.users
 
 data class CurrentUsersProfile(
     val displayName: String? = null,

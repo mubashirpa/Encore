@@ -10,12 +10,16 @@ data class Track(
     val name: String? = null,
     val mediaUrl: String? = null,
 ) {
-    val artistsNames: String? = artists?.joinToString(", ")
     private val cryptoManager = CryptoManager()
+    val artistsNames: String? =
+        artists?.joinToString(", ") {
+            it.name.toString()
+        }
     val decryptedMediaUrl: String? =
         if (mediaUrl.isNullOrEmpty()) {
             null
         } else {
             cryptoManager.decrypt(mediaUrl)
         }
+    val formattedName = name?.replace("&quot;", "\"")?.replace("&#039;", "'")?.replace("&amp;", "&")
 }
