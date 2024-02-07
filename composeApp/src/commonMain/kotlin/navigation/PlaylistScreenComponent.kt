@@ -12,14 +12,14 @@ interface PlaylistScreenComponent {
 
     fun onCloseClicked()
 
-    fun onPlaylistItemClicked(track: Track)
+    fun onPlayClicked(tracks: List<Track>)
 }
 
 class DefaultPlaylistScreenComponent(
     componentContext: ComponentContext,
     override val playlistId: String,
     private val onFinished: () -> Unit,
-    private val onPlayTrack: (track: Track) -> Unit,
+    private val onPlayTrack: (tracks: List<Track>) -> Unit,
 ) : PlaylistScreenComponent, ComponentContext by componentContext, KoinComponent {
     override val viewModel: PlaylistViewModel by inject()
 
@@ -27,7 +27,7 @@ class DefaultPlaylistScreenComponent(
         onFinished()
     }
 
-    override fun onPlaylistItemClicked(track: Track) {
-        onPlayTrack(track)
+    override fun onPlayClicked(tracks: List<Track>) {
+        onPlayTrack(tracks)
     }
 }

@@ -47,6 +47,8 @@ kotlin {
             implementation(compose.ui)
             implementation(compose.components.resources)
 
+            implementation(compose.materialIconsExtended)
+
             implementation(libs.bundles.decompose.common)
             implementation(libs.bundles.kmpalette)
             implementation(libs.bundles.koin.common)
