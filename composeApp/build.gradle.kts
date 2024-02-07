@@ -37,8 +37,6 @@ kotlin {
 
             implementation(libs.bundles.media3.android)
             implementation(libs.androidx.core.splashscreen)
-            implementation(libs.androidx.palette)
-            implementation(libs.coil.kt.comopose)
             implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
         }
@@ -50,6 +48,7 @@ kotlin {
             implementation(compose.components.resources)
 
             implementation(libs.bundles.decompose.common)
+            implementation(libs.bundles.kmpalette)
             implementation(libs.bundles.koin.common)
             implementation(libs.bundles.ktor.common)
             implementation(libs.bundles.moko.mvvm.common)

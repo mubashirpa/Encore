@@ -6,15 +6,14 @@ android-minSdk = "24"
 android-targetSdk = "34"
 androidx-activityCompose = "1.8.2"
 androidx-coreSplashscreen = "1.0.1"
-androidx-palette = "1.0.0"
 arkivanov-decompose = "2.2.2"
 arkivanov-decompose-alpha = "3.0.0-alpha05" # Currently causes problems: Cannot access class 'kotlinx.serialization.json.Json'. Check your module classpath for missing or conflicting dependencies
-coil-kt = "2.5.0"
 compose = "1.6.0"
 compose-compiler = "1.5.8"
 compose-plugin = "1.6.0-beta01"
 datastore = "1.1.0-beta01"
 kamel-image = "0.9.1"
+kmpalette = "3.1.0"
 koin = "3.5.3"
 koin-compose = "1.1.2"
 kotlin = "1.9.22"
@@ -26,13 +25,13 @@ moko-mvvm = "0.16.1"
 aakira-napier = { group = "io.github.aakira", name = "napier", version.ref = "aakira-napier" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "androidx-coreSplashscreen" }
-androidx-palette = { group = "androidx.palette", name = "palette", version.ref = "androidx-palette" }
 arkivanov-decompose = { group = "com.arkivanov.decompose", name = "decompose", version.ref = "arkivanov-decompose" }
 arkivanov-decompose-extensions-compose = { group = "com.arkivanov.decompose", name = "extensions-compose", version.ref = "arkivanov-decompose-alpha" }
-coil-kt-comopose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil-kt" }
 compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose" }
 datastore-preferences-core = { group = "androidx.datastore", name = "datastore-preferences-core", version.ref = "datastore" }
+kmpalette-core = { module = "com.kmpalette:kmpalette-core", version.ref = "kmpalette" }
+kmpalette-extensions-network = { module = "com.kmpalette:extensions-network", version.ref = "kmpalette" }
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin-compose" }
 koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin" }
@@ -59,6 +58,10 @@ kotlinSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", versio
 decompose-common = [
     "arkivanov-decompose",
     "arkivanov-decompose-extensions-compose",
+]
+kmpalette = [
+    "kmpalette-core",
+    "kmpalette-extensions-network"
 ]
 koin-common = [
     "koin-compose",
