@@ -37,7 +37,7 @@ fun rememberDominantColorState(
     }
 
 /**
- * A composable which allows dynamic theming of the [androidx.compose.material.Colors.primary]
+ * A composable which allows dynamic theming of the [MaterialTheme.colorScheme.primary]
  * color from an image.
  */
 @Composable
