@@ -9,7 +9,7 @@ import data.remote.dto.saavn.playlists.playlistItems.Playlist as PlaylistItem
 
 fun PlaylistItemsDto.toPlaylist(): Playlist {
     return Playlist(
-        description = headerDesc,
+        description = subtitle,
         id = id,
         image = image,
         name = title,
