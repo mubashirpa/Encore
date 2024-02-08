@@ -26,8 +26,8 @@ import androidx.compose.material.icons.filled.Shuffle
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -205,13 +205,14 @@ fun PlaylistScreen(
                                         modifier =
                                             Modifier
                                                 .fillMaxWidth()
-                                                .padding(vertical = 24.dp),
+                                                .padding(horizontal = 32.dp, vertical = 24.dp),
                                         horizontalArrangement = Arrangement.Center,
                                     ) {
-                                        FilledTonalButton(
+                                        ElevatedButton(
                                             onClick = {
                                                 onPlayClicked(playlistItems.shuffled())
                                             },
+                                            modifier = Modifier.weight(1f),
                                             contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                                         ) {
                                             Icon(
@@ -227,6 +228,7 @@ fun PlaylistScreen(
                                             onClick = {
                                                 onPlayClicked(playlistItems)
                                             },
+                                            modifier = Modifier.weight(1f),
                                             contentPadding = ButtonDefaults.ButtonWithIconContentPadding,
                                         ) {
                                             Icon(
