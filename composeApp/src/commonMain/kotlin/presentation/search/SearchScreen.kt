@@ -1,6 +1,5 @@
 package presentation.search
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -64,6 +63,7 @@ fun SearchScreen(
     uiState: SearchUiState,
     onEvent: (SearchUiEvent) -> Unit,
     accessToken: String,
+    updateBackCallback: (isEnabled: Boolean) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -78,6 +78,10 @@ fun SearchScreen(
 
     LaunchedEffect(accessToken) {
         onEvent(SearchUiEvent.OnGetAccessToken(accessToken))
+    }
+
+    LaunchedEffect(uiState.isSearchBarActive) {
+        updateBackCallback(uiState.isSearchBarActive)
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
@@ -140,6 +144,73 @@ fun SearchScreen(
                 } else {
                     null
                 },
+            content = {
+                Row(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    filterItems.forEach { filter ->
+                        FilterChip(
+                            selected = filter.second == uiState.searchItemType,
+                            onClick = {
+                                onEvent(SearchUiEvent.OnSearchItemTypeChange(filter.second))
+                            },
+                            label = {
+                                Text(filter.first)
+                            },
+                        )
+                    }
+                }
+                when (val searchResult = uiState.searchResult) {
+                    is Result.Empty -> {
+                        // Nothing is shown
+                    }
+
+                    is Result.Error -> {
+                        Box(
+                            modifier =
+                                Modifier
+                                    .fillMaxSize()
+                                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                                    .wrapContentSize(Alignment.Center),
+                        ) {
+                            Text(
+                                text = searchResult.message.orEmpty(),
+                                textAlign = TextAlign.Center,
+                            )
+                        }
+                    }
+
+                    is Result.Loading -> {
+                        Box(
+                            modifier =
+                                Modifier
+                                    .fillMaxSize()
+                                    .wrapContentSize(Alignment.Center),
+                        ) {
+                            CircularProgressIndicator()
+                        }
+                    }
+
+                    is Result.Success -> {
+                        SearchListContent(
+                            searchItemType = uiState.searchItemType,
+                            albums = searchResult.data?.albums.orEmpty(),
+                            artists = searchResult.data?.artists.orEmpty(),
+                            playlists = searchResult.data?.playlists.orEmpty(),
+                            shows = searchResult.data?.shows.orEmpty(),
+                            tracks = searchResult.data?.tracks.orEmpty(),
+                            // TODO("Add Modifier.imeNestedScroll() when available")
+                            modifier = Modifier.fillMaxSize(),
+                        )
+                    }
+                }
+            },
         )
 
         if (!uiState.isSearchBarActive) {
@@ -215,76 +286,6 @@ fun SearchScreen(
                                     )
                                 }
                             },
-                        )
-                    }
-                }
-            }
-        }
-
-        AnimatedVisibility(visible = uiState.isSearchBarActive) {
-            Column {
-                Row(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .horizontalScroll(rememberScrollState())
-                            .padding(horizontal = 16.dp)
-                            .padding(bottom = 12.dp),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp),
-                ) {
-                    filterItems.forEach { filter ->
-                        FilterChip(
-                            selected = filter.second == uiState.searchItemType,
-                            onClick = {
-                                onEvent(SearchUiEvent.OnSearchItemTypeChange(filter.second))
-                            },
-                            label = {
-                                Text(filter.first)
-                            },
-                        )
-                    }
-                }
-                when (val searchResult = uiState.searchResult) {
-                    is Result.Empty -> {
-                        // Nothing is shown
-                    }
-
-                    is Result.Error -> {
-                        Box(
-                            modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .padding(horizontal = 16.dp, vertical = 12.dp)
-                                    .wrapContentSize(Alignment.Center),
-                        ) {
-                            Text(
-                                text = searchResult.message.orEmpty(),
-                                textAlign = TextAlign.Center,
-                            )
-                        }
-                    }
-
-                    is Result.Loading -> {
-                        Box(
-                            modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .wrapContentSize(Alignment.Center),
-                        ) {
-                            CircularProgressIndicator()
-                        }
-                    }
-
-                    is Result.Success -> {
-                        SearchListContent(
-                            searchItemType = uiState.searchItemType,
-                            albums = searchResult.data?.albums.orEmpty(),
-                            artists = searchResult.data?.artists.orEmpty(),
-                            playlists = searchResult.data?.playlists.orEmpty(),
-                            shows = searchResult.data?.shows.orEmpty(),
-                            tracks = searchResult.data?.tracks.orEmpty(),
-                            // TODO("Add Modifier.imeNestedScroll() when available")
-                            modifier = Modifier.fillMaxSize(),
                         )
                     }
                 }
