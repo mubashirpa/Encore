@@ -138,7 +138,7 @@ fun HomeScreen(
                             key = { it.id!! },
                         ) { trending ->
                             HomeListItem(
-                                name = trending.title.orEmpty(),
+                                name = trending.formattedTitle.orEmpty(),
                                 imageUrl = trending.image.orEmpty(),
                                 onClick = {
                                     trending.id?.also {
@@ -172,7 +172,7 @@ fun HomeScreen(
                             key = { it.id!! },
                         ) { topCharts ->
                             HomeListItem(
-                                name = topCharts.title.orEmpty(),
+                                name = topCharts.formattedTitle.orEmpty(),
                                 imageUrl = topCharts.image.orEmpty(),
                                 onClick = {
                                     topCharts.id?.also {
@@ -206,7 +206,7 @@ fun HomeScreen(
                             key = { it.id!! },
                         ) { newAlbums ->
                             HomeListItem(
-                                name = newAlbums.title.orEmpty(),
+                                name = newAlbums.formattedTitle.orEmpty(),
                                 imageUrl = newAlbums.image.orEmpty(),
                                 onClick = { /*TODO*/ },
                             )
@@ -236,7 +236,7 @@ fun HomeScreen(
                             key = { it.id!! },
                         ) { topPlaylists ->
                             HomeListItem(
-                                name = topPlaylists.title.orEmpty(),
+                                name = topPlaylists.formattedTitle.orEmpty(),
                                 imageUrl = topPlaylists.image.orEmpty(),
                                 onClick = {
                                     topPlaylists.id?.also {

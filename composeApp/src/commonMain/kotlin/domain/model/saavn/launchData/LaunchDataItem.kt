@@ -5,4 +5,7 @@ data class LaunchDataItem(
     val image: String? = null,
     val subtitle: String? = null,
     val title: String? = null,
-)
+) {
+    val formattedTitle =
+        title?.replace("&quot;", "\"")?.replace("&#039;", "'")?.replace("&amp;", "&")
+}
