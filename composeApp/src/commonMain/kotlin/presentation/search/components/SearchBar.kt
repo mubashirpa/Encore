@@ -1,7 +1,21 @@
 package presentation.search.components
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.CubicBezierEasing
+import androidx.compose.animation.core.FiniteAnimationSpec
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -39,6 +53,7 @@ import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,35 +71,52 @@ fun SearchBar(
     trailingIcon: @Composable (() -> Unit)? = null,
     shape: Shape = SearchBarDefaults.dockedShape,
     colors: SearchBarColors = SearchBarDefaults.colors(),
-    tonalElevation: Dp = SearchBarDefaults.Elevation,
+    tonalElevation: Dp = SearchBarDefaults.TonalElevation,
+    shadowElevation: Dp = SearchBarDefaults.ShadowElevation,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
 
-    Surface(
-        shape = shape,
-        color = colors.containerColor,
-        contentColor = contentColorFor(colors.containerColor),
-        tonalElevation = tonalElevation,
-        modifier = modifier.width(360.dp),
-    ) {
-        SearchBarInputField(
-            query = query,
-            onQueryChange = onQueryChange,
-            onSearch = onSearch,
-            active = active,
-            onActiveChange = onActiveChange,
-            enabled = enabled,
-            placeholder = placeholder,
-            leadingIcon = leadingIcon,
-            trailingIcon = trailingIcon,
-            colors = colors.inputFieldColors,
-            interactionSource = interactionSource,
-        )
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Surface(
+            shape = shape,
+            color = colors.containerColor,
+            contentColor = contentColorFor(colors.containerColor),
+            tonalElevation = tonalElevation,
+            shadowElevation = shadowElevation,
+            modifier = modifier.width(360.dp),
+        ) {
+            SearchBarInputField(
+                query = query,
+                onQueryChange = onQueryChange,
+                onSearch = onSearch,
+                active = active,
+                onActiveChange = onActiveChange,
+                enabled = enabled,
+                placeholder = placeholder,
+                leadingIcon = leadingIcon,
+                trailingIcon = trailingIcon,
+                colors = colors.inputFieldColors,
+                interactionSource = interactionSource,
+            )
+        }
+
+        AnimatedVisibility(
+            visible = active,
+            enter = SearchBarEnterTransition,
+            exit = SearchBarExitTransition,
+        ) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                content()
+            }
+        }
     }
 
+    val isFocused = interactionSource.collectIsFocusedAsState().value
+    val shouldClearFocus = !active && isFocused
     LaunchedEffect(active) {
-        if (!active) {
+        if (shouldClearFocus) {
             focusManager.clearFocus()
         }
     }
@@ -171,3 +203,38 @@ private fun SearchBarInputField(
         },
     )
 }
+
+// Animation specs
+private const val AnimationEnterDurationMillis: Int = 600
+private const val AnimationExitDurationMillis: Int = 350
+private const val AnimationDelayMillis: Int = 100
+private val AnimationEnterEasing = CubicBezierEasing(0.05f, 0.7f, 0.1f, 1.0f)
+private val AnimationExitEasing = CubicBezierEasing(0.0f, 1.0f, 0.0f, 1.0f)
+private val AnimationEnterFloatSpec: FiniteAnimationSpec<Float> =
+    tween(
+        durationMillis = AnimationEnterDurationMillis,
+        delayMillis = AnimationDelayMillis,
+        easing = AnimationEnterEasing,
+    )
+private val AnimationExitFloatSpec: FiniteAnimationSpec<Float> =
+    tween(
+        durationMillis = AnimationExitDurationMillis,
+        delayMillis = AnimationDelayMillis,
+        easing = AnimationExitEasing,
+    )
+private val AnimationEnterSizeSpec: FiniteAnimationSpec<IntSize> =
+    tween(
+        durationMillis = AnimationEnterDurationMillis,
+        delayMillis = AnimationDelayMillis,
+        easing = AnimationEnterEasing,
+    )
+private val AnimationExitSizeSpec: FiniteAnimationSpec<IntSize> =
+    tween(
+        durationMillis = AnimationExitDurationMillis,
+        delayMillis = AnimationDelayMillis,
+        easing = AnimationExitEasing,
+    )
+private val SearchBarEnterTransition: EnterTransition =
+    fadeIn(AnimationEnterFloatSpec) + expandVertically(AnimationEnterSizeSpec)
+private val SearchBarExitTransition: ExitTransition =
+    fadeOut(AnimationExitFloatSpec) + shrinkVertically(AnimationExitSizeSpec)
