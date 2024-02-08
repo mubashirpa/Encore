@@ -92,7 +92,6 @@ fun HomeContainer(component: HomeContainerComponent) {
                     is HomeContainerComponent.Child.LibraryScreen -> {
                         val libraryScreenComponent = instance.component
                         val viewModel = libraryScreenComponent.viewModel
-
                         HomeAppBar(
                             title = stringResource(Res.string.title_library_screen),
                             profileImage = "$profileUrl",
@@ -140,6 +139,7 @@ fun HomeContainer(component: HomeContainerComponent) {
                             uiState = viewModel.uiState,
                             onEvent = viewModel::onEvent,
                             accessToken = accessToken,
+                            updateBackCallback = searchScreenComponent::updateBackCallback,
                         )
                     }
                 }
