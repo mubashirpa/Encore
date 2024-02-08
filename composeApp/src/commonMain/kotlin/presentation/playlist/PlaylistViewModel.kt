@@ -19,6 +19,7 @@ class PlaylistViewModel(
         when (event) {
             is PlaylistUiEvent.OnGetPlaylistId -> {
                 if (event.playlistId != uiState.playlistId) {
+                    uiState = uiState.copy(playlistId = event.playlistId)
                     getPlaylistItems(event.playlistId)
                 }
             }
