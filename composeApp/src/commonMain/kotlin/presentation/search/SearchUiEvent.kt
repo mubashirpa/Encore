@@ -10,4 +10,6 @@ sealed class SearchUiEvent {
     data class OnSearchBarQueryChange(val query: String) : SearchUiEvent()
 
     data class OnSearchItemTypeChange(val searchItemType: SearchItemType) : SearchUiEvent()
+
+    data object OnRetry : SearchUiEvent()
 }

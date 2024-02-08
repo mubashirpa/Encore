@@ -55,6 +55,8 @@ class SearchViewModel(
                     type = event.searchItemType,
                 )
             }
+
+            SearchUiEvent.OnRetry -> getCategories(uiState.accessToken)
         }
     }
 
@@ -73,12 +75,12 @@ class SearchViewModel(
         type: SearchItemType,
         delay: Long = 0,
     ) {
+        searchForItemUseCaseJob?.cancel()
+        searchForItemUseCaseJob = null
         if (query.isBlank()) {
             uiState = uiState.copy(searchResult = Result.Empty())
             return
         }
-        searchForItemUseCaseJob?.cancel()
-        searchForItemUseCaseJob = null
         searchForItemUseCaseJob =
             viewModelScope.launch {
                 delay(delay)

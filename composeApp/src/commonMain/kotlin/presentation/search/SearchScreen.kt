@@ -1,14 +1,18 @@
 package presentation.search
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -16,9 +20,11 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Button
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
@@ -31,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import core.Result
 import domain.model.artists.Artist
@@ -103,8 +110,7 @@ fun SearchScreen(
                             },
                         ) {
                             Icon(
-                                // TODO("Replace with Icons.AutoMirrored.Filled.ArrowBack once https://github.com/JetBrains/compose-multiplatform/issues/4172 is fixed")
-                                imageVector = Icons.Filled.ArrowBack,
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = null,
                             )
                         }
@@ -135,91 +141,45 @@ fun SearchScreen(
                     null
                 },
         )
-        if (uiState.isSearchBarActive) {
-            Row(
-                modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .horizontalScroll(rememberScrollState())
-                        .padding(horizontal = 16.dp)
-                        .padding(bottom = 12.dp),
-                horizontalArrangement = Arrangement.spacedBy(10.dp),
-            ) {
-                filterItems.forEach { filter ->
-                    FilterChip(
-                        selected = filter.second == uiState.searchItemType,
-                        onClick = {
-                            onEvent(SearchUiEvent.OnSearchItemTypeChange(filter.second))
-                        },
-                        label = {
-                            Text(filter.first)
-                        },
-                    )
-                }
-            }
-            when (val searchResult = uiState.searchResult) {
-                is Result.Empty -> {
-                    // Nothing is shown
-                }
 
-                is Result.Error -> {
-                    Box(
-                        modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .padding(horizontal = 16.dp),
-                    ) {
-                        Text(
-                            "${searchResult.message}",
-                            modifier = Modifier.align(Alignment.Center),
-                        )
-                    }
-                }
-
-                is Result.Loading -> {
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        // TODO("Uncomment once https://github.com/JetBrains/compose-multiplatform/issues/4157 is fixed")
-                        // CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
-                    }
-                }
-
-                is Result.Success -> {
-                    SearchListContent(
-                        searchItemType = uiState.searchItemType,
-                        albums = uiState.searchResult.data?.albums.orEmpty(),
-                        artists = uiState.searchResult.data?.artists.orEmpty(),
-                        playlists = uiState.searchResult.data?.playlists.orEmpty(),
-                        shows = uiState.searchResult.data?.shows.orEmpty(),
-                        tracks = uiState.searchResult.data?.tracks.orEmpty(),
-                        // TODO("Add Modifier.imeNestedScroll() when available")
-                        modifier = Modifier.fillMaxSize(),
-                    )
-                }
-            }
-        } else {
+        if (!uiState.isSearchBarActive) {
             when (val categoriesResult = uiState.categoriesResult) {
                 is Result.Empty -> {
                     // Nothing is shown
                 }
 
                 is Result.Error -> {
-                    Box(
+                    Column(
                         modifier =
                             Modifier
                                 .fillMaxSize()
-                                .padding(horizontal = 16.dp),
+                                .padding(horizontal = 16.dp, vertical = 12.dp),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         Text(
-                            "${categoriesResult.message}",
-                            modifier = Modifier.align(Alignment.Center),
+                            text = categoriesResult.message.orEmpty(),
+                            textAlign = TextAlign.Center,
                         )
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Button(
+                            onClick = {
+                                onEvent(SearchUiEvent.OnRetry)
+                            },
+                        ) {
+                            Text(text = stringResource(Res.string.retry))
+                        }
                     }
                 }
 
                 is Result.Loading -> {
-                    Box(modifier = Modifier.fillMaxSize()) {
-                        // TODO("Uncomment once https://github.com/JetBrains/compose-multiplatform/issues/4157 is fixed")
-                        // CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    Box(
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .wrapContentSize(Alignment.Center),
+                    ) {
+                        CircularProgressIndicator()
                     }
                 }
 
@@ -255,6 +215,76 @@ fun SearchScreen(
                                     )
                                 }
                             },
+                        )
+                    }
+                }
+            }
+        }
+
+        AnimatedVisibility(visible = uiState.isSearchBarActive) {
+            Column {
+                Row(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .horizontalScroll(rememberScrollState())
+                            .padding(horizontal = 16.dp)
+                            .padding(bottom = 12.dp),
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                ) {
+                    filterItems.forEach { filter ->
+                        FilterChip(
+                            selected = filter.second == uiState.searchItemType,
+                            onClick = {
+                                onEvent(SearchUiEvent.OnSearchItemTypeChange(filter.second))
+                            },
+                            label = {
+                                Text(filter.first)
+                            },
+                        )
+                    }
+                }
+                when (val searchResult = uiState.searchResult) {
+                    is Result.Empty -> {
+                        // Nothing is shown
+                    }
+
+                    is Result.Error -> {
+                        Box(
+                            modifier =
+                                Modifier
+                                    .fillMaxSize()
+                                    .padding(horizontal = 16.dp, vertical = 12.dp)
+                                    .wrapContentSize(Alignment.Center),
+                        ) {
+                            Text(
+                                text = searchResult.message.orEmpty(),
+                                textAlign = TextAlign.Center,
+                            )
+                        }
+                    }
+
+                    is Result.Loading -> {
+                        Box(
+                            modifier =
+                                Modifier
+                                    .fillMaxSize()
+                                    .wrapContentSize(Alignment.Center),
+                        ) {
+                            CircularProgressIndicator()
+                        }
+                    }
+
+                    is Result.Success -> {
+                        SearchListContent(
+                            searchItemType = uiState.searchItemType,
+                            albums = searchResult.data?.albums.orEmpty(),
+                            artists = searchResult.data?.artists.orEmpty(),
+                            playlists = searchResult.data?.playlists.orEmpty(),
+                            shows = searchResult.data?.shows.orEmpty(),
+                            tracks = searchResult.data?.tracks.orEmpty(),
+                            // TODO("Add Modifier.imeNestedScroll() when available")
+                            modifier = Modifier.fillMaxSize(),
                         )
                     }
                 }
