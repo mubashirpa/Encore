@@ -2,6 +2,7 @@ package presentation.playlist
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -37,6 +38,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -172,16 +174,22 @@ fun PlaylistScreen(
                                                 .padding(top = 12.dp),
                                         horizontalAlignment = Alignment.CenterHorizontally,
                                     ) {
-                                        KamelImage(
-                                            resource = asyncPainterResource(playlist?.image.orEmpty()),
-                                            contentDescription = null,
-                                            modifier =
-                                                Modifier
-                                                    .size(180.dp)
-                                                    .clip(MaterialTheme.shapes.medium),
-                                            alignment = Alignment.TopCenter,
-                                            contentScale = ContentScale.Crop,
-                                        )
+                                        BoxWithConstraints {
+                                            val imageSize =
+                                                remember(maxWidth) {
+                                                    maxWidth * 2f / 3f
+                                                }
+                                            KamelImage(
+                                                resource = asyncPainterResource(playlist?.image.orEmpty()),
+                                                contentDescription = null,
+                                                modifier =
+                                                    Modifier
+                                                        .size(imageSize)
+                                                        .clip(MaterialTheme.shapes.medium),
+                                                alignment = Alignment.TopCenter,
+                                                contentScale = ContentScale.Crop,
+                                            )
+                                        }
                                         Spacer(modifier = Modifier.height(32.dp))
                                         Text(
                                             text = playlist?.name.orEmpty(),
