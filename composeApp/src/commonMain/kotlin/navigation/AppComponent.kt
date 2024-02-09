@@ -13,11 +13,11 @@ import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
 import kotlinx.serialization.Serializable
-import navigation.RootComponent.Child
-import navigation.RootComponent.Child.HomeContainer
-import navigation.RootComponent.Child.PlaylistScreen
+import navigation.AppComponent.Child
+import navigation.AppComponent.Child.HomeContainer
+import navigation.AppComponent.Child.PlaylistScreen
 
-interface RootComponent {
+interface AppComponent {
     val childStack: Value<ChildStack<*, Child>>
     val player: Value<ChildSlot<*, PlayerComponent>>
 
@@ -29,9 +29,9 @@ interface RootComponent {
     }
 }
 
-class DefaultRootComponent(
+class DefaultAppComponent(
     componentContext: ComponentContext,
-) : RootComponent, ComponentContext by componentContext {
+) : AppComponent, ComponentContext by componentContext {
     private val navigation = StackNavigation<Configuration>()
 
     override val childStack: Value<ChildStack<*, Child>> =

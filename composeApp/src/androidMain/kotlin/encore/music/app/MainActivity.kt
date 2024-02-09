@@ -10,15 +10,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.arkivanov.decompose.defaultComponentContext
-import navigation.DefaultRootComponent
-import navigation.RootComponent
+import navigation.AppComponent
+import navigation.DefaultAppComponent
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import presentation.App
 import presentation.MainUIEvent
 import presentation.MainViewModel
 
 class MainActivity : ComponentActivity() {
-    private lateinit var rootComponent: RootComponent
+    private lateinit var appComponent: AppComponent
     private val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +33,7 @@ class MainActivity : ComponentActivity() {
         // TODO("Handle user authorization error")
         val authorizationCode = intent.data?.extractAuthorizationCode()
 
-        rootComponent = DefaultRootComponent(componentContext = defaultComponentContext())
+        appComponent = DefaultAppComponent(componentContext = defaultComponentContext())
 
         if (authorizationCode != null) {
             intent =
@@ -45,7 +45,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             App(
-                component = rootComponent,
+                component = appComponent,
                 modifier = Modifier.fillMaxSize(),
             )
         }
