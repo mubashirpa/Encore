@@ -12,6 +12,7 @@ import com.arkivanov.decompose.router.stack.childStack
 import com.arkivanov.decompose.router.stack.pop
 import com.arkivanov.decompose.router.stack.push
 import com.arkivanov.decompose.value.Value
+import domain.model.tracks.Track
 import kotlinx.serialization.Serializable
 import navigation.AppComponent.Child
 import navigation.AppComponent.Child.HomeContainer
@@ -58,7 +59,7 @@ class DefaultAppComponent(
         ) { config, childComponentContext ->
             DefaultPlayerComponent(
                 componentContext = childComponentContext,
-                trackId = config.trackId,
+                tracks = config.tracks,
                 onDismissed = playerNavigation::dismiss,
             )
         }
@@ -94,14 +95,12 @@ class DefaultAppComponent(
             playlistId = configuration.playlistId,
             onFinished = navigation::pop,
             onPlayTrack = {
-                it.first().id?.also { id ->
-                    showPlayer(id)
-                }
+                showPlayer(it)
             },
         )
 
-    private fun showPlayer(trackId: String) {
-        playerNavigation.activate(PlayerConfig(trackId = trackId))
+    private fun showPlayer(tracks: List<Track>) {
+        playerNavigation.activate(PlayerConfig(tracks))
     }
 
     @Serializable // kotlinx-serialization plugin must be applied
@@ -115,6 +114,6 @@ class DefaultAppComponent(
 
     @Serializable // kotlinx-serialization plugin must be applied
     private data class PlayerConfig(
-        val trackId: String,
+        val tracks: List<Track>,
     )
 }

@@ -90,7 +90,7 @@ private fun EncoreApp(
             PlayerScreen(
                 uiState = viewModel.uiState,
                 onEvent = viewModel::onEvent,
-                trackId = playerComponent.trackId,
+                tracks = playerComponent.tracks,
             )
         }
     }
