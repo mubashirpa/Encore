@@ -18,7 +18,7 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.slide
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import navigation.RootComponent
+import navigation.AppComponent
 import org.koin.compose.KoinContext
 import presentation.homeContainer.HomeContainer
 import presentation.player.PlayerScreen
@@ -27,7 +27,7 @@ import presentation.theme.EncoreTheme
 
 @Composable
 fun App(
-    component: RootComponent,
+    component: AppComponent,
     modifier: Modifier = Modifier,
 ) {
     KoinContext {
@@ -48,7 +48,7 @@ fun App(
 
 @Composable
 private fun EncoreApp(
-    component: RootComponent,
+    component: AppComponent,
     modifier: Modifier = Modifier,
 ) {
     val playerSlot by component.player.subscribeAsState()
@@ -68,11 +68,11 @@ private fun EncoreApp(
             animation = stackAnimation(slide()),
         ) { child ->
             when (val instance = child.instance) {
-                is RootComponent.Child.HomeContainer -> {
+                is AppComponent.Child.HomeContainer -> {
                     HomeContainer(component = instance.component)
                 }
 
-                is RootComponent.Child.PlaylistScreen -> {
+                is AppComponent.Child.PlaylistScreen -> {
                     val playlistScreenComponent = instance.component
                     val viewModel = playlistScreenComponent.viewModel
                     PlaylistScreen(
