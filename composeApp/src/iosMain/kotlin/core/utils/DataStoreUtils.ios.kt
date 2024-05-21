@@ -12,13 +12,16 @@ import platform.Foundation.NSFileManager
 import platform.Foundation.NSURL
 import platform.Foundation.NSUserDomainMask
 
-fun dataStore(): DataStore<Preferences> = createDataStore {
-    val documentDirectory: NSURL? = NSFileManager.defaultManager.URLForDirectory(
-        directory = NSDocumentDirectory,
-        inDomain = NSUserDomainMask,
-        appropriateForURL = null,
-        create = false,
-        error = null
-    )
-    requireNotNull(documentDirectory).path + "/$dataStoreFileName"
-}
+@OptIn(kotlinx.cinterop.ExperimentalForeignApi::class)
+fun dataStore(): DataStore<Preferences> =
+    createDataStore {
+        val documentDirectory: NSURL? =
+            NSFileManager.defaultManager.URLForDirectory(
+                directory = NSDocumentDirectory,
+                inDomain = NSUserDomainMask,
+                appropriateForURL = null,
+                create = false,
+                error = null,
+            )
+        requireNotNull(documentDirectory).path + "/$dataStoreFileName"
+    }
