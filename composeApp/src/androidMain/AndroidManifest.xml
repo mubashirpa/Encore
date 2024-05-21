@@ -30,7 +30,7 @@
 
                 <data
                     android:host="spotify"
-                    android:scheme="blackhole" />
+                    android:scheme="encore" />
             </intent-filter>
         </activity>
     </application>
