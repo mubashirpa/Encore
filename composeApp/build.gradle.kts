@@ -1,11 +1,9 @@
-import com.android.build.gradle.internal.lint.AndroidLintAnalysisTask
-import com.android.build.gradle.internal.lint.LintModelWriterTask
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
 
+    alias(libs.plugins.composeCompiler)
     alias(libs.plugins.kotlinSerialization)
 }
 
@@ -46,17 +44,20 @@ kotlin {
             implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
+            implementation(compose.components.uiToolingPreview)
 
             implementation(compose.materialIconsExtended)
+
+            implementation(libs.aakira.napier)
+            implementation(libs.datastore.preferences.core)
+            implementation(libs.kotlinx.atomicfu)
+            implementation(libs.media.kamel.image)
 
             implementation(libs.bundles.decompose.common)
             implementation(libs.bundles.kmpalette)
             implementation(libs.bundles.koin.common)
             implementation(libs.bundles.ktor.common)
             implementation(libs.bundles.moko.mvvm.common)
-            implementation(libs.aakira.napier)
-            implementation(libs.datastore.preferences.core)
-            implementation(libs.media.kamel.image)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
@@ -70,7 +71,7 @@ android {
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     sourceSets["main"].res.srcDirs("src/androidMain/res")
-    sourceSets["main"].resources.srcDirs("src/commonMain/composeResources") // TODO: Verify the correctness
+    sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
         applicationId = "encore.music.app"
@@ -93,24 +94,7 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)
     }
-}
-
-// TODO: Remove once https://github.com/JetBrains/compose-multiplatform/issues/4085 is fixed
-// Workaround for error: A problem was found with the configuration of task ':composeApp:generateReleaseLintVitalReportModel' (type 'LintModelWriterTask').
-
-tasks.withType<AndroidLintAnalysisTask> {
-    dependsOn("copyFontsToAndroidAssets")
-}
-
-tasks.withType<LintModelWriterTask> {
-    dependsOn("copyFontsToAndroidAssets")
 }
