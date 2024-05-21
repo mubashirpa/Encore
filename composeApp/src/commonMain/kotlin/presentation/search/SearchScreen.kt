@@ -45,8 +45,15 @@ import domain.model.spotify.search.AlbumsItem
 import domain.model.spotify.search.ShowsItem
 import domain.model.tracks.Track
 import domain.repository.SearchItemType
-import encore.composeapp.generated.resources.Res
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.albums
+import kotlinproject.composeapp.generated.resources.artists
+import kotlinproject.composeapp.generated.resources.browse_all
+import kotlinproject.composeapp.generated.resources.playlists
+import kotlinproject.composeapp.generated.resources.podcasts_and_shows
+import kotlinproject.composeapp.generated.resources.retry
+import kotlinproject.composeapp.generated.resources.search_bar_placeholder
+import kotlinproject.composeapp.generated.resources.songs
 import org.jetbrains.compose.resources.stringResource
 import presentation.search.components.AlbumsListItem
 import presentation.search.components.ArtistsListItem
@@ -57,7 +64,7 @@ import presentation.search.components.ShowsListItem
 import presentation.search.components.TracksListItem
 import presentation.utils.header
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchScreen(
     uiState: SearchUiState,

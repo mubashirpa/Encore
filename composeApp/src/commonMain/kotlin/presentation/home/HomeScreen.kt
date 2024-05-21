@@ -21,13 +21,16 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import core.Result
-import encore.composeapp.generated.resources.Res
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.editorial_picks
+import kotlinproject.composeapp.generated.resources.new_releases
+import kotlinproject.composeapp.generated.resources.popular
+import kotlinproject.composeapp.generated.resources.top_charts
+import kotlinproject.composeapp.generated.resources.trending_now
 import org.jetbrains.compose.resources.stringResource
 import presentation.home.components.HomeListItem
 import presentation.home.components.TopTracksListItem
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun HomeScreen(
     uiState: HomeUiState,

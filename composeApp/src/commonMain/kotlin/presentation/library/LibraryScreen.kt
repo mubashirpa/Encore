@@ -17,14 +17,15 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import core.Result
-import encore.composeapp.generated.resources.Res
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.artists
+import kotlinproject.composeapp.generated.resources.playlists
+import kotlinproject.composeapp.generated.resources.songs
 import org.jetbrains.compose.resources.stringResource
 import presentation.library.components.ArtistsListItem
 import presentation.library.components.PlaylistsListItem
 import presentation.library.components.TracksListItem
 
-@OptIn(ExperimentalResourceApi::class)
 @Composable
 fun LibraryScreen(
     uiState: LibraryUiState,

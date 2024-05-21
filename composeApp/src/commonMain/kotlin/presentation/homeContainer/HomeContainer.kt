@@ -21,9 +21,15 @@ import com.arkivanov.decompose.extensions.compose.stack.Children
 import com.arkivanov.decompose.extensions.compose.stack.animation.fade
 import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
-import encore.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.ic_add
+import kotlinproject.composeapp.generated.resources.ic_refresh
+import kotlinproject.composeapp.generated.resources.ic_search
+import kotlinproject.composeapp.generated.resources.ic_shazam
+import kotlinproject.composeapp.generated.resources.title_home_screen
+import kotlinproject.composeapp.generated.resources.title_library_screen
+import kotlinproject.composeapp.generated.resources.title_search_screen
 import navigation.HomeContainerComponent
-import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 import presentation.home.HomeScreen
@@ -32,7 +38,7 @@ import presentation.homeContainer.components.HomeBottomBar
 import presentation.library.LibraryScreen
 import presentation.search.SearchScreen
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeContainer(component: HomeContainerComponent) {
     val scrollBehavior =

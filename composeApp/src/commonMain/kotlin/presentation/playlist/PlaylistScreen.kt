@@ -51,16 +51,18 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import core.Result
 import domain.model.tracks.Track
-import encore.composeapp.generated.resources.Res
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import org.jetbrains.compose.resources.ExperimentalResourceApi
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.play
+import kotlinproject.composeapp.generated.resources.retry
+import kotlinproject.composeapp.generated.resources.shuffle
 import org.jetbrains.compose.resources.stringResource
 import presentation.playlist.components.PlaylistListItem
 import presentation.theme.EncoreDynamicTheme
 import presentation.utils.verticalGradientScrim
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalResourceApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PlaylistScreen(
     uiState: PlaylistUiState,
