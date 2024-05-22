@@ -17,10 +17,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import core.Result
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.artists
-import kotlinproject.composeapp.generated.resources.playlists
-import kotlinproject.composeapp.generated.resources.songs
+import encore.composeapp.generated.resources.Res
+import encore.composeapp.generated.resources.artists
+import encore.composeapp.generated.resources.playlists
+import encore.composeapp.generated.resources.songs
 import org.jetbrains.compose.resources.stringResource
 import presentation.library.components.ArtistsListItem
 import presentation.library.components.PlaylistsListItem

@@ -51,12 +51,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import core.Result
 import domain.model.tracks.Track
+import encore.composeapp.generated.resources.Res
+import encore.composeapp.generated.resources.play
+import encore.composeapp.generated.resources.retry
+import encore.composeapp.generated.resources.shuffle
 import io.kamel.image.KamelImage
 import io.kamel.image.asyncPainterResource
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.play
-import kotlinproject.composeapp.generated.resources.retry
-import kotlinproject.composeapp.generated.resources.shuffle
 import org.jetbrains.compose.resources.stringResource
 import presentation.playlist.components.PlaylistListItem
 import presentation.theme.EncoreDynamicTheme
