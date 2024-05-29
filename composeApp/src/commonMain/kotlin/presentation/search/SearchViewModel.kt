@@ -3,8 +3,9 @@ package presentation.search
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import core.Result
-import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import domain.repository.SearchItemType
 import domain.usecase.spotify.category.GetCategoriesUseCase
 import domain.usecase.spotify.search.SearchForItemUseCase

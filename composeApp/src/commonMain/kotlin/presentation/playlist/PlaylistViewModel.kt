@@ -3,8 +3,9 @@ package presentation.playlist
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import core.Result
-import dev.icerock.moko.mvvm.viewmodel.ViewModel
 import domain.usecase.saavn.playlists.GetPlaylistItemsUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach

@@ -3,7 +3,8 @@ package presentation.library
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import dev.icerock.moko.mvvm.viewmodel.ViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import domain.usecase.spotify.playlists.GetCurrentUsersPlaylistsUseCase
 import domain.usecase.spotify.users.GetFollowedArtistsUseCase
 import domain.usecase.spotify.users.GetUsersTopTracksUseCase
