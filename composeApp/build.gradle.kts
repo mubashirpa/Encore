@@ -5,7 +5,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
-    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.composeCompiler)
 
     alias(libs.plugins.kotlinSerialization)
 }
@@ -35,10 +35,11 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
 
-            implementation(libs.bundles.media3.android)
             implementation(libs.androidx.core.splashscreen)
             implementation(libs.koin.android)
             implementation(libs.ktor.client.okhttp)
+
+            implementation(libs.bundles.media3.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -53,13 +54,13 @@ kotlin {
             implementation(libs.aakira.napier)
             implementation(libs.datastore.preferences.core)
             implementation(libs.kotlinx.atomicfu)
+            implementation(libs.lifecycle.viewmodel.compose)
             implementation(libs.media.kamel.image)
 
             implementation(libs.bundles.decompose.common)
             implementation(libs.bundles.kmpalette)
             implementation(libs.bundles.koin.common)
             implementation(libs.bundles.ktor.common)
-            implementation(libs.bundles.moko.mvvm.common)
         }
         iosMain.dependencies {
             implementation(libs.ktor.client.darwin)
