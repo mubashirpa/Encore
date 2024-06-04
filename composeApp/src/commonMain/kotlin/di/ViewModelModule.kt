@@ -1,5 +1,6 @@
 package di
 
+import org.koin.compose.viewmodel.dsl.viewModelOf
 import org.koin.dsl.module
 import presentation.MainViewModel
 import presentation.home.HomeViewModel
@@ -10,43 +11,10 @@ import presentation.search.SearchViewModel
 
 val viewModelModule =
     module {
-        factory {
-            HomeViewModel(
-                getFeaturedPlaylistsUseCase = get(),
-                getLaunchDataUseCase = get(),
-                getUsersTopTracksUseCase = get(),
-            )
-        }
-        factory {
-            LibraryViewModel(
-                getCurrentUsersPlaylistsUseCase = get(),
-                getFollowedArtistsUseCase = get(),
-                getUsersTopTracksUseCase = get(),
-            )
-        }
-        factory {
-            MainViewModel(
-                getAccessTokenUseCase = get(),
-                refreshTokenUseCase = get(),
-                requestAuthAccessTokenUseCase = get(),
-                requestUserAuthorizationUseCase = get(),
-                urlLauncher = get(),
-            )
-        }
-        factory {
-            PlayerViewModel(
-                getTrackUseCase = get(),
-            )
-        }
-        factory {
-            PlaylistViewModel(
-                getPlaylistItemsUseCase = get(),
-            )
-        }
-        factory {
-            SearchViewModel(
-                getCategoriesUseCase = get(),
-                searchForItemUseCase = get(),
-            )
-        }
+        viewModelOf(::HomeViewModel)
+        viewModelOf(::LibraryViewModel)
+        viewModelOf(::MainViewModel)
+        viewModelOf(::PlayerViewModel)
+        viewModelOf(::PlaylistViewModel)
+        viewModelOf(::SearchViewModel)
     }
