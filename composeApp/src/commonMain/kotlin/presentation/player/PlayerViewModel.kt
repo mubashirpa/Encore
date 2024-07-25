@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import core.Result
 import domain.usecase.saavn.tracks.GetTrackUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -28,7 +29,15 @@ class PlayerViewModel(
 
     private fun getTrack(trackId: String) {
         getTrackUseCase(trackId).onEach {
-            uiState = uiState.copy(trackResult = it)
+            uiState =
+                if (it is Result.Success) {
+                    uiState.copy(
+                        trackImageUrl = it.data?.image.orEmpty(),
+                        trackResult = it,
+                    )
+                } else {
+                    uiState.copy(trackResult = it)
+                }
         }.launchIn(viewModelScope)
     }
 }
