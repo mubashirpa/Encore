@@ -11,12 +11,12 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -178,7 +178,7 @@ private fun PlalistsListItemContent(
                 Modifier
                     .aspectRatio(1f)
                     .clip(MaterialTheme.shapes.medium)
-                    .indication(interactionSource, rememberRipple()),
+                    .indication(interactionSource, ripple()),
             contentScale = ContentScale.Crop,
         )
         Spacer(modifier = Modifier.height(8.dp))
