@@ -2,9 +2,11 @@ package core.utils
 
 import android.annotation.SuppressLint
 import android.util.Base64
+import kotlinx.serialization.Serializable
 import javax.crypto.Cipher
 import javax.crypto.spec.SecretKeySpec
 
+@Serializable
 actual class CryptoManager actual constructor() {
     @SuppressLint("GetInstance")
     actual fun decrypt(input: String): String {

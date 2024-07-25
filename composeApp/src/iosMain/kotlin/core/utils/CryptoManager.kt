@@ -4,12 +4,14 @@ import io.ktor.utils.io.core.String
 import io.ktor.utils.io.core.toByteArray
 import kotlinx.cinterop.ExperimentalForeignApi
 import kotlinx.cinterop.refTo
+import kotlinx.serialization.Serializable
 import platform.CommonCrypto.CCCrypt
 import platform.CommonCrypto.CCCryptorStatus
 import platform.CommonCrypto.CCKern
 
-// TODO("Verify the correctness")
-actual class CryptoManager actual constructor() {
+// TODO("Fix CryptoManager")
+@Serializable
+actual class CryptoManager {
     @OptIn(ExperimentalForeignApi::class)
     actual fun decrypt(input: String): String {
         val keyData = CRYPTO_MANAGER_KEY.toByteArray()

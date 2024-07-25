@@ -1,5 +1,8 @@
 package core.utils
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 expect class CryptoManager() {
     fun decrypt(input: String): String
 }
