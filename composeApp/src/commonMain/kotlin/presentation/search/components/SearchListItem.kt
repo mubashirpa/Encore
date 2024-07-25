@@ -36,7 +36,7 @@ fun AlbumsListItem(
     typeAndYear: String?,
     onClick: () -> Unit,
 ) {
-    PlalistsListItemContent(
+    PlaylistsListItemContent(
         title = name,
         imageUrl = imageUrl,
         subTitle = artists,
@@ -82,7 +82,7 @@ fun PlalistsListItem(
     owner: String?,
     onClick: () -> Unit,
 ) {
-    PlalistsListItemContent(
+    PlaylistsListItemContent(
         title = name,
         imageUrl = imageUrl,
         subTitle = owner,
@@ -145,7 +145,7 @@ fun ShowsListItem(
     publisher: String?,
     onClick: () -> Unit,
 ) {
-    PlalistsListItemContent(
+    PlaylistsListItemContent(
         title = name,
         imageUrl = imageUrl,
         subTitle = publisher,
@@ -154,7 +154,7 @@ fun ShowsListItem(
 }
 
 @Composable
-private fun PlalistsListItemContent(
+private fun PlaylistsListItemContent(
     title: String,
     imageUrl: String,
     subTitle: String? = null,
