@@ -2,7 +2,9 @@ package domain.model.tracks
 
 import core.utils.CryptoManager
 import domain.model.artists.Artist
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Track(
     val artists: List<Artist>? = null,
     val id: String? = null,
@@ -11,10 +13,11 @@ data class Track(
     val mediaUrl: String? = null,
 ) {
     private val cryptoManager = CryptoManager()
-    val artistsNames: String? =
+    val artistsNames: String? by lazy {
         artists?.joinToString(", ") {
             it.name.toString()
-        }
+        }?.replace("&quot;", "\"")?.replace("&#039;", "'")?.replace("&amp;", "&")
+    }
     val decryptedMediaUrl: String? by lazy {
         if (mediaUrl.isNullOrEmpty()) {
             null
@@ -22,5 +25,7 @@ data class Track(
             cryptoManager.decrypt(mediaUrl)
         }
     }
-    val formattedName = name?.replace("&quot;", "\"")?.replace("&#039;", "'")?.replace("&amp;", "&")
+    val formattedName by lazy {
+        name?.replace("&quot;", "\"")?.replace("&#039;", "'")?.replace("&amp;", "&")
+    }
 }
